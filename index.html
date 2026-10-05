@@ -191,15 +191,12 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .acctop{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .acctabs{align-self:flex-start}
 .acctform{display:flex;flex-direction:column;gap:6px}
-.acctform label,.aserver label{font-size:13px;color:var(--muted);margin-top:4px}
-.acctform input,.aserver input{font:16px var(--f-body);padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
-.acctform input:focus-visible,.aserver input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.acctform label{font-size:13px;color:var(--muted);margin-top:4px}
+.acctform input{font:16px var(--f-body);padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.acctform input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .acctform .btn.primary{margin-top:8px;padding:10px 14px;font-size:15px}
 #acct:not(.newmode) .newonly{display:none}
 .aerr{color:var(--warn);font-size:13px;margin:0;min-height:1em}
-.aserver{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px}
-.aserver summary{cursor:pointer;font-size:13px;color:var(--muted)}
-.aserver[open]{display:flex}
 .potchip{position:absolute;transform:translate(-50%,-150%);font:600 13px var(--f-display);letter-spacing:.06em;text-transform:uppercase;background:#5ee08a;color:#0d2415;border:0;border-radius:6px;padding:5px 10px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
 .potchip:focus-visible{outline:2px solid #fff}
 .potchip.rem{background:#e5484d;color:#fff}
@@ -370,13 +367,6 @@ details[open] summary{margin-bottom:8px}
       <div class="row"><button class="btn primary" id="aSyncNow" type="button">Sync now</button><button class="btn" id="aOutBtn" type="button">Sign out</button></div>
       <p class="note">Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.</p>
     </div>
-    <details class="aserver" id="aServer">
-      <summary>Server settings</summary>
-      <p class="note">For whoever hosts the app: paste the Project URL and the anon public key from Supabase (Project settings → API). Leave empty to use the built-in server.</p>
-      <label for="aUrl">Project URL</label><input id="aUrl" type="url" placeholder="https://xxxx.supabase.co" spellcheck="false">
-      <label for="aKey">Anon public key</label><input id="aKey" type="text" spellcheck="false" placeholder="eyJ…">
-      <div class="row"><button class="btn" id="aSaveSrv" type="button">Save server</button><span class="note" id="aSrvMsg"></span></div>
-    </details>
   </div>
 </div>
 <div class="dragghost" id="dragGhost" hidden></div>
@@ -2005,13 +1995,13 @@ $('#sideTab').onclick=()=>{const o=$('#side').classList.contains('closed');if(o&
 $('#barTab').onclick=()=>setBarOpen($('#bar').classList.contains('closed'));
 
 /* ---------- my ID: nickname + PIN, scenes synced through Supabase ---------- */
-/* Whoever hosts the app fills these two in (Supabase → Project settings → API). They can also be set from the app. */
-const CLOUD_DEFAULT={url:'',key:''};
+/* The Supabase project every copy of the app talks to (Supabase → Project settings → API). */
+const CLOUD_DEFAULT={url:'https://xbsqeqpsitqfuayrrcjd.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhic3FlcXBzaXRxZnVheXJyY2pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzY5MTEsImV4cCI6MjEwNjgxMjkxMX0.taTTSojVuW_H4qchGTCl3-4S39kAKGLsTVwUnJa7c1o'};
 const ACCT='atelier-account',SRV='atelier-cloud';
 const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch(_){return null}};
 const lsSet=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,JSON.stringify(v))}catch(_){}};
 let acct=lsGet(ACCT); /* {username, token, rev, lastSync} */
-const cloud=()=>{const o=lsGet(SRV)||{};return {url:(o.url||CLOUD_DEFAULT.url||'').replace(/\/+$/,''),key:o.key||CLOUD_DEFAULT.key||''}};
+const cloud=()=>({url:(CLOUD_DEFAULT.url||'').replace(/\/+$/,''),key:CLOUD_DEFAULT.key||''}); /* set only in this file, the same for everyone */
 const cloudReady=()=>{const c=cloud();return !!(c.url&&c.key)};
 async function rpc(fn,args){
   const c=cloud();if(!c.url||!c.key)throw new Error('no_server');
@@ -2095,9 +2085,7 @@ function renderAcct(){
   $('#tabIn').classList.toggle('on',acctMode==='in');$('#tabNew').classList.toggle('on',acctMode==='new');
   $('#aGo').textContent=acctMode==='new'?'Create my ID':'Sign in';
   if(signed){$('#aName').textContent=acct.username;$('#aSync').textContent=acct.lastSync?'Last synced '+new Date(acct.lastSync).toLocaleString([], {dateStyle:'short',timeStyle:'short'}):'Not synced yet'}
-  const c=lsGet(SRV)||{};$('#aUrl').value=c.url||'';$('#aKey').value=c.key||'';
-  $('#aServer').open=!cloudReady();
-  if(!cloudReady())$('#aErr').textContent=signed?'':'Sync is not set up on this copy of the app yet (see Server settings).';
+  if(!cloudReady())$('#aErr').textContent=signed?'':'Online saving is not available right now. Your work is saved on this device.';
 }
 function openAcct(){$('#aErr').textContent='';renderAcct();$('#acct').hidden=false;setTimeout(()=>{const f=acct?$('#aSyncNow'):$('#aUser');try{f.focus({preventScroll:true})}catch(_){}},30)}
 function closeAcct(){$('#acct').hidden=true}
@@ -2106,7 +2094,7 @@ $('#acct').addEventListener('pointerdown',e=>{if(e.target===$('#acct'))closeAcct
 $('#acct').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();closeAcct()}});
 $('#tabIn').onclick=()=>{acctMode='in';$('#aErr').textContent='';renderAcct()};
 $('#tabNew').onclick=()=>{acctMode='new';$('#aErr').textContent='';renderAcct()};
-const ERR={bad_username:'Nickname: 3 to 20 letters, numbers, dots, dashes or underscores.',bad_pin:'PIN: 4 to 8 digits.',taken:'That nickname is taken. Try another one.',no_server:'Sync is not set up on this copy of the app yet (see Server settings).',offline:'Cannot reach the server. Check the connection, or the server settings.'};
+const ERR={bad_username:'Nickname: 3 to 20 letters, numbers, dots, dashes or underscores.',bad_pin:'PIN: 4 to 8 digits.',taken:'That nickname is taken. Try another one.',no_server:'Online saving is not available right now. Your work is saved on this device.',offline:'Cannot reach the server. Check your connection; your work is saved on this device.'};
 $('#acctForm').addEventListener('submit',async e=>{
   e.preventDefault();const err=$('#aErr');err.textContent='';
   const u=$('#aUser').value.trim().toLowerCase(),pin=$('#aPin').value.trim();
@@ -2130,9 +2118,6 @@ $('#acctForm').addEventListener('submit',async e=>{
 });
 $('#aSyncNow').onclick=async()=>{await syncNow();renderAcct()};
 $('#aOutBtn').onclick=async()=>{const t=acct&&acct.token;signOutLocal();try{if(t)await rpc('am_logout',{p_token:t})}catch(_){}};
-$('#aSaveSrv').onclick=()=>{const url=$('#aUrl').value.trim(),key=$('#aKey').value.trim();
-  if(url&&!/^(https:\/\/.+|http:\/\/(localhost|127\.0\.0\.1)(:\d+)?.*)$/.test(url)){$('#aSrvMsg').textContent='The URL must start with https://';return}
-  lsSet(SRV,url||key?{url,key}:null);$('#aSrvMsg').textContent='Saved.';$('#aErr').textContent='';renderAcct()};
 /* stay in step: on opening, when coming back to the app, and every minute while it is open */
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&acct)syncNow()});
 window.addEventListener('focus',()=>{if(acct)syncNow()});
