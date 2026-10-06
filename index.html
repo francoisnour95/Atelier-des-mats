@@ -292,7 +292,7 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .dopt.busy .dname::after{content:' …'}
 .dsw{display:block;width:100%;aspect-ratio:16/10;border-radius:6px}
 .dsw.studio{background:linear-gradient(#1c211e 0 52%,#2a312c 52% 100%)}
-.dsw.camp{background:url(env/camp-thumb.jpg) center/cover,linear-gradient(#9cc0dc 0,#d9e6ee 46%,#3d5a31 47%,#7a9a52 100%)}
+.dsw.camp{background:url(env/camp-thumb.jpg?v=2) center/cover,linear-gradient(#9cc0dc 0,#d9e6ee 46%,#3d5a31 47%,#7a9a52 100%)}
 @media (max-width:760px){.decor:not(.closed){width:168px}}
 .scenes.closed .scenetab,.side.closed .sidetab{height:auto;padding:12px 0 14px}
 /* the main controls, always at the bottom middle */
@@ -1215,7 +1215,7 @@ function setEnv(n){
   envName=n;envFailed=false;try{localStorage.setItem('atelier-decor',n)}catch(_){}
   if(n==='camp'&&!campTex&&!campLoading){
     campLoading=true;
-    new THREE.TextureLoader().load('env/camp.jpg',tex=>{
+    new THREE.TextureLoader().load('env/camp.jpg?v=2',tex=>{
       tex.minFilter=THREE.LinearFilter;tex.generateMipmaps=false;tex.wrapS=THREE.RepeatWrapping; /* no mipmaps: they would draw a seam where the photo wraps */
       tex.anisotropy=renderer.capabilities.getMaxAnisotropy();
       campTex=tex;sky.material.uniforms.map.value=tex;campLoading=false;applyEnv();if(typeof scheduleThumb==='function')scheduleThumb();
