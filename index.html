@@ -251,6 +251,7 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .jbbtns .btn{padding:8px 14px}
 .hint.under{display:none}
 .fnum{position:absolute;transform:translate(-50%,-50%);font:600 10px var(--f-mono);color:#1a1408;background:#ffc865;border-radius:3px;padding:0 3px;pointer-events:none}
+.flabel.open{background:#cfe0ff;color:#0e2a55;box-shadow:0 0 0 1.5px #5d93e8}
 .flabel{position:absolute;transform:translate(-50%,-50%);font:700 16px var(--f-display);color:#1a1408;background:#e2a84c;border-radius:4px;padding:0 6px;pointer-events:none;letter-spacing:.04em}
 .side{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-height:0;display:flex;flex-direction:column;width:340px}
 .sidebody{overflow:auto;min-height:0;flex:1;display:flex;flex-direction:column}
@@ -298,7 +299,8 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .dock{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:8px;padding:6px;border-radius:99px;
   background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),var(--glass-shadow)}
 .dock .dseg{border-radius:99px;border:0;background:transparent}
-.dock .dseg button{padding:10px 18px;font-size:16px;border-radius:99px}
+.dock .dseg button{padding:10px 14px;font-size:15px;border-radius:99px}
+@media (max-width:760px){.dock{gap:4px;padding:5px}.dock .dseg button{padding:9px 10px;font-size:14px}.dbtn{width:38px;height:38px}}
 .dbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--glass-sep);background:var(--glass-2);color:var(--fg);display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
 .dbtn svg{width:20px;height:20px;fill:currentColor}
 .dbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
@@ -334,6 +336,8 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .list button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:7px;padding:7px 10px;cursor:pointer;font:inherit}
 .list button.on{border-color:var(--accent);background:var(--accent-soft)}
 .list .letter{font:700 16px var(--f-display);width:22px;height:22px;display:grid;place-items:center;border-radius:4px;background:var(--accent);color:var(--accent-ink);flex:none}
+.list .letter.open{background:#cfe0ff;color:#0e2a55}
+.opentag{font:600 11px var(--f-body);color:#5d93e8}
 .list .meta{margin-left:auto;font:12px var(--f-mono);color:var(--muted);white-space:nowrap}
 table{width:100%;border-collapse:collapse;font:12px var(--f-mono);font-variant-numeric:tabular-nums}
 th{font:600 11px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;padding:3px 4px;border-bottom:1px solid var(--line)}
@@ -483,7 +487,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 22 · decor</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 24 · three tools</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -558,7 +562,8 @@ details[open] summary{margin-bottom:8px}
         <button class="dbtn" id="bUndo" type="button" title="Undo (Ctrl+Z)" aria-label="Undo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 3 10.5 9 16v-3.6h6a4 4 0 0 1 0 8h-3V23h3a6.5 6.5 0 0 0 0-13H9z"/></svg></button>
         <div class="seg dseg" role="group" aria-label="Mode">
           <button id="mDraw" class="on" type="button">Draw</button>
-          <button id="mSelect" type="button">Knots</button>
+          <button id="mSelect" type="button">Lash</button>
+          <button id="mJeux" type="button">Strings</button>
         </div>
         <button class="dbtn" id="bRedo" type="button" title="Redo (Ctrl+Shift+Z)" aria-label="Redo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5 6 5.5-6 5.5v-3.6H9a4 4 0 0 0 0 8h3V23H9a6.5 6.5 0 0 1 0-13h6z"/></svg></button>
       </div>
@@ -656,7 +661,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 22 · decor','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Knots','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'proto 24 · three tools','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -673,7 +678,7 @@ sharedBy:'Shared by {from} · not saved',sharedTag:'Shared · not saved',saveCop
 openingShared:'Opening the shared installation…',sharedH:'Shared installation',shareNotFound:'This link does not work. Check that it was copied whole.',
 shareExpired:'This link has expired. Links last 14 days: ask for a new one.',shareOffline:'Cannot reach the server to open this link. Check your connection.',
 ok:'OK',retry:'Try again',keptCopy:'Saved in your installations.',
-delLogT:'Delete this log','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
+delLogT:'Delete this log','hint.jeux':'Tap a face to choose it · faces with a dotted side are open · + Jeu de ficelles adds strings',jeuxNote:'Tap a face (a letter) to see its string art, or add one. Open faces have a dotted side with no wood.',openFace:'open',openNote:'Open face: the dotted side has no wood, so no strings go there. Strings join each chosen piece of wood to the next one along the chain.','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
@@ -727,7 +732,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 22 · decor','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Nouer','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'proto 24 · three tools','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -744,7 +749,7 @@ sharedBy:'Partagée par {from} · pas enregistrée',sharedTag:'Partagée · pas 
 openingShared:'Ouverture de l’installation partagée…',sharedH:'Installation partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
 shareExpired:'Ce lien a expiré. Les liens durent 14 jours : demandez-en un nouveau.',shareOffline:'Impossible de joindre le serveur pour ouvrir ce lien. Vérifiez votre connexion.',
 ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos installations.',
-delLogT:'Supprimer cette perche','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
+delLogT:'Supprimer cette perche','hint.jeux':'Touchez une face pour la choisir · les faces à côté pointillé sont ouvertes · + Jeu de ficelles en ajoute un',jeuxNote:'Touchez une face (une lettre) pour voir ses jeux de ficelles, ou en ajouter un. Les faces ouvertes ont un côté en pointillés sans bois.',openFace:'ouverte',openNote:'Face ouverte : le côté en pointillés n’a pas de bois, aucune ficelle n’y va. Les ficelles relient chaque morceau de bois choisi au suivant le long de la chaîne.','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -757,7 +762,7 @@ const STATIC=[
  ['#acctTitle','text','s.myId'],['#acctClose','text','s.close'],['#acctClose','aria','s.close'],['#acctOut .lead','text','s.acctLead'],['#tabIn','text','signIn'],['#tabNew','text','createId'],
  ['label[for=aUser]','text','s.nickname'],['#aUser','ph','s.nickPh'],['label[for=aPin]','text','s.pinLabel'],['label[for=aPin2]','text','s.repeatPin'],['#acctForm p.note','text','s.nickNote'],
  ['#aNameLbl','text','s.signedAs'],['#aSyncNow','text','s.syncNow'],['#aOutBtn','text','s.signOut'],['#acctIn > p.note:last-child','text','s.acctInNote'],
- ['.brand span','text','s.brandTag'],['#dock .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],
+ ['.brand span','text','s.brandTag'],['#dock .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],['#mJeux','text','s.jeux'],
  ['#bUndo','aria','s.undo'],['#bUndo','title','s.undoT'],['#bRedo','aria','s.redo'],['#bRedo','title','s.redoT'],
  ['#cSnap','tail','s.gridSnap'],['#cGrid','tail','s.showGrid'],['#cBase','tail','s.baseDrawing'],['#cLabels','tail','s.labels'],
  ['#sceneTab .stl','text','s.scenes'],['#decorTab .stl','text','s.decor'],['[data-env=studio] .dname','text','s.studio'],['[data-env=camp] .dname','text','s.camp'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
@@ -847,6 +852,7 @@ let libDeleted={},libOrderAt=0;
 let state=scenes.find(x=>x.id===active).state;
 const cur=()=>scenes.find(x=>x.id===active);
 let showLabels=true,drawD=R.defaultD,dropOrient='up';
+let jeuxMode=false; /* the third tool: faces and jeux de ficelles are only shown and edited here */
 let mode='draw', sel=null, pending=null, hover=null, snapGrid=true, showBase=false, workZ=0;
 let model=null, history=[], future=[];
 function clone(o){return JSON.parse(JSON.stringify(o))}
@@ -1068,8 +1074,76 @@ function computeModel(){
     faces.push({pts,beams:bs,sides,area,c,key:[...bs].sort((a,b)=>a-b).join('-'),perimeter:sides.reduce((s,x)=>s+x.len,0),warp:flat});
   }
   faces.sort((a,b)=>a.c[0]-b.c[0]||a.c[1]-b.c[1]);
+  faces.push(...openFaces(beams,nodes,faces));
   faces.forEach((f,k)=>f.letter=String.fromCharCode(65+(k%26))+(k>=26?Math.floor(k/26):''));
   return {beams,joints,nodes,faces,potentials};
+}
+
+/* ---------- open faces ----------
+   Every log is cut into pieces of wood at its brelages and at its two ends. An open face is a chain of
+   2 to 4 pieces from different logs, each joined to the next by a brelage, that lies flat and turns one
+   way, so it encloses an area even though one side has no wood (the gap between the chain's two free ends).
+   Only the biggest chains are kept, and none that sit inside a closed face. */
+const OPEN={minPiece:0.2,minTurn:15,maxTurn:165,flat:0.07,minArea:0.06,max:40};
+function openFaces(beams,nodes,closed){
+  /* pieces of wood */
+  const pieces=[],atNode=new Map();
+  for(const b of beams){
+    const span=d3(b.G1,b.G2),stops=[{s:0,p:b.G1,k:-1},{s:span,p:b.G2,k:-1}],seen=new Set();
+    for(const J of b.joints){const k=J.node.k;if(seen.has(k))continue;seen.add(k);
+      const p=J.i===b.i?J.pi:J.pj,sv=dot(sub(p,b.G1),b.dir);if(sv<-0.05||sv>span+0.05)continue;stops.push({s:clamp(sv,0,span),p,k})}
+    stops.sort((x,y)=>x.s-y.s);
+    for(let q=0;q+1<stops.length;q++){const A=stops[q],B=stops[q+1];if(B.s-A.s<OPEN.minPiece)continue;if(A.k<0&&B.k<0)continue;
+      const pc={id:b.l.id+':'+q,bi:b.i,beam:b.l.id,a:A.p,b:B.p,ka:A.k,kb:B.k,len:B.s-A.s};pieces.push(pc);
+      for(const [k,end] of [[A.k,'a'],[B.k,'b']])if(k>=0){if(!atNode.has(k))atNode.set(k,[]);atNode.get(k).push({pc,end})}}
+  }
+  const ang=(o,p,q)=>{const u=nrm(sub(p,o)),v=nrm(sub(q,o));return Math.acos(clamp(dot(u,v),-1,1))*180/Math.PI};
+  /* closed faces, to skip open ones lying inside them */
+  const inClosed=pt=>closed.some(F=>{let N=[0,0,0];for(let k=0;k<F.pts.length;k++)N=add(N,crs(F.pts[k],F.pts[(k+1)%F.pts.length]));const n=nrm(N);
+    if(Math.abs(dot(sub(pt,F.c),n))>0.12)return false;
+    let sign=0;for(let k=0;k<F.pts.length;k++){const a=F.pts[k],b=F.pts[(k+1)%F.pts.length],c=dot(crs(sub(b,a),sub(pt,a)),n);if(Math.abs(c)<1e-9)continue;const sg=c>0?1:-1;if(!sign)sign=sg;else if(sg!==sign)return false}
+    return true});
+  const cands=new Map();
+  /* walk: start on a piece from its free end (or any end), cross brelages to pieces of other logs */
+  const walk=(chain,pts,used)=>{
+    if(chain.length>=2){
+      const key=chain.map(x=>x.pc.id).slice().sort().join('|');
+      if(!cands.has(key)){const f=checkOpen(chain,pts);if(f)cands.set(key,f)}
+    }
+    if(chain.length>=4)return;
+    const last=chain[chain.length-1],k=last.end==='b'?last.pc.kb:last.pc.ka;if(k<0)return;
+    for(const nx of atNode.get(k)||[]){
+      if(used.has(nx.pc.bi))continue;
+      const corner=pts[pts.length-1],prev=pts[pts.length-2],far=nx.end==='a'?nx.pc.b:nx.pc.a;
+      const t=ang(corner,prev,far);if(t<OPEN.minTurn||t>OPEN.maxTurn)continue;
+      used.add(nx.pc.bi);walk([...chain,{pc:nx.pc,end:nx.end==='a'?'b':'a'}],[...pts,far],used);used.delete(nx.pc.bi);
+    }
+  };
+  /* is this chain a usable open face? */
+  const checkOpen=(chain,pts)=>{
+    if(d3(pts[0],pts[pts.length-1])<0.1)return null;
+    let N=[0,0,0];for(let k=0;k<pts.length;k++)N=add(N,crs(pts[k],pts[(k+1)%pts.length]));
+    const area=len3(N)/2;if(area<OPEN.minArea)return null;const n=nrm(N);
+    const c=mul(pts.reduce((acc,p)=>add(acc,p),[0,0,0]),1/pts.length);
+    let warp=0;for(const p of pts)warp=Math.max(warp,Math.abs(dot(sub(p,c),n)));if(warp>OPEN.flat)return null;
+    for(let k=0;k<pts.length;k++){const a=pts[(k+pts.length-1)%pts.length],b=pts[k],d=pts[(k+1)%pts.length];if(dot(crs(sub(b,a),sub(d,b)),n)<-1e-6)return null} /* turns one way, gap included */
+    if(inClosed(c))return null;
+    const sides=chain.map((x,i)=>({beam:x.pc.beam,bi:x.pc.bi,len:x.pc.len,pu:pts[i],pv:pts[i+1],piece:x.pc.id}));
+    return {pts,beams:sides.map(x=>x.beam),sides,area,c,warp,open:true,perimeter:sides.reduce((acc,x)=>acc+x.len,0),
+      key:'o'+chain.map(x=>x.pc.id).slice().sort().join('|'),pieceSet:new Set(chain.map(x=>x.pc.id))};
+  };
+  for(const pc of pieces)for(const end of ['a','b']){
+    /* start from this end, heading to the other end, which must be a brelage */
+    const toK=end==='a'?pc.kb:pc.ka;if(toK<0)continue;
+    const start=end==='a'?pc.a:pc.b,mid=end==='a'?pc.b:pc.a;
+    walk([{pc,end:end==='a'?'b':'a'}],[start,mid],new Set([pc.bi]));
+  }
+  /* keep the biggest: drop a chain whose pieces all belong to a kept, longer chain */
+  const all=[...cands.values()].sort((x,y)=>y.sides.length-x.sides.length||y.area-x.area);
+  const kept=[];
+  for(const f of all){if(kept.some(K=>[...f.pieceSet].every(p=>K.pieceSet.has(p))))continue;kept.push(f);if(kept.length>=OPEN.max)break}
+  kept.sort((a,b)=>a.c[0]-b.c[0]||a.c[1]-b.c[1]);
+  return kept;
 }
 
 /* ---------- three.js scene ---------- */
@@ -1210,6 +1284,9 @@ const faceMatPick=new THREE.MeshBasicMaterial({color:0x3d8bff,transparent:true,o
 const pickHitMat=new THREE.MeshBasicMaterial({visible:false});
 const faceMatDim=new THREE.MeshBasicMaterial({color:0xe2a84c,transparent:true,opacity:0.05,side:THREE.DoubleSide,depthWrite:false});
 const faceMatSel=new THREE.MeshBasicMaterial({color:0xe2a84c,transparent:true,opacity:0.38,side:THREE.DoubleSide,depthWrite:false});
+const faceMatOpen=new THREE.MeshBasicMaterial({color:0x7fb2ff,transparent:true,opacity:0.1,side:THREE.DoubleSide,depthWrite:false});
+const faceMatOpenSel=new THREE.MeshBasicMaterial({color:0x7fb2ff,transparent:true,opacity:0.3,side:THREE.DoubleSide,depthWrite:false});
+const gapMat=new THREE.LineDashedMaterial({color:0x9cc4ff,dashSize:0.07,gapSize:0.06,transparent:true,opacity:0.9,depthTest:false});
 const handleGeo=new THREE.SphereGeometry(0.05,16,10),handleMat=new THREE.MeshBasicMaterial({color:0xe2a84c,depthTest:false}),handleMatOn=new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false});
 const sideMat=new THREE.MeshBasicMaterial({color:0x8fbcff,transparent:true,opacity:0.35,depthWrite:false});
 const sideMatOn=new THREE.MeshBasicMaterial({color:0xffb52e,transparent:true,opacity:0.7,depthWrite:false});
@@ -1366,7 +1443,9 @@ function jeuStrings(jeu){
   const P=chosen.map(x=>sidePoints(f,x.sd,jeu.n));
   /* link chosen borders that meet at a corner (neighbours around the face); if none meet, link the two chosen */
   const nS=f.sides.length,adj=(x,y)=>(chosen[y].i-chosen[x].i+nS)%nS===1;
-  const pairs=[];for(let k=0;k<chosen.length;k++){const k2=(k+1)%chosen.length;if(k2===k)continue;if(adj(k,k2)&&!(chosen.length===2&&k===1&&pairs.length))pairs.push([k,k2])}
+  const pairs=[];
+  if(f.open)for(let k=0;k+1<chosen.length;k++)pairs.push([k,k+1]); /* open: each chosen piece to the next one along the chain */
+  else for(let k=0;k<chosen.length;k++){const k2=(k+1)%chosen.length;if(k2===k)continue;if(adj(k,k2)&&!(chosen.length===2&&k===1&&pairs.length))pairs.push([k,k2])}
   if(!pairs.length)pairs.push([0,1]);
   const strings=[];for(const [x,y] of pairs)for(let i=0;i<jeu.n;i++)strings.push([P[x][i],P[y][i]]);
   const cord=strings.reduce((acc,[a,b])=>acc+d3(a,b),0);
@@ -1426,17 +1505,21 @@ function buildScene(){
     }
     for(const J of n.js){if(J.loose<=R.lashGap)continue;const g=new THREE.BufferGeometry().setFromPoints([V(J.pi),V(J.pj)]);const l=new THREE.Line(g,lineMat(0xe8806c,1,false));l.renderOrder=6;l.userData.own=true;group.add(l)}
   }
-  for(const f of model.faces){
+  for(const f of (jeuxMode?model.faces:[])){
     const isSel=sel&&sel.type==='face'&&sel.key===f.key;
     const pos=[...f.c];f.pts.forEach(p=>pos.push(p[0],p[1],p[2]));
     const idx=[];for(let k=0;k<f.pts.length;k++)idx.push(0,k+1,(k+1)%f.pts.length+1);
     const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);
     const hasJeu=state.ficelles.some(j=>j.face===f.key);
     const picking=activeJeu()&&activeJeu().face===f.key;
-    const m=new THREE.Mesh(g,picking?faceMatPick:isSel?(hasJeu?faceMatDim:faceMatSel):(hasJeu?faceMatDim:faceMat));m.userData={kind:'face',key:f.key,own:true};m.renderOrder=2;group.add(m);pickables.push(m);
+    const fm=f.open?(picking?faceMatPick:isSel?faceMatOpenSel:(hasJeu?faceMatDim:faceMatOpen)):(picking?faceMatPick:isSel?(hasJeu?faceMatDim:faceMatSel):(hasJeu?faceMatDim:faceMat));
+    const m=new THREE.Mesh(g,fm);m.userData={kind:'face',key:f.key,own:true};m.renderOrder=2;group.add(m);pickables.push(m);
     const og=new THREE.BufferGeometry().setFromPoints(f.pts.map(V));
-    const ol=new THREE.LineLoop(og,lineMat(0xe2a84c,isSel?1:.55,true));ol.userData.own=true;group.add(ol);
-    if(showLabels){const d=document.createElement('div');d.className='flabel';d.textContent=f.letter;labels.appendChild(d);
+    if(f.open){
+      const ol=new THREE.Line(og,lineMat(0x9cc4ff,isSel?1:.5,true));ol.userData.own=true;group.add(ol);
+      const gg=new THREE.BufferGeometry().setFromPoints([V(f.pts[f.pts.length-1]),V(f.pts[0])]);const gl=new THREE.Line(gg,gapMat);gl.computeLineDistances();gl.renderOrder=6;gl.userData.own=true;group.add(gl);
+    }else{const ol=new THREE.LineLoop(og,lineMat(0xe2a84c,isSel?1:.55,true));ol.userData.own=true;group.add(ol)}
+    if(showLabels){const d=document.createElement('div');d.className='flabel'+(f.open?' open':'');d.textContent=f.letter;labels.appendChild(d);
     labelItems.push({el:d,v:V(f.c)});}
   }
   /* jeux de ficelles */
@@ -1660,7 +1743,7 @@ el.addEventListener('pointerdown',e=>{
 },true);
 el.addEventListener('pointermove',e=>{
   if(mode==='draw'){hover=snap(e,{from:pending,plane:workPlane()});showSnap(hover);updatePreview()}
-  else if(!gizmoDrag){
+  else if(!gizmoDrag&&!jeuxMode){
     const onHandle=handles.length&&handleHit(e);
     hoverNode=onHandle?null:nodeHit(e);hoverPot=(onHandle||hoverNode)?null:potHit(e);updatePot();
     el.style.cursor=(hoverPot||hoverNode||onHandle)?'pointer':'';
@@ -1695,6 +1778,11 @@ function pickAt(e){
     ray.setFromCamera(ndc(e),camera);const sh=ray.intersectObjects(pickables,false).find(x=>x.object.userData.kind==='side');
     if(sh)toggleSide(sh.object.userData.beam);return;
   }
+  if(jeuxMode){
+    ray.setFromCamera(ndc(e),camera);const fh=ray.intersectObjects(pickables,false).find(x=>x.object.userData.kind==='face');
+    if(!fh)sel=null;else if(!(sel&&sel.type==='face'&&sel.key===fh.object.userData.key))sel={type:'face',key:fh.object.userData.key};
+    rebuild(false);return;
+  }
   const h=handleHit(e);
   if(h&&sel&&sel.type==='beam'){sel={type:'beam',id:sel.id,end:h};rebuild(false);return}
   const nh=nodeHit(e);if(nh){sel={type:'node',key:nh.js[0].key};rebuild(false);return}
@@ -1702,7 +1790,7 @@ function pickAt(e){
   ray.setFromCamera(ndc(e),camera);const hits=ray.intersectObjects(pickables,false);
   /* borders being picked, then logs, then faces: a face never hides the log right next to it */
   const rank=h=>({side:0,beam:1,face:2})[h.object.userData.kind]??3;
-  const hit=hits.length?hits.reduce((a,b)=>rank(b)<rank(a)?b:a):null;
+  const hits2=hits.filter(x=>x.object.userData.kind!=='face'),hit=hits2.length?hits2.reduce((a,b)=>rank(b)<rank(a)?b:a):null;
   if(!hit)sel=null;
   else if(hit.object.userData.kind==='side'){toggleSide(hit.object.userData.beam);return}
   else if(hit.object.userData.kind==='beam'){
@@ -1715,10 +1803,12 @@ function pickAt(e){
 }
 
 /* ---------- actions ---------- */
-function setMode(m){
+function setMode(m,keepSel){
   closeFixPop();
+  const wasJeux=jeuxMode;jeuxMode=m==='jeux';if(jeuxMode)m='select';
+  if(!keepSel&&wasJeux!==jeuxMode)sel=null; /* a face does not stay selected outside Strings, a log not inside it */
   mode=m;pending=null;updatePreview();showSnap(null);
-  $('#mDraw').classList.toggle('on',m==='draw');$('#mSelect').classList.toggle('on',m==='select');
+  $('#mDraw').classList.toggle('on',m==='draw');$('#mSelect').classList.toggle('on',m==='select'&&!jeuxMode);$('#mJeux').classList.toggle('on',jeuxMode);
   view.classList.toggle('draw',m==='draw');
   if(m==='draw'){controls.mouseButtons={LEFT:null,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.ROTATE};controls.touches={ONE:null,TWO:THREE.TOUCH.DOLLY_ROTATE}}
   else{controls.mouseButtons={LEFT:THREE.MOUSE.ROTATE,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.PAN};controls.touches={ONE:THREE.TOUCH.ROTATE,TWO:THREE.TOUCH.DOLLY_PAN}}
@@ -1728,6 +1818,7 @@ function updateHint(){
   const touch=matchMedia('(pointer:coarse)').matches;
   $('#hint').textContent=mode==='draw'
     ?t(touch?'hint.drawTouch':'hint.drawMouse')
+    :jeuxMode?t('hint.jeux')
     :(state.workflow==='inventory'?t('hint.inv'):'')+t(touch?'hint.selTouch':'hint.selMouse');
 }
 function flip(id){const l=lineById(id);if(!l)return;pushHistory();l.sideA=-l.sideA;l.sideB=-l.sideB;rebuild()}
@@ -1739,7 +1830,7 @@ function undo(){if(!history.length)return;future.push(JSON.stringify(state));sta
 function redo(){if(!future.length)return;history.push(JSON.stringify(state));state=JSON.parse(future.pop());afterTimeTravel()}
 function afterTimeTravel(){closeFixPop();pending=null;if(sel&&sel.type==='beam'&&!lineById(sel.id))sel=null;applyWorkflow();rebuild();updatePreview()}
 
-$('#mDraw').onclick=()=>setMode('draw');$('#mSelect').onclick=()=>setMode('select');
+$('#mDraw').onclick=()=>setMode('draw');$('#mSelect').onclick=()=>setMode('select');$('#mJeux').onclick=()=>setMode('jeux');
 $('#bUndo').onclick=undo;$('#bRedo').onclick=redo;
 $('#bConnectAll').onclick=connectAll;
 $('#remChip').onclick=()=>{const n=sel&&sel.type==='node'?model.nodes.find(n=>n.js.some(J=>J.key===sel.key)):null;if(!n)return;pushHistory();const ks=new Set(n.js.map(J=>J.key));state.brelages=state.brelages.filter(q=>!ks.has(q.a+'-'+q.b));sel=null;rebuild()};
@@ -1769,12 +1860,12 @@ window.addEventListener('keydown',e=>{
 
 /* ---------- panel ---------- */
 function renderStats(){
-  $('#sBeams').textContent=model.beams.length;$('#sJoints').textContent=model.nodes.length;$('#sFaces').textContent=model.faces.length;
+  $('#sBeams').textContent=model.beams.length;$('#sJoints').textContent=model.nodes.length;$('#sFaces').textContent=model.faces.filter(f=>!f.open).length+(model.faces.some(f=>f.open)?' + '+model.faces.filter(f=>f.open).length:'');
   const np=model.potentials.length;$('#possRow').hidden=!np;$('#possTxt').textContent=t('possible',{n:np});
   const fl=$('#faceList');
-  fl.innerHTML=model.faces.length?model.faces.map(f=>`<li><button type="button" data-key="${f.key}" class="${sel&&sel.type==='face'&&sel.key===f.key?'on':''}"><span class="letter">${f.letter}</span>${t('logsWord')} ${f.beams.join(', ')}<span class="meta">${(n=>n?t('nJeux',{n})+' · ':'')(state.ficelles.filter(j=>j.face===f.key).length)}${f.area.toFixed(2)} m²</span></button></li>`).join('')
+  fl.innerHTML=model.faces.length?model.faces.map(f=>`<li><button type="button" data-key="${f.key}" class="${sel&&sel.type==='face'&&sel.key===f.key?'on':''}"><span class="letter${f.open?' open':''}">${f.letter}</span>${t('logsWord')} ${f.beams.join(', ')}${f.open?` <span class="opentag">${t('openFace')}</span>`:''}<span class="meta">${(n=>n?t('nJeux',{n})+' · ':'')(state.ficelles.filter(j=>j.face===f.key).length)}${f.area.toFixed(2)} m²</span></button></li>`).join('')
     :`<li class="note">${t('noFaces')}</li>`;
-  fl.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(sel&&sel.type==='face'&&sel.key===b.dataset.key)return;sel={type:'face',key:b.dataset.key};if(mode==='draw')setMode('select');else rebuild(false)});
+  fl.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(sel&&sel.type==='face'&&sel.key===b.dataset.key)return;sel={type:'face',key:b.dataset.key};if(!jeuxMode)setMode('jeux',true);else rebuild(false)});
   renderStock();
   $('#bUndo').disabled=!history.length;$('#bRedo').disabled=!future.length;
 }
@@ -1899,7 +1990,7 @@ function renderCard(){
     const jeux=state.ficelles.filter(j=>j.face===f.key),act=activeJeu();
     const summary=j=>{const S=jeuStrings(j);return S?t('nStrings',{n:S.strings.length})+' · '+t('mCord',{m:S.cord.toFixed(1)}):t('needs2')};
     const bname=id=>{const l=lineById(id);return l&&l.inv?l.inv:t('logN',{id})};
-    card.innerHTML=`<h2>${t('selectedFace')}</h2><h3>${t('faceN',{l:f.letter})} · ${t('jeuBorders',{k:f.sides.length}).replace(/<\/?b>/g,'')}</h3>
+    card.innerHTML=`<h2>${t('selectedFace')}</h2><h3>${t('faceN',{l:f.letter})} · ${t('jeuBorders',{k:f.sides.length}).replace(/<\/?b>/g,'')}${f.open?' · '+t('openFace'):''}</h3>${f.open?`<p class="note">${t('openNote')}</p>`:''}
       <dl class="kv"><dt>${t('area')}</dt><dd>${f.area.toFixed(2)} m²</dd><dt>${t('outOfFlat')}</dt><dd>${cm(f.warp)}</dd></dl>
       <span class="note">${t('jeuxOnFace')}</span>
       <ul class="list" id="jeuList">${jeux.map((j,k)=>`<li><button type="button" data-jeu="${j.id}" class="${act&&act.id===j.id?'on':''}"><span class="letter">${k+1}</span>${j.sides.map(bname).join(' + ')}<span class="meta">${summary(j)}</span></button></li>`).join('')}</ul>
@@ -1928,7 +2019,7 @@ function renderCard(){
       if(q('jeuDel'))q('jeuDel').onclick=()=>deleteJeu();
     }
   }else{
-    card.innerHTML=`<h2>${t('selection')}</h2>${state.workflow==='draw'?`<span class="note">${t('newLogsDiam')}</span>${dChips(drawD)}`:''}<p class="note">${t(mode==='draw'?'selDrawNote':'selNote')}</p>`;
+    card.innerHTML=`<h2>${t('selection')}</h2>${state.workflow==='draw'?`<span class="note">${t('newLogsDiam')}</span>${dChips(drawD)}`:''}<p class="note">${t(mode==='draw'?'selDrawNote':jeuxMode?'jeuxNote':'selNote')}</p>`;
     card.querySelectorAll('.dchips button').forEach(x=>x.onclick=()=>{drawD=+x.dataset.d;renderCard()});
   }
 }
