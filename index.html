@@ -266,6 +266,25 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .bar.closed{justify-self:start}
 .bar.closed .barbody{display:none}
 .bar.closed .brand{margin-right:0}
+.bar{gap:8px 14px}
+.brand h1,.brand span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.barbody{gap:6px 14px;margin-left:0}
+.barend{display:flex;align-items:center;gap:8px;margin-left:auto}
+.chk{font-size:12.5px;white-space:nowrap}
+@media (max-width:760px){.barbody{order:3;width:100%;gap:4px 10px;flex-wrap:nowrap;overflow-x:auto}.chk{gap:4px;font-size:12px}.chk input{margin:0}.bar.closed .barbody{display:none}
+  .snew{font-size:12px;letter-spacing:.03em;padding:9px 6px}.snew .snl{white-space:normal}}
+/* closed side panels shrink to their label */
+.scenes.closed,.side.closed{align-self:start}
+.scenes.closed .scenetab,.side.closed .sidetab{height:auto;padding:12px 0 14px}
+/* the main controls, always at the bottom middle */
+.dock{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:8px;padding:6px;border-radius:99px;
+  background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),var(--glass-shadow)}
+.dock .dseg{border-radius:99px;border:0;background:transparent}
+.dock .dseg button{padding:10px 18px;font-size:16px;border-radius:99px}
+.dbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--glass-sep);background:var(--glass-2);color:var(--fg);display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
+.dbtn svg{width:20px;height:20px;fill:currentColor}
+.dbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.dbtn:disabled{opacity:.35;cursor:default}
 .sec{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px;min-width:0}
 .sec:last-child{border-bottom:0}
 .sec h2{font:600 13px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
@@ -332,7 +351,8 @@ details[open] summary{margin-bottom:8px}
   .btn.primary,.dchips button.on,.seg button.on{background:var(--accent)}
   .btn.danger.armed{background:var(--warn)}
   table th,table td{border-bottom-color:var(--glass-sep)}
-  .hint{bottom:14px}
+  .hint{bottom:76px}
+  .jeubar{bottom:76px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -441,22 +461,16 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 20 · tap to close</span></div>
-    <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
-    <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 21 · dock</span></div>
     <div class="barbody" id="barBody">
-    <button class="wfchip" id="wfChip" type="button" title="Start a new design">Free drawing</button>
-    <div class="seg" role="group" aria-label="Mode">
-      <button id="mDraw" class="on" type="button">Draw</button>
-      <button id="mSelect" type="button">Select</button>
-    </div>
-    <div class="tools">
-      <div class="ur"><button class="btn" id="bUndo" type="button" title="Undo (Ctrl+Z)">Undo</button><button class="btn" id="bRedo" type="button" title="Redo (Ctrl+Shift+Z)">Redo</button></div>
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
       <label class="chk"><input type="checkbox" id="cBase"> Base drawing</label>
       <label class="chk"><input type="checkbox" id="cLabels" checked> Labels</label>
     </div>
+    <div class="barend">
+      <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
+      <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
     </div>
   </header>
 
@@ -505,6 +519,14 @@ details[open] summary{margin-bottom:8px}
       <div class="sharebar" id="shareBar" role="region" aria-label="Shared scene" hidden>
         <div class="sbt"><b id="sbName"></b><span id="sbFrom"></span></div>
         <div class="sbb"><button type="button" class="btn primary" id="sbSave">Save a copy</button><button type="button" class="btn" id="sbClose">Close</button></div>
+      </div>
+      <div class="dock" id="dock">
+        <button class="dbtn" id="bUndo" type="button" title="Undo (Ctrl+Z)" aria-label="Undo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 3 10.5 9 16v-3.6h6a4 4 0 0 1 0 8h-3V23h3a6.5 6.5 0 0 0 0-13H9z"/></svg></button>
+        <div class="seg dseg" role="group" aria-label="Mode">
+          <button id="mDraw" class="on" type="button">Draw</button>
+          <button id="mSelect" type="button">Knots</button>
+        </div>
+        <button class="dbtn" id="bRedo" type="button" title="Redo (Ctrl+Shift+Z)" aria-label="Redo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5 6 5.5-6 5.5v-3.6H9a4 4 0 0 0 0 8h3V23H9a6.5 6.5 0 0 1 0-13h6z"/></svg></button>
       </div>
       <div class="hint" id="hint"></div>
     </div>
@@ -613,8 +635,8 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 20 · tap to close','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
-'s.gridSnap':'Grid snap','s.showGrid':'Show grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
+'s.brandTag':'proto 21 · dock','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Knots','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
 's.moveAllT':'Move the whole log from its centre','s.moveAll':'Move the whole log','s.flipBoth':'Flip both ends front / back',
@@ -684,8 +706,8 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos scènes sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 20 · tap to close','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
-'s.gridSnap':'Aimant grille','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
+'s.brandTag':'proto 21 · dock','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Nouer','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
 's.moveAllT':'Déplacer toute la perche depuis son centre','s.moveAll':'Déplacer toute la perche','s.flipBoth':'Passer les deux bouts devant / derrière',
@@ -714,8 +736,8 @@ const STATIC=[
  ['#acctTitle','text','s.myId'],['#acctClose','text','s.close'],['#acctClose','aria','s.close'],['#acctOut .lead','text','s.acctLead'],['#tabIn','text','signIn'],['#tabNew','text','createId'],
  ['label[for=aUser]','text','s.nickname'],['#aUser','ph','s.nickPh'],['label[for=aPin]','text','s.pinLabel'],['label[for=aPin2]','text','s.repeatPin'],['#acctForm p.note','text','s.nickNote'],
  ['#aNameLbl','text','s.signedAs'],['#aSyncNow','text','s.syncNow'],['#aOutBtn','text','s.signOut'],['#acctIn > p.note:last-child','text','s.acctInNote'],
- ['.brand span','text','s.brandTag'],['#wfChip','title','s.newDesign'],['.bar .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],
- ['#bUndo','text','s.undo'],['#bUndo','title','s.undoT'],['#bRedo','text','s.redo'],['#bRedo','title','s.redoT'],
+ ['.brand span','text','s.brandTag'],['#dock .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],
+ ['#bUndo','aria','s.undo'],['#bUndo','title','s.undoT'],['#bRedo','aria','s.redo'],['#bRedo','title','s.redoT'],
  ['#cSnap','tail','s.gridSnap'],['#cGrid','tail','s.showGrid'],['#cBase','tail','s.baseDrawing'],['#cLabels','tail','s.labels'],
  ['#sceneTab .stl','text','s.scenes'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
  ['#fixPop','aria','fixGround'],['#fixPop > b','text','s.fixThis'],['[data-fix=dig] .ft','text','s.digIn'],['[data-fix=dig] .fd','text','s.digInD'],
@@ -2071,7 +2093,6 @@ function previewList(){
 }
 function applyWorkflow(){
   const inv=state.workflow==='inventory';
-  $('#wfChip').textContent=t(inv?'wfInv':'wfDraw');
   /* the list is the main tool when building with your beams; the cut list sits lower when drawing */
   const st=$('#stockSec'),side=st.parentNode;
   side.insertBefore(st,$('#selCard').nextSibling); /* selected log first, then the list of logs */
@@ -2096,7 +2117,6 @@ $('#chContinue').onclick=()=>{$('#start').hidden=true;applyWorkflow();rebuild(fa
 const openDemo=()=>{$('#start').hidden=true;let d=scenes.find(x=>x.name===t('exTypes'));
   if(!d){storeCurrent();d=wrapScene({id:newId(),name:t('exTypes'),view:'demo',state:exState(EX_TYPES)});scenes.push(d);openScene(d);return}
   switchScene(d.id)};
-$('#wfChip').onclick=()=>openStart('choose');
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#start').hidden&&state.lines.length){$('#start').hidden=true}},true);
 
 /* ---------- scenes panel ---------- */
@@ -2252,7 +2272,7 @@ function deleteScene(id){
   if(!scenes.length)scenes.push(wrapScene({id:newId(),name:t('sceneWord')+' 1',state:emptyState(),updated:Date.now()}));
   openScene(scenes[Math.min(i,scenes.length-1)]);
 }
-$('#sceneNew').onclick=()=>{newScene();$('#start').hidden=true};
+$('#sceneNew').onclick=()=>{if(narrow())setScenesOpen(false);openStart('choose')}; /* a new scene starts with the choice: my beams or free drawing */
 function setScenesOpen(open){
   $('#scenes').classList.toggle('closed',!open);$('#sceneTab').setAttribute('aria-expanded',open);
   $('#sceneTab .arr').textContent=open?'‹':'›';try{localStorage.setItem('atelier-scenes-open',open?'1':'0')}catch(_){}
@@ -2441,8 +2461,8 @@ function resize(){
     const L=Math.max(0,$('#scenes').getBoundingClientRect().right-r.left),Rt=Math.max(0,r.right-$('.side').getBoundingClientRect().left),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
     camera.setViewOffset(W,H,-(L-Rt)/2,-T/2,W,H);
     hint.style.left=(L+14)+'px';hint.style.right=(Rt+14)+'px';hint.style.visibility=(W-L-Rt<240)?'hidden':'';
-    const sb=$('#shareBar');sb.style.top=(T+10)+'px';sb.style.left=((L+W-Rt)/2)+'px';sb.style.maxWidth=Math.max(240,W-L-Rt-24)+'px';
-  }else{camera.clearViewOffset();hint.style.left='';hint.style.right='';const sb=$('#shareBar');sb.style.top=sb.style.left=sb.style.maxWidth=''}
+    const dk=$('#dock');dk.style.left=(narrow()?W/2:(L+W-Rt)/2)+'px';const sb=$('#shareBar');sb.style.top=(T+10)+'px';sb.style.left=((L+W-Rt)/2)+'px';sb.style.maxWidth=Math.max(240,W-L-Rt-24)+'px';
+  }else{camera.clearViewOffset();hint.style.left='';hint.style.right='';const sb=$('#shareBar');sb.style.top=sb.style.left=sb.style.maxWidth='';$('#dock').style.left=''}
   camera.updateProjectionMatrix();
 }
 {const ro=new ResizeObserver(resize);ro.observe(view);ro.observe($('#scenes'));ro.observe($('.side'));ro.observe($('.bar'))}resize();
