@@ -230,6 +230,16 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .jeubar{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px;max-width:calc(100% - 24px);box-sizing:border-box;
   padding:10px 14px;border-radius:16px;background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),var(--glass-shadow);color:var(--fg)}
 .jeubar .jt{font:600 14px var(--f-body)}
+.sharebar{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 14px;max-width:calc(100% - 24px);box-sizing:border-box;
+  padding:10px 14px;border-radius:16px;background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),var(--glass-shadow);color:var(--fg)}
+.sharebar .sbt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sharebar .sbt b{font:600 15px var(--f-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px}
+.sharebar .sbt span{font:500 12px var(--f-body);color:var(--muted)}
+.sharebar .sbb{display:flex;gap:8px}
+.scard .stag{display:inline-block;margin-top:2px;padding:1px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font:600 11px var(--f-body)}
+.scard.temp{border-style:dashed}
+.linkbox{display:flex;gap:8px}.linkbox input{flex:1;min-width:0;font:500 13px var(--f-mono);padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.awhy{margin:0;padding:10px 12px;border-radius:10px;background:var(--accent-soft);color:var(--fg);font:500 14px/1.4 var(--f-body)}
 .jeubar .jt b{color:#3d8bff}
 .stepper{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
 .stepper button{width:32px;height:32px;border-radius:8px;border:1px solid var(--glass-sep);background:var(--glass-2);color:var(--fg);font:600 18px/1 var(--f-body);cursor:pointer}
@@ -371,6 +381,7 @@ details[open] summary{margin-bottom:8px}
 <div class="start" id="acct" role="dialog" aria-modal="true" aria-labelledby="acctTitle" hidden>
   <div class="startbox acctbox">
     <div class="acctop"><h1 id="acctTitle">My ID</h1><button class="btn" id="acctClose" type="button" aria-label="Close">Close</button></div>
+    <p class="awhy" id="aWhy" hidden></p>
     <div id="acctOut">
       <p class="lead">Save your scenes online and find them on your phone, tablet or computer. No email: just a nickname and a PIN.</p>
       <div class="seg acctabs" role="tablist"><button type="button" id="tabIn" class="on" role="tab">Sign in</button><button type="button" id="tabNew" role="tab">Create my ID</button></div>
@@ -405,11 +416,30 @@ details[open] summary{margin-bottom:8px}
     <p class="note" id="ios4">The app gets its own icon and works without internet. It keeps its own copy of your scenes, so sign in with your ID to find them there.</p>
   </div>
 </div>
+<div class="start" id="shareDlg" role="dialog" aria-modal="true" aria-labelledby="shTitle" hidden>
+  <div class="startbox acctbox">
+    <div class="acctop"><h1 id="shTitle"></h1><button class="btn" id="shClose" type="button">Close</button></div>
+    <p class="lead" style="margin:0"><b id="shName"></b></p>
+    <p class="note" id="shStatus"></p>
+    <div id="shReady" hidden>
+      <div class="linkbox"><input id="shLink" type="text" readonly aria-label="Link"><button class="btn primary" id="shCopy" type="button">Copy link</button></div>
+      <div class="row" style="margin-top:10px"><button class="btn primary" id="shSend" type="button" hidden>Send…</button></div>
+      <p class="note" id="shNote"></p>
+    </div>
+  </div>
+</div>
+<div class="start" id="msgDlg" role="alertdialog" aria-modal="true" aria-labelledby="msgTitle" hidden>
+  <div class="startbox acctbox">
+    <h1 id="msgTitle"></h1>
+    <p class="lead" id="msgText"></p>
+    <div class="row" id="msgBtns"></div>
+  </div>
+</div>
 <div class="dragghost" id="dragGhost" hidden></div>
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 18 · app</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 19 · share</span></div>
     <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
     <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
     <div class="barbody" id="barBody">
@@ -469,6 +499,10 @@ details[open] summary{margin-bottom:8px}
         <div class="stepper"><button type="button" id="jbMinus" aria-label="Fewer points">−</button><b id="jbN">12</b><button type="button" id="jbPlus" aria-label="More points">+</button><span>points</span></div>
         <div class="jbbtns"><button type="button" class="btn danger" id="jbDel" hidden>Delete</button><button type="button" class="btn" id="jbCancel">Cancel</button><button type="button" class="btn primary" id="jbOk">Create</button></div>
       </div>
+      <div class="sharebar" id="shareBar" role="region" aria-label="Shared scene" hidden>
+        <div class="sbt"><b id="sbName"></b><span id="sbFrom"></span></div>
+        <div class="sbb"><button type="button" class="btn primary" id="sbSave">Save a copy</button><button type="button" class="btn" id="sbClose">Close</button></div>
+      </div>
       <div class="hint" id="hint"></div>
     </div>
 
@@ -496,6 +530,7 @@ details[open] summary{margin-bottom:8px}
           <button class="btn" id="bCopy" type="button">Copy design JSON</button>
           <button class="btn danger" id="bClear" type="button">Clear all</button>
           <button class="btn" id="bInstall" type="button" hidden>Install the app</button>
+          <button class="btn" id="bShare" type="button">Share this scene</button>
         </div>
         <details>
           <summary>Import a design</summary>
@@ -575,7 +610,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 18 · app','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'proto 19 · share','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Grid snap','s.showGrid':'Show grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -583,7 +618,15 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.fewer':'Fewer points','s.more':'More points','s.points':'points','s.delete':'Delete','s.details':'Details','s.logs':'logs','s.connectAll':'Connect all',
 's.facesH':'Faces for jeux de ficelles','s.session':'Session','s.autosaves':'Autosaves in this browser','s.importH':'Import a design','s.pastePh':'Paste design JSON here',
 's.loadPasted':'Load pasted design','s.openJson':'Open .json file','s.langT':'Langue : français',
-installApp:'Install the app on this device',installShort:'Install the app','s.ios1':'Open this page in Safari.','s.ios2a':'Tap the Share button','s.ios2b':'at the bottom of the screen.','s.ios3':'Scroll down and tap “Add to Home Screen”, then “Add”.','s.ios4':'The app gets its own icon and works without internet. It keeps its own copy of your scenes, so sign in with your ID to find them there.'
+installApp:'Install the app on this device',installShort:'Install the app','s.ios1':'Open this page in Safari.','s.ios2a':'Tap the Share button','s.ios2b':'at the bottom of the screen.','s.ios3':'Scroll down and tap “Add to Home Screen”, then “Add”.','s.ios4':'The app gets its own icon and works without internet. It keeps its own copy of your scenes, so sign in with your ID to find them there.',
+share:'Share',shareScene:'Share this scene',shareH:'Share a scene',shareMaking:'Making the link…',shareCopy:'Copy link',shareCopied:'Copied',shareSend:'Send…',
+shareNote:'Anyone with this link can open this scene until {d}. It is a copy of the scene as it is now: later changes are not included.',
+shareText:'My scene “{name}” on Atelier des Mâts',shareNeedsId:'Sign in or create your ID to share a scene.',keepNeedsId:'Sign in or create your ID to keep this scene with your scenes.',
+shareTooMany:'Too many links made in the last hour. Try again later.',shareFailed:'Could not make the link ({e}).',shareTempFirst:'Save a copy of this scene before sharing it.',
+sharedBy:'Shared by {from} · not saved',sharedTag:'Shared · not saved',saveCopy:'Save a copy',closeShared:'Close',closeSharedT:'Close without saving',
+openingShared:'Opening the shared scene…',sharedH:'Shared scene',shareNotFound:'This link does not work. Check that it was copied whole.',
+shareExpired:'This link has expired. Links last 14 days: ask for a new one.',shareOffline:'Cannot reach the server to open this link. Check your connection.',
+ok:'OK',retry:'Try again',keptCopy:'Saved in your scenes.'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
@@ -637,7 +680,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos scènes sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 18 · app','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'proto 19 · share','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant grille','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -645,7 +688,15 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.fewer':'Moins de points','s.more':'Plus de points','s.points':'points','s.delete':'Supprimer','s.details':'Détails','s.logs':'perches','s.connectAll':'Tout relier',
 's.facesH':'Faces pour jeux de ficelles','s.session':'Session','s.autosaves':'Sauvegarde automatique dans ce navigateur','s.importH':'Importer un projet','s.pastePh':'Collez le JSON du projet ici',
 's.loadPasted':'Charger le projet collé','s.openJson':'Ouvrir un fichier .json','s.langT':'Language: English',
-installApp:'Installer l’appli sur cet appareil',installShort:'Installer l’appli','s.ios1':'Ouvrez cette page dans Safari.','s.ios2a':'Touchez le bouton Partager','s.ios2b':'en bas de l’écran.','s.ios3':'Descendez et touchez « Sur l’écran d’accueil », puis « Ajouter ».','s.ios4':'L’appli a sa propre icône et marche sans internet. Elle garde sa propre copie de vos scènes : connectez-vous avec votre identifiant pour les y retrouver.'
+installApp:'Installer l’appli sur cet appareil',installShort:'Installer l’appli','s.ios1':'Ouvrez cette page dans Safari.','s.ios2a':'Touchez le bouton Partager','s.ios2b':'en bas de l’écran.','s.ios3':'Descendez et touchez « Sur l’écran d’accueil », puis « Ajouter ».','s.ios4':'L’appli a sa propre icône et marche sans internet. Elle garde sa propre copie de vos scènes : connectez-vous avec votre identifiant pour les y retrouver.',
+share:'Partager',shareScene:'Partager cette scène',shareH:'Partager une scène',shareMaking:'Création du lien…',shareCopy:'Copier le lien',shareCopied:'Copié',shareSend:'Envoyer…',
+shareNote:'Toute personne qui a ce lien peut ouvrir cette scène jusqu’au {d}. C’est une copie de la scène telle qu’elle est maintenant : les changements suivants n’y sont pas.',
+shareText:'Ma scène « {name} » sur Atelier des Mâts',shareNeedsId:'Connectez-vous ou créez votre identifiant pour partager une scène.',keepNeedsId:'Connectez-vous ou créez votre identifiant pour garder cette scène avec les vôtres.',
+shareTooMany:'Trop de liens créés dans la dernière heure. Réessayez plus tard.',shareFailed:'Impossible de créer le lien ({e}).',shareTempFirst:'Enregistrez une copie de cette scène avant de la partager.',
+sharedBy:'Partagée par {from} · pas enregistrée',sharedTag:'Partagée · pas enregistrée',saveCopy:'Enregistrer une copie',closeShared:'Fermer',closeSharedT:'Fermer sans enregistrer',
+openingShared:'Ouverture de la scène partagée…',sharedH:'Scène partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
+shareExpired:'Ce lien a expiré. Les liens durent 14 jours : demandez-en un nouveau.',shareOffline:'Impossible de joindre le serveur pour ouvrir ce lien. Vérifiez votre connexion.',
+ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos scènes.'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -670,7 +721,8 @@ const STATIC=[
  ['#sideTab .stl','text','s.details'],['#sBeams + span','text','s.logs'],['#bConnectAll','text','s.connectAll'],['#faceList','prevh2','s.facesH'],['#savedMsg','prevh2','s.session'],
  ['#savedMsg','text','s.autosaves'],['#bCopy','text','copyJson'],['#bClear','text','clearAll'],['details > summary','text','s.importH'],['#tImport','ph','s.pastePh'],
  ['#bImport','text','s.loadPasted'],['label[for=fImport]','text','s.openJson'],
- ['#iosTitle','text','installShort'],['#iosClose','text','s.close'],['#ios1','text','s.ios1'],['#ios2a','text','s.ios2a'],['#ios2b','text','s.ios2b'],['#ios3','text','s.ios3'],['#ios4','text','s.ios4']
+ ['#iosTitle','text','installShort'],['#iosClose','text','s.close'],['#ios1','text','s.ios1'],['#ios2a','text','s.ios2a'],['#ios2b','text','s.ios2b'],['#ios3','text','s.ios3'],['#ios4','text','s.ios4'],
+ ['#sbSave','text','saveCopy'],['#sbClose','text','closeShared'],['#sbClose','title','closeSharedT'],['#shClose','text','s.close'],['#shCopy','text','shareCopy'],['#shSend','text','shareSend'],['#bShare','text','shareScene'],['#shareBar','aria','sharedH']
 ];
 function applyStatic(){
   document.documentElement.lang=lang;
@@ -767,7 +819,7 @@ function hasSave(){try{return !!localStorage.getItem(STORE)}catch(e){return fals
 function previousSave(){try{for(const k of OLD_STORES){const s=localStorage.getItem(k);if(s){const d=JSON.parse(s);if(valid(d)&&d.lines.length)return d}}}catch(e){}return null}
 function load(){try{const s=localStorage.getItem(STORE);const d=s?JSON.parse(s):previousSave();return d&&valid(d)?normalize(d):null}catch(e){return null}}
 function valid(d){return d&&Array.isArray(d.lines)&&d.lines.every(l=>Array.isArray(l.a)&&Array.isArray(l.b)&&l.a.length>=2&&l.b.length>=2)}
-function libPayload(){return {scenes:scenes.map(x=>({id:x.id,name:x.name,view:x.view,state:x.state,updated:x.updated||0})),deleted:libDeleted,order:scenes.map(x=>x.id),orderAt:libOrderAt}}
+function libPayload(){return {scenes:scenes.filter(x=>!x.temp).map(x=>({id:x.id,name:x.name,view:x.view,state:x.state,updated:x.updated||0})),deleted:libDeleted,order:scenes.filter(x=>!x.temp).map(x=>x.id),orderAt:libOrderAt}}
 const hm=d=>d.toLocaleTimeString(lang, {hour:'2-digit',minute:'2-digit'});
 function save(){try{localStorage.setItem(LIB,JSON.stringify({active,...libPayload()}));if(typeof scheduleSync==='function')scheduleSync();$('#savedMsg').textContent=t('savedAt',{t:hm(new Date())})}catch(e){$('#savedMsg').textContent=t('saveBlocked')}}
 function pushHistory(){history.push(JSON.stringify(state));if(history.length>80)history.shift();future=[]}
@@ -2058,17 +2110,29 @@ function scheduleThumb(){clearTimeout(thumbTimer);thumbTimer=setTimeout(()=>{if(
 const ICON_REN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.2 3.8a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L9 20H4v-5zM13.8 7.1 6 14.9V18h3.1l7.8-7.8z"/></svg>';
 const ICON_OK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.2 5.3 12l-1.8 1.8 6 6 11-11-1.8-1.8z"/></svg>';
 const ICON_DUP='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h12a2 2 0 0 1 2 2v12h-2V4H8zM4 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2v12h12V8z"/></svg>';
+const ICON_SHARE='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2a3 3 0 1 1-2.2 5.1L8.9 11a3 3 0 0 1 0 2l6.9 3.9A3 3 0 1 1 15 19l-6.9-3.9a3 3 0 1 1 0-4.2L15 7a3 3 0 0 1 3-5z"/></svg>';
 const ICON_DEL='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 12H7zm3 2v8h2v-8zm4 0v8h2v-8z"/></svg>';
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
 function renderScenes(){
   const card=sc=>{const n=sc.state.lines.length,nb=(sc.state.brelages||[]).length;
+    if(sc.temp)return `<div class="scard temp ${sc.id===active?'on':''}" data-id="${sc.id}" role="button" tabindex="0" aria-pressed="${sc.id===active}">
+      <div class="thumb">${sc.thumb?`<img src="${sc.thumb}" alt="" draggable="false">`:`<span class="noimg">${t('emptyThumb')}</span>`}
+        <div class="sacts"><button type="button" data-act="del" title="${t('closeSharedT')}">${ICON_DEL}</button></div></div>
+      <b class="sname">${esc(sc.name)}</b><span class="stag">${t('sharedTag')}</span></div>`;
     return `<div class="scard ${sc.id===active?'on':''}" data-id="${sc.id}" role="button" tabindex="0" aria-pressed="${sc.id===active}" title="${t('sceneCardTitle')}">
       <div class="thumb">${sc.thumb?`<img src="${sc.thumb}" alt="" draggable="false">`:`<span class="noimg">${t('emptyThumb')}</span>`}
-        <div class="sacts"><button type="button" data-act="ren" title="${t('renameScene')}">${ICON_REN}</button><button type="button" data-act="dup" title="${t('dupScene')}">${ICON_DUP}</button><button type="button" data-act="del" title="${t('delScene')}">${ICON_DEL}</button></div></div>
+        <div class="sacts"><button type="button" data-act="ren" title="${t('renameScene')}">${ICON_REN}</button><button type="button" data-act="dup" title="${t('dupScene')}">${ICON_DUP}</button><button type="button" data-act="share" title="${t('shareScene')}">${ICON_SHARE}</button><button type="button" data-act="del" title="${t('delScene')}">${ICON_DEL}</button></div></div>
       <b class="sname">${esc(sc.name)}</b><span>${t('nLogs',{n})} · ${t('nBrelages',{n:nb})}</span></div>`};
   const list=$('#sceneList');list.innerHTML=scenes.map(card).join('');
   list.querySelectorAll('.scard').forEach(c=>{
-    const id=c.dataset.id;
+    const id=c.dataset.id,sc0=sceneById(id);
+    if(sc0&&sc0.temp){
+      c.addEventListener('click',e=>{if(!e.target.closest('.sacts'))switchScene(id)});
+      c.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target===c){e.preventDefault();switchScene(id)}});
+      c.querySelector('[data-act=del]').onclick=e=>{e.stopPropagation();closeShared(id)};
+      return;
+    }
+    c.querySelector('[data-act=share]').onclick=e=>{e.stopPropagation();shareScene(id)};
     c.addEventListener('click',e=>{if(e.target.closest('.sacts')||c.dataset.justDragged)return;if(e.target.closest('.sname[contenteditable=true]'))return;switchScene(id)});
     c.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target===c){e.preventDefault();switchScene(id)}});
     c.querySelector('[data-act=dup]').onclick=e=>{e.stopPropagation();duplicateScene(id)};
@@ -2144,7 +2208,7 @@ function startSceneDrag(e,card){
 function nextSceneName(base=t('sceneWord')){let n=1;for(const x of scenes){const m=x.name.match(new RegExp('^'+base+' (\\d+)$'));if(m)n=Math.max(n,+m[1]+1)}return base+' '+n}
 function storeCurrent(){const c=cur();if(!c)return;c.history=history;c.future=future;c.cam={p:camera.position.toArray(),t:controls.target.toArray()};c.thumb=makeThumb()||c.thumb}
 function openScene(n){
-  active=n.id;state=n.state;history=n.history;future=n.future;sel=null;pending=null;
+  active=n.id;updateShareBar(n);state=n.state;history=n.history;future=n.future;sel=null;pending=null;
   applyWorkflow();
   if(n.cam){camera.position.fromArray(n.cam.p);controls.target.fromArray(n.cam.t);controls.update()}else setView(n.view||'front');
   setMode(state.workflow==='inventory'||state.lines.length?'select':'draw');
@@ -2168,7 +2232,7 @@ function duplicateScene(id){
 }
 function deleteScene(id){
   const i=scenes.findIndex(x=>x.id===id);if(i<0)return;
-  libDeleted[id]=Date.now();
+  if(!scenes[i].temp)libDeleted[id]=Date.now();
   if(id!==active){scenes.splice(i,1);renderScenes();save();return}
   closeFixPop();scenes.splice(i,1);
   if(!scenes.length)scenes.push(wrapScene({id:newId(),name:t('sceneWord')+' 1',state:emptyState(),updated:Date.now()}));
@@ -2234,6 +2298,7 @@ function applyLib(lib){
     return wrapScene({id:String(x.id),name:String(x.name||'Scene'),view:x.view,state:normalize(clone(x.state)),updated:+x.updated||0,cam:o?o.cam:null});
   });
   if(!next.length)return false;
+  next.unshift(...scenes.filter(x=>x.temp)); /* an open shared scene stays until it is saved or closed */
   scenes.length=0;scenes.push(...next);libDeleted=lib.deleted||{};libOrderAt=+lib.orderAt||0;
   const n=sceneById(active);
   if(!n)openScene(scenes[0]);
@@ -2288,9 +2353,10 @@ function renderAcct(){
   if(signed){$('#aName').textContent=acct.username;$('#aSync').textContent=acct.lastSync?t('lastSynced',{d:new Date(acct.lastSync).toLocaleString(lang, {dateStyle:'short',timeStyle:'short'})}):t('notSynced')}
   if(!cloudReady())$('#aErr').textContent=signed?'':t('noServer');
 }
-function openAcct(){$('#aErr').textContent='';renderAcct();$('#acct').hidden=false;setTimeout(()=>{const f=acct?$('#aSyncNow'):$('#aUser');try{f.focus({preventScroll:true})}catch(_){}},30)}
-function closeAcct(){$('#acct').hidden=true}
-$('#acctBtn').onclick=openAcct;$('#acctClose').onclick=closeAcct;
+function openAcct(why){$('#aErr').textContent='';acctWhy=typeof why==='string'?why:'';$('#aWhy').textContent=acctWhy;$('#aWhy').hidden=!acctWhy;if(acctWhy&&!acct)acctMode='new';renderAcct();$('#acct').hidden=false;setTimeout(()=>{const f=acct?$('#aSyncNow'):$('#aUser');try{f.focus({preventScroll:true})}catch(_){}},30)}
+let acctWhy='',afterSignIn=null;
+function closeAcct(){$('#acct').hidden=true;afterSignIn=null;acctWhy=''}
+$('#acctBtn').onclick=()=>openAcct();$('#acctClose').onclick=closeAcct;
 $('#acct').addEventListener('pointerdown',e=>{if(e.target===$('#acct'))closeAcct()});
 $('#acct').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();closeAcct()}});
 $('#tabIn').onclick=()=>{acctMode='in';$('#aErr').textContent='';renderAcct()};
@@ -2314,6 +2380,7 @@ $('#acctForm').addEventListener('submit',async e=>{
     acct={username:r.username,token:r.token,rev:null,lastSync:0};lsSet(ACCT,acct);
     $('#aPin').value='';$('#aPin2').value='';
     renderAcct();setSyncState('busy',t('syncing'));await syncNow();renderAcct();
+    if(afterSignIn){const f=afterSignIn;afterSignIn=null;closeAcct();f()}
   }catch(ex){err.textContent=ERR[ex.message]||t('somethingWrong',{e:ex.message})}
   finally{go.disabled=false;renderAcct()}
 });
@@ -2336,7 +2403,8 @@ function resize(){
     const L=Math.max(0,$('#scenes').getBoundingClientRect().right-r.left),Rt=Math.max(0,r.right-$('.side').getBoundingClientRect().left),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
     camera.setViewOffset(W,H,-(L-Rt)/2,-T/2,W,H);
     hint.style.left=(L+14)+'px';hint.style.right=(Rt+14)+'px';hint.style.visibility=(W-L-Rt<240)?'hidden':'';
-  }else{camera.clearViewOffset();hint.style.left='';hint.style.right=''}
+    const sb=$('#shareBar');sb.style.top=(T+10)+'px';sb.style.left=((L+W-Rt)/2)+'px';sb.style.maxWidth=Math.max(240,W-L-Rt-24)+'px';
+  }else{camera.clearViewOffset();hint.style.left='';hint.style.right='';const sb=$('#shareBar');sb.style.top=sb.style.left=sb.style.maxWidth=''}
   camera.updateProjectionMatrix();
 }
 {const ro=new ResizeObserver(resize);ro.observe(view);ro.observe($('#scenes'));ro.observe($('.side'));ro.observe($('.bar'))}resize();
@@ -2359,10 +2427,84 @@ applyWorkflow();setMode(state.workflow==='inventory'||state.lines.length?'select
   setScenesOpen(get('atelier-scenes-open',phone?'0':'1')==='1');setSideOpen(get('atelier-side-open',phone?'0':'1')==='1');
   if(phone&&!$('#scenes').classList.contains('closed')&&!$('#side').classList.contains('closed'))setSideOpen(false);setBarOpen(get('atelier-bar-open','1')==='1')}
 const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}
-  applyStatic();updateInstall();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
+  applyStatic();updateInstall();updateShareBar();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
   setSideOpen(!$('#side').classList.contains('closed'));setBarOpen(!$('#bar').classList.contains('closed'));
   if(!$('#start').hidden&&!$('#stepChoose').hidden)openStart('choose');else if(!$('#start').hidden)previewList()};
 document.querySelectorAll('.langbtn').forEach(b=>b.onclick=switchLang);
+/* ---------- share a scene by link ---------- */
+/* the link holds a frozen copy on the server (am_shares) for 14 days; it opens for anyone, keeping it needs an ID */
+const fmtDate=d=>new Date(d).toLocaleDateString(lang,{day:'numeric',month:'long'});
+async function shareScene(id){
+  const sc=sceneById(id||active);if(!sc)return;
+  if(sc.temp){showMsg(t('sharedH'),t('shareTempFirst'));return}
+  if(!acct){afterSignIn=()=>shareScene(sc.id);openAcct(t('shareNeedsId'));return}
+  if(sc.id===active)storeCurrent();
+  $('#shTitle').textContent=t('shareH');$('#shName').textContent=sc.name;$('#shStatus').textContent=t('shareMaking');$('#shStatus').hidden=false;$('#shReady').hidden=true;$('#shareDlg').hidden=false;
+  try{
+    const r=await rpc('am_share_create',{p_token:acct.token,p_name:sc.name,p_data:sc.state});
+    if(r.error==='signed_out'){$('#shareDlg').hidden=true;signOutLocal(t('sessionEnded'));return}
+    if(r.error){$('#shStatus').textContent=r.error==='too_many'?t('shareTooMany'):t('shareFailed',{e:r.error});return}
+    const url=location.origin+location.pathname+'#s='+r.code;
+    $('#shLink').value=url;$('#shNote').textContent=t('shareNote',{d:fmtDate(r.expires_at)});
+    $('#shStatus').hidden=true;$('#shReady').hidden=false;$('#shCopy').textContent=t('shareCopy');
+    const data={title:'Atelier des Mâts',text:t('shareText',{name:sc.name}),url};
+    const send=$('#shSend');send.hidden=!(navigator.share&&(!navigator.canShare||navigator.canShare(data)));
+    send.onclick=()=>{navigator.share(data).catch(()=>{})};
+    $('#shCopy').onclick=()=>{const done=()=>{$('#shCopy').textContent=t('shareCopied');setTimeout(()=>{$('#shCopy').textContent=t('shareCopy')},1500)};
+      const fb=()=>{const i=$('#shLink');i.focus();i.select();try{document.execCommand('copy');done()}catch(_){}};
+      try{navigator.clipboard.writeText(url).then(done,fb)}catch(_){fb()}};
+  }catch(e){$('#shStatus').textContent=e.message==='offline'?t('err.offline'):t('shareFailed',{e:e.message})}
+}
+$('#bShare').onclick=()=>shareScene(active);
+$('#shClose').onclick=()=>{$('#shareDlg').hidden=true};
+$('#shareDlg').addEventListener('pointerdown',e=>{if(e.target===$('#shareDlg'))$('#shareDlg').hidden=true});
+$('#shareDlg').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();$('#shareDlg').hidden=true}});
+/* a small message window: title, text, buttons [[label, action, primary]] */
+function showMsg(title,text,btns){
+  $('#msgTitle').textContent=title;$('#msgText').textContent=text;const box=$('#msgBtns');box.innerHTML='';
+  for(const [label,fn,primary] of (btns||[[t('ok'),null,true]])){const b=document.createElement('button');b.type='button';b.className='btn'+(primary?' primary':'');b.textContent=label;
+    b.onclick=()=>{$('#msgDlg').hidden=true;if(fn)fn()};box.appendChild(b)}
+  $('#msgDlg').hidden=!title&&!text;box.hidden=btns&&!btns.length;
+}
+const shareCode=()=>{const m=location.hash.match(/[#&]s=([a-z0-9]{6,16})/i);return m?m[1].toLowerCase():null};
+const clearShareHash=()=>{if(shareCode())try{history.replaceState(null,'',location.pathname+location.search)}catch(_){location.hash=''}};
+function updateShareBar(n){
+  n=n||cur();const on=!!(n&&n.temp);$('#shareBar').hidden=!on;$('#bShare').hidden=on;
+  if(on){$('#sbName').textContent=n.name;$('#sbFrom').textContent=t('sharedBy',{from:n.share.from||'?'})}
+}
+async function openShareLink(){
+  const code=shareCode();if(!code)return false;
+  const there=scenes.find(x=>x.temp&&x.share&&x.share.code===code);
+  if(there){$('#start').hidden=true;switchScene(there.id);return true}
+  $('#start').hidden=true;showMsg(t('sharedH'),t('openingShared'),[]);
+  const fail=msg=>showMsg(t('sharedH'),msg,[[t('ok'),()=>{clearShareHash();if(!state.lines.length)openStart('choose')},true]]);
+  try{
+    const r=await rpc('am_share_get',{p_code:code});
+    if(r.error){fail(r.error==='expired'?t('shareExpired'):t('shareNotFound'));return true}
+    if(!valid(r.data)){fail(t('shareNotFound'));return true}
+    $('#msgDlg').hidden=true;
+    const n=wrapScene({id:newId(),name:String(r.name||t('sceneWord')).slice(0,40),view:'34',state:normalize(clone(r.data)),updated:0});
+    n.temp=true;n.share={code,from:r.from,expires:r.expires_at};
+    closeFixPop();storeCurrent();scenes.unshift(n);openScene(n);
+  }catch(e){showMsg(t('sharedH'),t('shareOffline'),[[t('retry'),openShareLink,true],[t('closeShared'),()=>{clearShareHash();if(!state.lines.length)openStart('choose')}]])}
+  return true;
+}
+function keepShared(id){
+  const n=sceneById(id);if(!n||!n.temp)return;
+  if(!acct){afterSignIn=()=>keepShared(id);openAcct(t('keepNeedsId'));return}
+  n.temp=false;delete n.share;n.updated=Date.now();libOrderAt=Date.now();
+  if(id===active)cur().state=state;
+  clearShareHash();updateShareBar();renderScenes();save();syncNow();
+  showMsg(t('sharedH'),t('keptCopy'));
+}
+function closeShared(id){
+  const n=sceneById(id);if(!n||!n.temp)return;
+  clearShareHash();deleteScene(id);updateShareBar();
+}
+$('#sbSave').onclick=()=>keepShared(active);
+$('#sbClose').onclick=()=>closeShared(active);
+window.addEventListener('hashchange',()=>{if(shareCode())openShareLink()});
+
 /* ---------- install as an app (only on the real site, where the manifest is) ---------- */
 const PWA=!!document.querySelector('link[rel=manifest]');
 const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
@@ -2382,7 +2524,7 @@ $('#iosHelp').addEventListener('pointerdown',e=>{if(e.target===$('#iosHelp'))$('
 $('#iosHelp').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();$('#iosHelp').hidden=true}});
 if(PWA&&'serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 updateInstall();
-renderScenes();openStart('choose');loop();
+renderScenes();loop();if(!shareCode())openStart('choose');else openShareLink();
 setSyncState(acct?'busy':'idle',acct?t('syncing'):'');if(acct)syncNow();
 })();
 </script>
