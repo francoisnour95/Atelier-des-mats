@@ -141,6 +141,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-vi
 .midbtn{position:relative;width:34px;height:34px;border-radius:50%;background:rgba(14,17,15,.9);border:1.5px solid #e2a84c;color:#e2a84c;display:grid;place-items:center;cursor:pointer;z-index:3;padding:0}
 .midbtn:hover:not(:disabled){background:#e2a84c;color:#1a1408}
 .midbtn:disabled{opacity:.4;cursor:default}
+.midbtn.del{border-color:#e5484d;color:#ff8a8d}.midbtn.del:hover{background:#e5484d;color:#fff}
+.midbtn.del.armed{background:#e5484d;color:#fff;width:auto;border-radius:17px;padding:0 12px;font:700 12px var(--f-body);white-space:nowrap}
 .start{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(3px);padding:16px;overflow:auto}
 .start[hidden]{display:none}
 .startbox{width:min(760px,100%);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;box-sizing:border-box;box-shadow:0 20px 60px rgba(0,0,0,.18)}
@@ -439,7 +441,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 19 · share</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 20 · tap to close</span></div>
     <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
     <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
     <div class="barbody" id="barBody">
@@ -490,6 +492,7 @@ details[open] summary{margin-bottom:8px}
       </div>
       <div class="midtools" id="midTools" hidden>
         <button class="midbtn" id="etMidMove" type="button" title="Move the whole log from its centre" aria-label="Move the whole log"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.5 3.5h-2.5v5h5V8l3.5 3.5-3.5 3.5v-2.5h-5v5h2.5L12 21l-3.5-3.5H11v-5H6V15l-3.5-3.5L6 8v2.5h5v-5H8.5z"/></svg></button>
+        <button class="midbtn del" id="etMidDel" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 12H7zm3 2v8h2v-8zm4 0v8h2v-8z"/></svg></button>
         <button class="midbtn" id="etMid" type="button" title="Flip both ends front / back" aria-label="Flip both ends front / back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l5 4.5-5 4.5V9H6V6h11zM7 12v3h11v3H7v3l-5-4.5z"/></svg></button>
       </div>
 
@@ -610,7 +613,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 19 · share','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'proto 20 · tap to close','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Grid snap','s.showGrid':'Show grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -626,7 +629,8 @@ shareTooMany:'Too many links made in the last hour. Try again later.',shareFaile
 sharedBy:'Shared by {from} · not saved',sharedTag:'Shared · not saved',saveCopy:'Save a copy',closeShared:'Close',closeSharedT:'Close without saving',
 openingShared:'Opening the shared scene…',sharedH:'Shared scene',shareNotFound:'This link does not work. Check that it was copied whole.',
 shareExpired:'This link has expired. Links last 14 days: ask for a new one.',shareOffline:'Cannot reach the server to open this link. Check your connection.',
-ok:'OK',retry:'Try again',keptCopy:'Saved in your scenes.'
+ok:'OK',retry:'Try again',keptCopy:'Saved in your scenes.',
+delLogT:'Delete this log',takeOutT:'Take this log out of the scene',confirmDel:'Tap again to delete'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
@@ -680,7 +684,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos scènes sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 19 · share','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'proto 20 · tap to close','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant grille','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -696,7 +700,8 @@ shareTooMany:'Trop de liens créés dans la dernière heure. Réessayez plus tar
 sharedBy:'Partagée par {from} · pas enregistrée',sharedTag:'Partagée · pas enregistrée',saveCopy:'Enregistrer une copie',closeShared:'Fermer',closeSharedT:'Fermer sans enregistrer',
 openingShared:'Ouverture de la scène partagée…',sharedH:'Scène partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
 shareExpired:'Ce lien a expiré. Les liens durent 14 jours : demandez-en un nouveau.',shareOffline:'Impossible de joindre le serveur pour ouvrir ce lien. Vérifiez votre connexion.',
-ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos scènes.'
+ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos scènes.',
+delLogT:'Supprimer cette perche',takeOutT:'Retirer cette perche de la scène',confirmDel:'Touchez encore pour supprimer'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -1579,6 +1584,7 @@ function endPointer(e){
   const moved=Math.hypot(e.clientX-down.x,e.clientY-down.y),wasMulti=multi,btn=down.button;
   if(pointers.size===0){multi=false;down=null}
   if(e.type==='pointercancel'||wasMulti||moved>6||btn!==0)return;
+  if(closePanelsFromView())return;
   if(mode==='draw')placePoint(e);else pickAt(e);
 }
 el.addEventListener('pointerup',endPointer);el.addEventListener('pointercancel',endPointer);
@@ -1781,7 +1787,8 @@ function renderCard(){
     const b=model.beams.find(x=>x.l.id===sel.id);if(!b){sel=null;return renderCard()}
     card.innerHTML=`<h2>${t('selectedLog')}</h2><h3>${b.pick.inv?b.pick.label:t('logN',{id:b.l.id})}</h3>
       <dl class="kv" id="facts">${beamFacts(b)}</dl>
-      ${b.pick.inv?'':`<span class="note">${t('diameter')}</span>${dChips(b.l.d||R.defaultD)}`}`;
+      ${b.pick.inv?'':`<span class="note">${t('diameter')}</span>${dChips(b.l.d||R.defaultD)}`}${removeBtn()}`;
+    {const rb=card.querySelector('#bDel');if(rb)rb.onclick=()=>del(sel.id)}
     card.querySelectorAll('.dchips button').forEach(x=>x.onclick=()=>{const v=+x.dataset.d,l=lineById(sel.id);drawD=v;if(Math.abs((l.d||R.defaultD)-v)<1e-4)return;pushHistory();l.d=v;rebuild()});
   }else if(sel&&sel.type==='node'){
     const n=model.nodes.find(n=>n.js.some(J=>J.key===sel.key));
@@ -1921,7 +1928,7 @@ function updateBeamTools(){
     fb.querySelector('span').textContent=info.ctl.length?t(side?'front':'back'):'–';
     fb.title=info.ctl.length?t(side?'flipFront':'flipBack',{ids:[...new Set(info.ctl.map(J=>model.beams[J.i===b.i?J.j:J.i].l.id))].join(', ')}):t('flipNone');
   }
-  $('#midTools').hidden=!b;if(b){$('#etMid').disabled=!b.earlier;$('#etMidMove').classList.toggle('on',sel.tool==='moveAll')}
+  $('#midTools').hidden=!b;if(b&&delArmed&&delArmed.id!==b.l.id)disarmDel();if(b){const db=$('#etMidDel'),tt=t(b.pick.inv?'takeOutT':'delLogT');db.title=tt;db.setAttribute('aria-label',tt);$('#etMid').disabled=!b.earlier;$('#etMidMove').classList.toggle('on',sel.tool==='moveAll')}
 }
 for(const end of ['a','b'])$('#et'+end.toUpperCase()).addEventListener('click',e=>{
   const btn=e.target.closest('button');if(!btn||btn.disabled||!sel||sel.type!=='beam')return;
@@ -1930,6 +1937,15 @@ for(const end of ['a','b'])$('#et'+end.toUpperCase()).addEventListener('click',e
   else{sel={type:'beam',id:sel.id,end,tool:act};rebuild(false)}
 });
 $('#etMid').onclick=()=>{if(sel&&sel.type==='beam')flip(sel.id)};
+/* delete from the log itself: first tap arms the button, a second tap within 3 s deletes (Undo brings it back) */
+var delArmed=null;const DEL_ICON=$('#etMidDel').innerHTML;
+function disarmDel(){if(!delArmed)return;clearTimeout(delArmed.timer);delArmed=null;const d=$('#etMidDel');d.classList.remove('armed');d.innerHTML=DEL_ICON}
+$('#etMidDel').onclick=()=>{
+  if(!sel||sel.type!=='beam')return;
+  if(delArmed&&delArmed.id===sel.id){const id=sel.id;disarmDel();del(id);return}
+  disarmDel();const d=$('#etMidDel');d.classList.add('armed');d.textContent=t('confirmDel');
+  delArmed={id:sel.id,timer:setTimeout(disarmDel,3000)};
+};
 $('#etMidMove').onclick=()=>{if(sel&&sel.type==='beam'){sel={type:'beam',id:sel.id,end:'mid',tool:'moveAll'};rebuild(false)}};
 function placeBeamTools(){
   const b=(!$('#midTools').hidden&&sel&&sel.type==='beam')?model.beams.find(x=>x.l.id===sel.id):null;if(!b)return;
@@ -1979,8 +1995,7 @@ function renderStock(){
       <ul class="stock" id="stockList">${state.inventory.map(q=>{const u=used.get(q.id);return `<li data-id="${q.id}" class="${u?'used':''} ${u&&sel&&sel.type==='beam'&&sel.id===u?'on':''}" title="${t(u?'inSceneTitle':'dragTitle')}"><span class="grip"></span><span class="nm">${q.id}</span><span class="dim">${q.len.toFixed(2)} m · Ø${cm(q.d)}</span><span class="st">${t(u?'inScene':'drag')}</span></li>`}).join('')}</ul>
       <p class="note">${t(state.inventory.length?'dragNote':'emptyList')}</p>
       ${(()=>{const ex=model.beams.filter(b=>!b.pick.inv);return ex.length?`<span class="note">${t('extraBeams',{n:ex.length})}</span><ul class="stock">${ex.map(b=>`<li class="extra ${sel&&sel.type==='beam'&&sel.id===b.l.id?'on':''}" data-extra="${b.l.id}"><span class="grip" style="visibility:hidden"></span><span class="nm">+${b.l.id}</span><span class="dim">${b.pick.len.toFixed(2)} m · Ø${cm(b.r*2)}</span><span class="st">${t('drawn')}</span></li>`).join('')}</ul>`:''})()}
-      <div class="row"><button class="btn ${mode==='draw'?'primary':''}" id="bDrawExtra" type="button">${t(mode==='draw'?'drawing':'drawExtra')}</button></div>
-      ${removeBtn()}`;
+      <div class="row"><button class="btn ${mode==='draw'?'primary':''}" id="bDrawExtra" type="button">${t(mode==='draw'?'drawing':'drawExtra')}</button></div>`;
     $('#bEditList').onclick=()=>openStart('list',true);
     $('#bDrawExtra').onclick=()=>setMode(mode==='draw'?'select':'draw');
     sec.querySelectorAll('[data-extra]').forEach(li=>li.onclick=()=>{sel={type:'beam',id:+li.dataset.extra};if(mode!=='select')setMode('select');else rebuild(false)});
@@ -1994,9 +2009,8 @@ function renderStock(){
     const logs=model.beams.map(b=>({id:b.l.id,len:b.pick.len,d:b.r*2})).sort((a,b)=>b.len-a.len);
     const tot=logs.reduce((s,q)=>s+q.len,0);
     sec.innerHTML=`<h2>${t('logsToCut',{n:logs.length})}</h2>
-      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div><p class="note">${t('totalWood',{m:tot.toFixed(1)})}</p>`:`<p class="note">${t('drawNoteCut')}</p>`}${removeBtn()}`;
+      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div><p class="note">${t('totalWood',{m:tot.toFixed(1)})}</p>`:`<p class="note">${t('drawNoteCut')}</p>`}`;
   }
-  const rb=$('#bDel');if(rb)rb.onclick=()=>del(sel.id);
 }
 
 /* drag a log from the list into the scene */
@@ -2258,6 +2272,30 @@ function setBarOpen(open){
 const narrow=()=>innerWidth<760;
 $('#sideTab').onclick=()=>{const o=$('#side').classList.contains('closed');if(o&&narrow())setScenesOpen(false);setSideOpen(o)};
 $('#barTab').onclick=()=>setBarOpen($('#bar').classList.contains('closed'));
+/* a tap on an empty part of an open panel closes it (buttons, cards, lists and fields keep working) */
+const PANEL_ACTIVE='button,a,input,textarea,select,label,summary,details,[role=button],[contenteditable=true],.scard,.stock li,.dchips';
+function tapToClose(panel,isOpen,close){
+  let d=null;
+  panel.addEventListener('pointerdown',e=>{d=(e.isPrimary&&isOpen()&&!e.target.closest(PANEL_ACTIVE))?{x:e.clientX,y:e.clientY,t:Date.now()}:null});
+  panel.addEventListener('pointerup',e=>{
+    if(!d)return;const ok=Math.hypot(e.clientX-d.x,e.clientY-d.y)<8&&Date.now()-d.t<600&&!e.target.closest(PANEL_ACTIVE);d=null;
+    let picked='';try{picked=String(getSelection())}catch(_){}
+    if(ok&&!picked)close();
+  });
+  panel.addEventListener('pointercancel',()=>{d=null}); /* scrolling the panel is not a tap */
+}
+tapToClose($('#scenes'),()=>!$('#scenes').classList.contains('closed'),()=>setScenesOpen(false));
+tapToClose($('#side'),()=>!$('#side').classList.contains('closed'),()=>setSideOpen(false));
+tapToClose($('#bar'),()=>!$('#bar').classList.contains('closed'),()=>setBarOpen(false));
+/* on a phone the panels cover the 3D space: a tap there closes them first */
+function closePanelsFromView(){
+  if(!narrow())return false;
+  let swallow=false;
+  if(!$('#scenes').classList.contains('closed')){setScenesOpen(false);swallow=true}
+  if(!$('#side').classList.contains('closed')){setSideOpen(false);swallow=true}
+  if(!$('#bar').classList.contains('closed'))setBarOpen(false); /* the toolbar folds away without eating the tap */
+  return swallow;
+}
 
 /* ---------- my ID: nickname + PIN, scenes synced through Supabase ---------- */
 /* The Supabase project every copy of the app talks to (Supabase → Project settings → API). */
