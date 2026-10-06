@@ -3,6 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Design scout pole structures: logs, brelages and jeux de ficelles in 3D.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#e9ece5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Atelier des Mâts">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Atelier des Mâts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +47,10 @@ body{background:var(--bg);color:var(--fg);font:14px/1.45 var(--f-body)}
 .brand{display:flex;align-items:baseline;gap:10px}
 .brand h1{font:700 22px/1 var(--f-display);letter-spacing:.02em;margin:0;text-transform:uppercase}
 .brand span{font:500 12px var(--f-mono);color:var(--muted)}
+.brand .logo{width:30px;height:30px;align-self:center;flex:none;margin-right:-2px}
+.logoh{display:flex;align-items:center;gap:12px}.logoh .logo{width:54px;height:54px;flex:none}
+.howto{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;font:400 15px/1.45 var(--f-body)}
+.howto .ios-share{display:inline-block;width:18px;height:18px;vertical-align:-3px;color:var(--accent)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
 .seg button{border:0;background:transparent;color:var(--fg);font:600 15px var(--f-display);letter-spacing:.05em;text-transform:uppercase;padding:7px 14px;cursor:pointer}
 .seg button[hidden]{display:none}
@@ -186,6 +201,8 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .acctbtn:hover{border-color:var(--accent)}
 .langbtn{display:inline-flex;border:1px solid var(--glass-sep);background:var(--glass-2);border-radius:99px;padding:2px;cursor:pointer;font:700 11px var(--f-body);color:var(--muted)}
 .startbox{position:relative}.startlang{position:absolute;top:14px;right:14px}#start h1{padding-right:84px}
+@media (max-width:600px){#start .logoh{font-size:30px;gap:10px}#start .logoh .logo{width:42px;height:42px}}
+#ios4{margin:6px 0 0}
 .langbtn:hover{border-color:var(--accent)}
 .langbtn span{padding:4px 8px;border-radius:99px;letter-spacing:.04em}
 .langbtn span.on{background:var(--accent);color:#fff}
@@ -315,7 +332,7 @@ details[open] summary{margin-bottom:8px}
   <div class="startbox">
     <button class="langbtn startlang" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
     <div class="startstep" id="stepChoose">
-      <h1>Atelier des Mâts</h1>
+      <h1 class="logoh"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><span>Atelier des Mâts</span></h1>
       <div class="choices">
         <button class="choice" id="chInv" type="button">
           <span class="cicon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 12h32M8 24h32M8 36h22" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/></svg></span>
@@ -327,6 +344,7 @@ details[open] summary{margin-bottom:8px}
         </button>
       </div>
       <button class="contlink" id="chContinue" type="button" hidden></button>
+      <button class="contlink" id="chInstall" type="button" hidden>Install the app on this device</button>
     </div>
     <div class="startstep" id="stepList" hidden>
       <h1>Your beams</h1>
@@ -376,11 +394,22 @@ details[open] summary{margin-bottom:8px}
     </div>
   </div>
 </div>
+<div class="start" id="iosHelp" role="dialog" aria-modal="true" aria-labelledby="iosTitle" hidden>
+  <div class="startbox acctbox">
+    <div class="acctop"><h1 id="iosTitle">Install the app</h1><button class="btn" id="iosClose" type="button">Close</button></div>
+    <ol class="howto">
+      <li><span id="ios1">Open this page in Safari.</span></li>
+      <li><span id="ios2a">Tap the Share button</span> <svg class="ios-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 7.8 6.7l1.4 1.4L11 6.3V15h2V6.3l1.8 1.8 1.4-1.4z" fill="currentColor"/><path d="M6 10h3v2H7v8h10v-8h-2v-2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1z" fill="currentColor"/></svg> <span id="ios2b">at the bottom of the screen.</span></li>
+      <li><span id="ios3">Scroll down and tap “Add to Home Screen”, then “Add”.</span></li>
+    </ol>
+    <p class="note" id="ios4">The app gets its own icon and works without internet. It keeps its own copy of your scenes, so sign in with your ID to find them there.</p>
+  </div>
+</div>
 <div class="dragghost" id="dragGhost" hidden></div>
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><h1>Atelier des Mâts</h1><span>proto 17 · FR/EN</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 18 · app</span></div>
     <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
     <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
     <div class="barbody" id="barBody">
@@ -466,6 +495,7 @@ details[open] summary{margin-bottom:8px}
         <div class="row">
           <button class="btn" id="bCopy" type="button">Copy design JSON</button>
           <button class="btn danger" id="bClear" type="button">Clear all</button>
+          <button class="btn" id="bInstall" type="button" hidden>Install the app</button>
         </div>
         <details>
           <summary>Import a design</summary>
@@ -545,14 +575,15 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 17 · FR/EN','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'proto 18 · app','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Grid snap','s.showGrid':'Show grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
 's.moveAllT':'Move the whole log from its centre','s.moveAll':'Move the whole log','s.flipBoth':'Flip both ends front / back',
 's.fewer':'Fewer points','s.more':'More points','s.points':'points','s.delete':'Delete','s.details':'Details','s.logs':'logs','s.connectAll':'Connect all',
 's.facesH':'Faces for jeux de ficelles','s.session':'Session','s.autosaves':'Autosaves in this browser','s.importH':'Import a design','s.pastePh':'Paste design JSON here',
-'s.loadPasted':'Load pasted design','s.openJson':'Open .json file','s.langT':'Langue : français'
+'s.loadPasted':'Load pasted design','s.openJson':'Open .json file','s.langT':'Langue : français',
+installApp:'Install the app on this device',installShort:'Install the app','s.ios1':'Open this page in Safari.','s.ios2a':'Tap the Share button','s.ios2b':'at the bottom of the screen.','s.ios3':'Scroll down and tap “Add to Home Screen”, then “Add”.','s.ios4':'The app gets its own icon and works without internet. It keeps its own copy of your scenes, so sign in with your ID to find them there.'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
@@ -606,14 +637,15 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos scènes sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 17 · FR/EN','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'proto 18 · app','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant grille','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
 's.moveAllT':'Déplacer toute la perche depuis son centre','s.moveAll':'Déplacer toute la perche','s.flipBoth':'Passer les deux bouts devant / derrière',
 's.fewer':'Moins de points','s.more':'Plus de points','s.points':'points','s.delete':'Supprimer','s.details':'Détails','s.logs':'perches','s.connectAll':'Tout relier',
 's.facesH':'Faces pour jeux de ficelles','s.session':'Session','s.autosaves':'Sauvegarde automatique dans ce navigateur','s.importH':'Importer un projet','s.pastePh':'Collez le JSON du projet ici',
-'s.loadPasted':'Charger le projet collé','s.openJson':'Ouvrir un fichier .json','s.langT':'Language: English'
+'s.loadPasted':'Charger le projet collé','s.openJson':'Ouvrir un fichier .json','s.langT':'Language: English',
+installApp:'Installer l’appli sur cet appareil',installShort:'Installer l’appli','s.ios1':'Ouvrez cette page dans Safari.','s.ios2a':'Touchez le bouton Partager','s.ios2b':'en bas de l’écran.','s.ios3':'Descendez et touchez « Sur l’écran d’accueil », puis « Ajouter ».','s.ios4':'L’appli a sa propre icône et marche sans internet. Elle garde sa propre copie de vos scènes : connectez-vous avec votre identifiant pour les y retrouver.'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -637,7 +669,8 @@ const STATIC=[
  ['#jbMinus','aria','s.fewer'],['#jbPlus','aria','s.more'],['#jbN + button + span','text','s.points'],['#jbDel','text','s.delete'],['#jbCancel','text','cancel'],
  ['#sideTab .stl','text','s.details'],['#sBeams + span','text','s.logs'],['#bConnectAll','text','s.connectAll'],['#faceList','prevh2','s.facesH'],['#savedMsg','prevh2','s.session'],
  ['#savedMsg','text','s.autosaves'],['#bCopy','text','copyJson'],['#bClear','text','clearAll'],['details > summary','text','s.importH'],['#tImport','ph','s.pastePh'],
- ['#bImport','text','s.loadPasted'],['label[for=fImport]','text','s.openJson']
+ ['#bImport','text','s.loadPasted'],['label[for=fImport]','text','s.openJson'],
+ ['#iosTitle','text','installShort'],['#iosClose','text','s.close'],['#ios1','text','s.ios1'],['#ios2a','text','s.ios2a'],['#ios2b','text','s.ios2b'],['#ios3','text','s.ios3'],['#ios4','text','s.ios4']
 ];
 function applyStatic(){
   document.documentElement.lang=lang;
@@ -2326,10 +2359,29 @@ applyWorkflow();setMode(state.workflow==='inventory'||state.lines.length?'select
   setScenesOpen(get('atelier-scenes-open',phone?'0':'1')==='1');setSideOpen(get('atelier-side-open',phone?'0':'1')==='1');
   if(phone&&!$('#scenes').classList.contains('closed')&&!$('#side').classList.contains('closed'))setSideOpen(false);setBarOpen(get('atelier-bar-open','1')==='1')}
 const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}
-  applyStatic();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
+  applyStatic();updateInstall();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
   setSideOpen(!$('#side').classList.contains('closed'));setBarOpen(!$('#bar').classList.contains('closed'));
   if(!$('#start').hidden&&!$('#stepChoose').hidden)openStart('choose');else if(!$('#start').hidden)previewList()};
 document.querySelectorAll('.langbtn').forEach(b=>b.onclick=switchLang);
+/* ---------- install as an app (only on the real site, where the manifest is) ---------- */
+const PWA=!!document.querySelector('link[rel=manifest]');
+const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let installEvt=null;
+function updateInstall(){const can=PWA&&!standalone()&&(!!installEvt||isIOS);
+  $('#chInstall').hidden=!can;$('#chInstall').textContent=t('installApp');$('#bInstall').hidden=!can;$('#bInstall').textContent=t('installShort')}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;updateInstall()});
+window.addEventListener('appinstalled',()=>{installEvt=null;updateInstall()});
+async function doInstall(){
+  if(installEvt){const e=installEvt;installEvt=null;try{e.prompt();await e.userChoice}catch(_){}updateInstall()}
+  else if(isIOS){$('#iosHelp').hidden=false;try{$('#iosClose').focus({preventScroll:true})}catch(_){}}
+}
+$('#chInstall').onclick=doInstall;$('#bInstall').onclick=doInstall;
+$('#iosClose').onclick=()=>{$('#iosHelp').hidden=true};
+$('#iosHelp').addEventListener('pointerdown',e=>{if(e.target===$('#iosHelp'))$('#iosHelp').hidden=true});
+$('#iosHelp').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();$('#iosHelp').hidden=true}});
+if(PWA&&'serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+updateInstall();
 renderScenes();openStart('choose');loop();
 setSyncState(acct?'busy':'idle',acct?t('syncing'):'');if(acct)syncNow();
 })();
