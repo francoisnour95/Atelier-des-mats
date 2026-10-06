@@ -626,7 +626,7 @@ knotRule:'The knot follows the angle: parallel (under 15°) is a brelage long, 9
 possibleBrelage:'Possible brelage',axesDist:'Distance between axes',possibleNote:'These beams are close but not tied, so they ignore each other. Add a brelage to lash them: they will then rest on each other and move together.',addBrelage:'Add brelage',removeBrelage:'Remove brelage',
 mCord:'{m} m of cord',needs2:'needs 2 borders',selectedFace:'Selected face',faceN:'Face {l}',area:'Area',outOfFlat:'Out of flat',jeuxOnFace:'Jeux de ficelles on this face',newJeu:'New jeu',jeuN:'Jeu {n}',
 bordersHelp:'Borders, in order around the face. Pick at least 2, here or on the logs in the view.',density:'Density',ptsPerBorder:'{n} points per border',createJeu:'Create jeu',cancel:'Cancel',deleteJeu:'Delete jeu',addJeu:'Add a jeu de ficelles',
-selection:'Selection',newLogsDiam:'Diameter of new logs',selDrawNote:'Draw a log with two clicks. Start on an existing log end to join logs at different depths.',selNote:'Click a log to see its tools. Hover where two logs meet: green adds a brelage, red removes one.',
+selection:'Selection',newLogsDiam:'Diameter of new logs',selDrawNote:'Draw a log with two clicks. Start on an existing log end to join logs at different depths.',selNote:'Tap a log: green spheres show where it can be tied, red ones its brelages. Tap a sphere to add or remove a brelage.',
 dugIn:'Dug in',metalL:'Metal L',fixGround:'Fix to the ground',fixSetTitle:'Fixed to the ground. Click to change.',fixNearTitle:'This end is near the ground. Click to fix it.',
 rotOppFixed:'The other end is fixed to the ground: rotate around that end instead',rotTitle:'Rotate the beam around this end',front:'Front',back:'Back',
 flipFront:'This end sits in front of beam {ids}. Click to flip.',flipBack:'This end sits behind beam {ids}. Click to flip.',flipNone:'Nothing to flip: this end is not tied to an earlier beam',
@@ -698,7 +698,7 @@ knotRule:'Le nœud suit l’angle : parallèles (moins de 15°) c’est un brela
 possibleBrelage:'Brelage possible',axesDist:'Distance entre les axes',possibleNote:'Ces perches sont proches mais pas liées, donc elles s’ignorent. Ajoutez un brelage pour les attacher : elles reposeront l’une sur l’autre et bougeront ensemble.',addBrelage:'Ajouter un brelage',removeBrelage:'Enlever le brelage',
 mCord:'{m} m de ficelle',needs2:'il faut 2 bords',selectedFace:'Face choisie',faceN:'Face {l}',area:'Surface',outOfFlat:'Écart au plan',jeuxOnFace:'Jeux de ficelles sur cette face',newJeu:'Nouveau jeu',jeuN:'Jeu {n}',
 bordersHelp:'Les bords, dans l’ordre autour de la face. Choisissez-en au moins 2, ici ou sur les perches dans la vue.',density:'Densité',ptsPerBorder:'{n} points par bord',createJeu:'Créer le jeu',cancel:'Annuler',deleteJeu:'Supprimer le jeu',addJeu:'Ajouter un jeu de ficelles',
-selection:'Sélection',newLogsDiam:'Diamètre des nouvelles perches',selDrawNote:'Dessinez une perche en deux clics. Partez du bout d’une perche pour relier des perches à des profondeurs différentes.',selNote:'Cliquez une perche pour voir ses outils. Survolez l’endroit où deux perches se croisent : vert ajoute un brelage, rouge l’enlève.',
+selection:'Sélection',newLogsDiam:'Diamètre des nouvelles perches',selDrawNote:'Dessinez une perche en deux clics. Partez du bout d’une perche pour relier des perches à des profondeurs différentes.',selNote:'Touchez une perche : les sphères vertes montrent où la nouer, les rouges ses brelages. Touchez une sphère pour ajouter ou enlever un brelage.',
 dugIn:'Enterré',metalL:'Équerres',fixGround:'Fixer au sol',fixSetTitle:'Fixé au sol. Cliquez pour changer.',fixNearTitle:'Ce bout est près du sol. Cliquez pour le fixer.',
 rotOppFixed:'L’autre bout est fixé au sol : tournez plutôt autour de ce bout-là',rotTitle:'Faire tourner la perche autour de ce bout',front:'Devant',back:'Derrière',
 flipFront:'Ce bout passe devant la perche {ids}. Cliquez pour inverser.',flipBack:'Ce bout passe derrière la perche {ids}. Cliquez pour inverser.',flipNone:'Rien à inverser : ce bout n’est pas lié à une perche plus ancienne',
@@ -1713,6 +1713,12 @@ potMesh.renderOrder=8;potMesh.visible=false;scene.add(potMesh);
 const remMesh=new THREE.Mesh(new THREE.SphereGeometry(0.13,24,16),new THREE.MeshBasicMaterial({color:0xe5484d,transparent:true,opacity:0.25,depthTest:false,depthWrite:false}));
 remMesh.renderOrder=8;remMesh.visible=false;scene.add(remMesh);
 let hoverPot=null,hoverNode=null;
+/* with a log selected in Brelages, every place it could be tied (green) and every brelage it has (red) is shown */
+const markGroup=new THREE.Group();markGroup.renderOrder=7;scene.add(markGroup);
+const markGeo=new THREE.SphereGeometry(0.12,20,14);
+const markPot=new THREE.MeshBasicMaterial({color:0x5ee08a,transparent:true,opacity:0.6,depthTest:false,depthWrite:false});
+const markRem=new THREE.MeshBasicMaterial({color:0xe5484d,transparent:true,opacity:0.6,depthTest:false,depthWrite:false});
+var focusBeam=null;
 function screenNearest(e,items,getP,th){
   const r=el.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=null,bd=th;
   for(const it of items){const s=toScreen(V(getP(it)));if(!s.vis)continue;const d=Math.hypot(s.x-mx,s.y-my);if(d<bd){bd=d;best=it}}
@@ -1729,6 +1735,15 @@ function updatePot(){
   const nn=selNode||hoverNode;
   remMesh.visible=!!nn&&mode==='select';if(nn)remMesh.position.copy(V(nn.p));
   remMesh.material.opacity=selNode?0.4:0.22;
+  /* the log whose tie points are shown: the selected one, kept while one of its points is picked */
+  if(sel&&sel.type==='beam')focusBeam=sel.id;
+  else if(!(sel&&(sel.type==='potential'||sel.type==='node')))focusBeam=null;
+  markGroup.clear();
+  const fb=focusBeam!=null&&mode==='select'&&!jeuxMode?model.beams.find(b=>b.l.id===focusBeam):null;
+  if(fb){
+    for(const p of model.potentials)if((p.i===fb.i||p.j===fb.i)&&!(selPot&&selPot.key===p.key)){const m=new THREE.Mesh(markGeo,markPot);m.position.copy(V(p.p));m.renderOrder=7;markGroup.add(m)}
+    for(const n of model.nodes)if(n.beams.has(fb.i)&&n!==selNode){const m=new THREE.Mesh(markGeo,markRem);m.position.copy(V(n.p));m.renderOrder=7;markGroup.add(m)}
+  }
 }
 
 const pointers=new Set();let down=null,multi=false;
@@ -2282,7 +2297,7 @@ function makeThumb(){
   const p0=camera.position.clone(),vo=camera.view&&camera.view.enabled?{...camera.view}:null;camera.clearViewOffset();
   const dir=new THREE.Vector3(0.5,0.32,1).normalize(),dist=size/(2*Math.tan(camera.fov*Math.PI/360))*1.05;
   camera.position.set(c[0]+dir.x*dist,c[1]+dir.y*dist,c[2]+dir.z*dist);camera.lookAt(...c);camera.updateMatrixWorld();
-  const hide=[tc,potMesh,remMesh,gridGroup,preview,anchorDot,ghostLog,...handles.map(h=>h.mesh)],vis=hide.map(o=>o.visible);
+  const hide=[tc,potMesh,remMesh,markGroup,gridGroup,preview,anchorDot,ghostLog,...handles.map(h=>h.mesh)],vis=hide.map(o=>o.visible);
   hide.forEach(o=>o.visible=false);
   renderer.render(scene,camera);
   const W=240,H=150,t=document.createElement('canvas');t.width=W;t.height=H;
