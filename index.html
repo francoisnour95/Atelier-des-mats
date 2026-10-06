@@ -252,6 +252,29 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .scard .stag{display:inline-block;margin-top:2px;padding:1px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font:600 11px var(--f-body)}
 .scard.temp{border-style:dashed}
 .linkbox{display:flex;gap:8px}.linkbox input{flex:1;min-width:0;font:500 13px var(--f-mono);padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.gallery{position:fixed;inset:0;z-index:15;background:var(--bg);display:flex;flex-direction:column;gap:14px;overflow:auto;padding:16px max(16px,env(safe-area-inset-right)) 24px max(16px,env(safe-area-inset-left));box-sizing:border-box}
+.gallery[hidden]{display:none}
+.ghead{display:flex;align-items:center;gap:12px;position:sticky;top:-16px;background:var(--bg);padding:6px 0;z-index:1}
+.ghead h1{font:700 26px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;margin:0}
+.ghead .btn{margin-left:auto}
+.ggrid,.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.pgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+@media (max-width:760px){.ggrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gcard{display:flex;flex-direction:column;gap:4px;border:1.5px solid var(--line);background:var(--panel);color:var(--fg);border-radius:12px;padding:6px;cursor:pointer;text-align:left;font:inherit;min-width:0}
+.gcard:hover{border-color:var(--accent)}
+.gcard img,.gcard .noimg{width:100%;aspect-ratio:16/10;border-radius:8px;display:block;background:#1c211e;object-fit:cover}
+.gcard .noimg{display:grid;place-items:center;color:#8a958b;font:12px var(--f-mono)}
+.gcard b{font:600 14px var(--f-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gcard span.by{font:12px var(--f-body);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gcard.armed{border-color:var(--accent);background:var(--accent-soft)}
+.gcard:disabled{opacity:.45;cursor:default}
+.gcard .gact{font:600 12px var(--f-body);color:var(--accent)}
+.gcard .gact.warn{color:var(--warn)}
+.gfoot{display:flex;flex-direction:column;align-items:center;gap:8px}
+.pubbox{width:min(820px,100%);display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 32px);overflow:auto}
+.pubh{font:600 13px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 0}
+.sharebar .sbrep{border:0;background:none;color:var(--muted);font:500 12px var(--f-body);text-decoration:underline;cursor:pointer;padding:4px}
+.sharebar .sbrep.armed{color:var(--warn);font-weight:700}
 .awhy{margin:0;padding:10px 12px;border-radius:10px;background:var(--accent-soft);color:var(--fg);font:500 14px/1.4 var(--f-body)}
 .jeubar .jt b{color:#3d8bff}
 .stepper{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
@@ -304,6 +327,8 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .dsw.studio{background:linear-gradient(#1c211e 0 52%,#2a312c 52% 100%)}
 .dsw.camp{background:url(env/camp-thumb.jpg?v=2) center/cover,linear-gradient(#9cc0dc 0,#d9e6ee 46%,#3d5a31 47%,#7a9a52 100%)}
 @media (max-width:760px){.decor:not(.closed){width:168px}}
+.xbtn{width:100%;padding:9px 8px;white-space:normal}
+#exploreBody{gap:8px}
 .scenes.closed .scenetab,.side.closed .sidetab{height:auto;padding:12px 0 14px}
 /* the main controls, always at the bottom middle */
 .dock{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:8px;padding:6px;border-radius:99px;
@@ -376,7 +401,10 @@ details[open] summary{margin-bottom:8px}
   .leftcol>.scenes:not(.closed){flex:1 1 auto}
   .decor{background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
     border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),var(--glass-shadow);border-radius:18px}
-  .work>.side{grid-column:3;grid-row:1;pointer-events:auto;position:relative;z-index:1}
+  .rightcol{grid-column:3;grid-row:1;display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-height:0;pointer-events:none}
+  .rightcol>.side,.rightcol>.decor{pointer-events:auto;position:relative;z-index:1}
+  .rightcol>.side:not(.closed){flex:1 1 auto}
+  .rightcol>.side.closed{align-self:flex-end}
   .bar,.scenes,.side{background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
     border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),inset 0 -1px 0 rgba(255,255,255,.04),var(--glass-shadow);border-radius:18px}
   .bar{padding:8px 10px 8px 16px}
@@ -493,11 +521,27 @@ details[open] summary{margin-bottom:8px}
     <div class="row" id="msgBtns"></div>
   </div>
 </div>
+<div class="gallery" id="gallery" role="dialog" aria-modal="true" aria-labelledby="gTitle" hidden>
+  <div class="ghead"><h1 id="gTitle">Explore</h1><span class="note" id="gCount"></span><button class="btn" id="gClose" type="button">Close</button></div>
+  <div class="ggrid" id="gGrid"></div>
+  <div class="gfoot"><p class="note" id="gMsg"></p><button class="btn" id="gMore" type="button" hidden>Show more</button></div>
+</div>
+<div class="start" id="pubDlg" role="dialog" aria-modal="true" aria-labelledby="pubTitle" hidden>
+  <div class="startbox pubbox">
+    <div class="acctop"><h1 id="pubTitle">Publish</h1><button class="btn" id="pubClose" type="button">Close</button></div>
+    <p class="note" id="pubLead"></p>
+    <p class="aerr" id="pubErr" role="alert"></p>
+    <h2 class="pubh" id="pubMineH"></h2>
+    <div class="pgrid" id="pubMine"></div>
+    <h2 class="pubh" id="pubPickH"></h2>
+    <div class="pgrid" id="pubPick"></div>
+  </div>
+</div>
 <div class="dragghost" id="dragGhost" hidden></div>
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 25 · point menus</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 26 · explore</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -517,14 +561,11 @@ details[open] summary{margin-bottom:8px}
       <button class="snew" id="sceneNew" type="button"><span aria-hidden="true">+</span> <span class="snl">New installation</span></button>
       <div class="scenelist" id="sceneList"></div>
     </aside>
-    <aside class="decor closed" id="decor">
-      <button class="scenetab" id="decorTab" type="button" aria-expanded="false" aria-controls="decorBody"><span class="arr" aria-hidden="true">›</span><span class="stl">Environment</span></button>
-      <div class="decorbody" id="decorBody">
-        <div class="dopts">
-          <button type="button" class="dopt" data-env="studio"><span class="dsw studio" aria-hidden="true"></span><span class="dname">Studio</span></button>
-          <button type="button" class="dopt" data-env="camp"><span class="dsw camp" aria-hidden="true"></span><span class="dname">Campsite</span></button>
-        </div>
-        <p class="note" id="decorMsg" hidden></p>
+    <aside class="decor closed" id="explore">
+      <button class="scenetab" id="exploreTab" type="button" aria-expanded="false" aria-controls="exploreBody"><span class="arr" aria-hidden="true">›</span><span class="stl">Explore</span></button>
+      <div class="decorbody" id="exploreBody">
+        <button type="button" class="btn primary xbtn" id="xBrowse">Explore installations</button>
+        <button type="button" class="btn xbtn" id="xPublish">Publish one of mine</button>
       </div>
     </aside>
     </div>
@@ -572,7 +613,7 @@ details[open] summary{margin-bottom:8px}
       </div>
       <div class="sharebar" id="shareBar" role="region" aria-label="Shared installation" hidden>
         <div class="sbt"><b id="sbName"></b><span id="sbFrom"></span></div>
-        <div class="sbb"><button type="button" class="btn primary" id="sbSave">Save a copy</button><button type="button" class="btn" id="sbClose">Close</button></div>
+        <div class="sbb"><button type="button" class="btn primary" id="sbSave">Save a copy</button><button type="button" class="btn" id="sbClose">Close</button><button type="button" class="sbrep" id="sbReport" hidden>Report</button></div>
       </div>
       <div class="dock" id="dock">
         <button class="dbtn" id="bUndo" type="button" title="Undo (Ctrl+Z)" aria-label="Undo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 3 10.5 9 16v-3.6h6a4 4 0 0 1 0 8h-3V23h3a6.5 6.5 0 0 0 0-13H9z"/></svg></button>
@@ -586,6 +627,7 @@ details[open] summary{margin-bottom:8px}
       <div class="hint" id="hint"></div>
     </div>
 
+    <div class="rightcol">
     <aside class="side" id="side">
       <button class="sidetab" id="sideTab" type="button" aria-expanded="true" aria-controls="sideBody"><span class="stl">Details</span><span class="arr" aria-hidden="true">›</span></button>
       <div class="sidebody" id="sideBody">
@@ -614,6 +656,17 @@ details[open] summary{margin-bottom:8px}
       </section>
       </div>
     </aside>
+    <aside class="decor closed" id="decor">
+      <button class="scenetab" id="decorTab" type="button" aria-expanded="false" aria-controls="decorBody"><span class="arr" aria-hidden="true">‹</span><span class="stl">Environment</span></button>
+      <div class="decorbody" id="decorBody">
+        <div class="dopts">
+          <button type="button" class="dopt" data-env="studio"><span class="dsw studio" aria-hidden="true"></span><span class="dname">Studio</span></button>
+          <button type="button" class="dopt" data-env="camp"><span class="dsw camp" aria-hidden="true"></span><span class="dname">Campsite</span></button>
+        </div>
+        <p class="note" id="decorMsg" hidden></p>
+      </div>
+    </aside>
+    </div>
   </main>
 </div>
 
@@ -677,7 +730,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 25 · point menus','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'proto 26 · explore','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -694,7 +747,7 @@ sharedBy:'Shared by {from} · not saved',sharedTag:'Shared · not saved',saveCop
 openingShared:'Opening the shared installation…',sharedH:'Shared installation',shareNotFound:'This link does not work. Check that it was copied whole.',
 shareExpired:'This link has expired. Links last 14 days: ask for a new one.',shareOffline:'Cannot reach the server to open this link. Check your connection.',
 ok:'OK',retry:'Try again',keptCopy:'Saved in your installations.',
-delLogT:'Delete this log',pMove:'Move',pTurn:'Turn',pFlip:'Flip',pCopy:'Copy',pDelete:'Delete',pRemove:'Remove',dupT:'Make a copy of this log beside it',rotMidT:'Turn the log around its middle','hint.jeux':'Tap a face to choose it · faces with a dotted side are open · + Jeu de ficelles adds strings',jeuxNote:'Tap a face (a letter) to see its string art, or add one. Open faces have a dotted side with no wood.',openFace:'open',openNote:'Open face: the dotted side has no wood, so no strings go there. Strings join each chosen piece of wood to the next one along the chain.','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
+delLogT:'Delete this log','s.explore':'Explore',xBrowse:'Explore installations',xPublish:'Publish one of mine',galLoading:'Loading…',galOpening:'Opening…',galCount:v=>`${v.n} installation${v.n===1?'':'s'}`,galBy:'by {from}',galCopies:v=>`${v.n} cop${v.n===1?'y':'ies'}`,galEmpty:'Nothing published yet. Be the first!',galOffline:'Cannot reach the gallery. Check your connection.',galMore:'Show more',pubTitle:'Publish',pubLead:'Pick one of your installations to show it to everyone in Explore, with your nickname. You can publish up to 10. Tap once to choose, again to confirm.',pubMineH:'Published · {n}/10',pubPickH:'My installations',pubTap:'Tap again to publish',pubRemove:'Remove',pubRemoveQ:'Tap again to remove',pubHidden:'Hidden after reports',pubEmptyMine:'None published yet.',pubEmptyPick:'Draw an installation first.',pubLimit:'You already have 10 published. Remove one to publish another.',pubNeedsId:'Sign in or create your ID to publish an installation.',fromGallery:'From Explore · by {from} · not saved',report:'Report',reportQ:'Report it?',reported:'Thanks. After a few reports an installation is hidden until an adult checks it.',pMove:'Move',pTurn:'Turn',pFlip:'Flip',pCopy:'Copy',pDelete:'Delete',pRemove:'Remove',dupT:'Make a copy of this log beside it',rotMidT:'Turn the log around its middle','hint.jeux':'Tap a face to choose it · faces with a dotted side are open · + Jeu de ficelles adds strings',jeuxNote:'Tap a face (a letter) to see its string art, or add one. Open faces have a dotted side with no wood.',openFace:'open',openNote:'Open face: the dotted side has no wood, so no strings go there. Strings join each chosen piece of wood to the next one along the chain.','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
@@ -748,7 +801,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 25 · point menus','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'proto 26 · explore','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -765,7 +818,7 @@ sharedBy:'Partagée par {from} · pas enregistrée',sharedTag:'Partagée · pas 
 openingShared:'Ouverture de l’installation partagée…',sharedH:'Installation partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
 shareExpired:'Ce lien a expiré. Les liens durent 14 jours : demandez-en un nouveau.',shareOffline:'Impossible de joindre le serveur pour ouvrir ce lien. Vérifiez votre connexion.',
 ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos installations.',
-delLogT:'Supprimer cette perche',pMove:'Déplacer',pTurn:'Tourner',pFlip:'Inverser',pCopy:'Copier',pDelete:'Supprimer',pRemove:'Retirer',dupT:'Faire une copie de cette perche à côté',rotMidT:'Tourner la perche autour de son milieu','hint.jeux':'Touchez une face pour la choisir · les faces à côté pointillé sont ouvertes · + Jeu de ficelles en ajoute un',jeuxNote:'Touchez une face (une lettre) pour voir ses jeux de ficelles, ou en ajouter un. Les faces ouvertes ont un côté en pointillés sans bois.',openFace:'ouverte',openNote:'Face ouverte : le côté en pointillés n’a pas de bois, aucune ficelle n’y va. Les ficelles relient chaque morceau de bois choisi au suivant le long de la chaîne.','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
+delLogT:'Supprimer cette perche','s.explore':'Explorer',xBrowse:'Explorer les installations',xPublish:'Publier une des miennes',galLoading:'Chargement…',galOpening:'Ouverture…',galCount:v=>`${v.n} installation${v.n>1?'s':''}`,galBy:'par {from}',galCopies:v=>`${v.n} copie${v.n>1?'s':''}`,galEmpty:'Rien de publié pour l’instant. Soyez le premier !',galOffline:'Impossible de joindre la galerie. Vérifiez votre connexion.',galMore:'Voir plus',pubTitle:'Publier',pubLead:'Choisissez une de vos installations pour la montrer à tous dans Explorer, avec votre pseudo. Vous pouvez en publier 10. Touchez une fois pour choisir, encore pour confirmer.',pubMineH:'Publiées · {n}/10',pubPickH:'Mes installations',pubTap:'Touchez encore pour publier',pubRemove:'Retirer',pubRemoveQ:'Touchez encore pour retirer',pubHidden:'Masquée après signalements',pubEmptyMine:'Aucune publiée pour l’instant.',pubEmptyPick:'Dessinez d’abord une installation.',pubLimit:'Vous en avez déjà 10 publiées. Retirez-en une pour en publier une autre.',pubNeedsId:'Connectez-vous ou créez votre identifiant pour publier une installation.',fromGallery:'Depuis Explorer · par {from} · pas enregistrée',report:'Signaler',reportQ:'Signaler ?',reported:'Merci. Après quelques signalements, une installation est masquée jusqu’à ce qu’un adulte la vérifie.',pMove:'Déplacer',pTurn:'Tourner',pFlip:'Inverser',pCopy:'Copier',pDelete:'Supprimer',pRemove:'Retirer',dupT:'Faire une copie de cette perche à côté',rotMidT:'Tourner la perche autour de son milieu','hint.jeux':'Touchez une face pour la choisir · les faces à côté pointillé sont ouvertes · + Jeu de ficelles en ajoute un',jeuxNote:'Touchez une face (une lettre) pour voir ses jeux de ficelles, ou en ajouter un. Les faces ouvertes ont un côté en pointillés sans bois.',openFace:'ouverte',openNote:'Face ouverte : le côté en pointillés n’a pas de bois, aucune ficelle n’y va. Les ficelles relient chaque morceau de bois choisi au suivant le long de la chaîne.','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -781,7 +834,7 @@ const STATIC=[
  ['.brand span','text','s.brandTag'],['#dock .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],['#mJeux','text','s.jeux'],
  ['#bUndo','aria','s.undo'],['#bUndo','title','s.undoT'],['#bRedo','aria','s.redo'],['#bRedo','title','s.redoT'],
  ['#cSnap','tail','s.gridSnap'],['#cGrid','tail','s.showGrid'],['#cBase','tail','s.baseDrawing'],['#cLabels','tail','s.labels'],
- ['#sceneTab .stl','text','s.scenes'],['#decorTab .stl','text','s.decor'],['[data-env=studio] .dname','text','s.studio'],['[data-env=camp] .dname','text','s.camp'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
+ ['#sceneTab .stl','text','s.scenes'],['#decorTab .stl','text','s.decor'],['#exploreTab .stl','text','s.explore'],['#xBrowse','text','xBrowse'],['#xPublish','text','xPublish'],['#gTitle','text','s.explore'],['#gClose','text','s.close'],['#gMore','text','galMore'],['#pubClose','text','s.close'],['[data-env=studio] .dname','text','s.studio'],['[data-env=camp] .dname','text','s.camp'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
  ['#fixPop','aria','fixGround'],['#fixPop > b','text','s.fixThis'],['[data-fix=dig] .ft','text','s.digIn'],['[data-fix=dig] .fd','text','s.digInD'],
  ['[data-fix=plate] .ft','text','s.metalLB'],['[data-fix=plate] .fd','text','s.metalD'],['[data-fix=none] .ft','text','s.notFixed'],['[data-fix=none] .fd','text','s.notFixedD'],
  ['#etA [data-act=move]','title','s.moveEnd'],['#etB [data-act=move]','title','s.moveEnd'],['#etA [data-act=flip]','title','s.flipEnd'],['#etB [data-act=flip]','title','s.flipEnd'],
@@ -2500,7 +2553,7 @@ function renderDecor(){
 }
 function setDecorOpen(open){
   $('#decor').classList.toggle('closed',!open);$('#decorTab').setAttribute('aria-expanded',open);
-  $('#decorTab .arr').textContent=open?'‹':'›';try{localStorage.setItem('atelier-decor-open',open?'1':'0')}catch(_){}
+  $('#decorTab .arr').textContent=open?'›':'‹';try{localStorage.setItem('atelier-decor-open',open?'1':'0')}catch(_){}
 }
 $('#decorTab').onclick=()=>setDecorOpen($('#decor').classList.contains('closed'));
 document.querySelectorAll('#decor .dopt').forEach(b=>b.onclick=()=>setEnv(b.dataset.env));
@@ -2519,6 +2572,7 @@ function tapToClose(panel,isOpen,close){
   panel.addEventListener('pointercancel',()=>{d=null}); /* scrolling the panel is not a tap */
 }
 tapToClose($('#scenes'),()=>!$('#scenes').classList.contains('closed'),()=>setScenesOpen(false));
+tapToClose($('#explore'),()=>!$('#explore').classList.contains('closed'),()=>setExploreOpen(false));
 tapToClose($('#decor'),()=>!$('#decor').classList.contains('closed'),()=>setDecorOpen(false));
 tapToClose($('#side'),()=>!$('#side').classList.contains('closed'),()=>setSideOpen(false));
 tapToClose($('#bar'),()=>!$('#bar').classList.contains('closed'),()=>setBarOpen(false));
@@ -2529,6 +2583,7 @@ function closePanelsFromView(){
   if(!$('#scenes').classList.contains('closed')){setScenesOpen(false);swallow=true}
   if(!$('#side').classList.contains('closed')){setSideOpen(false);swallow=true}
   if(!$('#decor').classList.contains('closed')){setDecorOpen(false);swallow=true}
+  if(!$('#explore').classList.contains('closed')){setExploreOpen(false);swallow=true}
   if(!$('#bar').classList.contains('closed'))setBarOpen(false); /* the toolbar folds away without eating the tap */
   return swallow;
 }
@@ -2674,14 +2729,14 @@ function resize(){
   const hint=$('#hint');
   if(getComputedStyle(view).position==='absolute'){
     /* glass layout: aim the camera at the open space between the panels, not the middle of the window */
-    const L=Math.max(0,Math.max($('#scenes').getBoundingClientRect().right,$('#decor').getBoundingClientRect().right)-r.left),Rt=Math.max(0,r.right-$('.side').getBoundingClientRect().left),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
+    const L=Math.max(0,Math.max($('#scenes').getBoundingClientRect().right,$('#explore').getBoundingClientRect().right)-r.left),Rt=Math.max(0,r.right-Math.min($('.side').getBoundingClientRect().left,$('#decor').getBoundingClientRect().left)),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
     camera.setViewOffset(W,H,-(L-Rt)/2,-T/2,W,H);
     hint.style.left=(L+14)+'px';hint.style.right=(Rt+14)+'px';hint.style.visibility=(W-L-Rt<240)?'hidden':'';
     const dk=$('#dock');dk.style.left=(narrow()?W/2:(L+W-Rt)/2)+'px';const sb=$('#shareBar');sb.style.top=(T+10)+'px';sb.style.left=((L+W-Rt)/2)+'px';sb.style.maxWidth=Math.max(240,W-L-Rt-24)+'px';
   }else{camera.clearViewOffset();hint.style.left='';hint.style.right='';const sb=$('#shareBar');sb.style.top=sb.style.left=sb.style.maxWidth='';$('#dock').style.left=''}
   camera.updateProjectionMatrix();
 }
-{const ro=new ResizeObserver(resize);ro.observe(view);ro.observe($('#scenes'));ro.observe($('#decor'));ro.observe($('.side'));ro.observe($('.bar'))}resize();
+{const ro=new ResizeObserver(resize);ro.observe(view);ro.observe($('#scenes'));ro.observe($('#decor'));ro.observe($('#explore'));ro.observe($('.side'));ro.observe($('.bar'))}resize();
 function loop(){
   controls.update();renderer.render(scene,camera);
   for(const it of labelItems){const s=toScreen(it.v);it.el.hidden=!s.vis;it.el.style.left=s.x+'px';it.el.style.top=s.y+'px'}
@@ -2744,7 +2799,8 @@ const shareCode=()=>{const m=location.hash.match(/[#&]s=([a-z0-9]{6,16})/i);retu
 const clearShareHash=()=>{if(shareCode())try{history.replaceState(null,'',location.pathname+location.search)}catch(_){location.hash=''}};
 function updateShareBar(n){
   n=n||cur();const on=!!(n&&n.temp);$('#shareBar').hidden=!on;$('#bShare').hidden=on;
-  if(on){$('#sbName').textContent=n.name;$('#sbFrom').textContent=t('sharedBy',{from:n.share.from||'?'})}
+  const g=on&&n.share&&n.share.gallery;$('#sbReport').hidden=!g;$('#sbReport').classList.remove('armed');$('#sbReport').textContent=t('report');
+  if(on){$('#sbName').textContent=n.name;$('#sbFrom').textContent=t(g?'fromGallery':'sharedBy',{from:n.share.from||'?'})}
 }
 async function openShareLink(){
   const code=shareCode();if(!code)return false;
@@ -2766,6 +2822,7 @@ async function openShareLink(){
 function keepShared(id){
   const n=sceneById(id);if(!n||!n.temp)return;
   if(!acct){afterSignIn=()=>keepShared(id);openAcct(t('keepNeedsId'));return}
+  if(n.share&&n.share.gallery)rpc('am_gallery_copied',{p_id:n.share.gallery}).catch(()=>{});
   n.temp=false;delete n.share;n.updated=Date.now();libOrderAt=Date.now();
   if(id===active)cur().state=state;
   clearShareHash();updateShareBar();renderScenes();save();syncNow();
@@ -2778,6 +2835,86 @@ function closeShared(id){
 $('#sbSave').onclick=()=>keepShared(active);
 $('#sbClose').onclick=()=>closeShared(active);
 window.addEventListener('hashchange',()=>{if(shareCode())openShareLink()});
+
+/* ---------- Explore: the public gallery ---------- */
+function setExploreOpen(open){
+  $('#explore').classList.toggle('closed',!open);$('#exploreTab').setAttribute('aria-expanded',open);
+  $('#exploreTab .arr').textContent=open?'‹':'›';
+}
+$('#exploreTab').onclick=()=>setExploreOpen($('#explore').classList.contains('closed'));
+const thumbHtml=(src,alt)=>src?`<img src="${esc(src)}" alt="" loading="lazy" draggable="false">`:`<span class="noimg">${esc(alt||'')}</span>`;
+let gal={items:[],total:0,loading:false};
+async function loadGallery(more){
+  if(gal.loading)return;gal.loading=true;$('#gMsg').textContent=more?'':t('galLoading');$('#gMore').hidden=true;
+  if(!more){gal.items=[];$('#gGrid').innerHTML=''}
+  try{
+    const r=await rpc('am_gallery_list',{p_offset:gal.items.length,p_limit:24});
+    if(r.error)throw new Error(r.error);
+    gal.total=+r.total||0;gal.items.push(...(r.items||[]));
+    $('#gGrid').innerHTML=gal.items.map(it=>`<button type="button" class="gcard" data-gid="${esc(it.id)}">${thumbHtml(it.thumb,t('emptyThumb'))}<b>${esc(it.name)}</b><span class="by">${esc(t('galBy',{from:it.from}))}${it.copies?' · '+esc(t('galCopies',{n:it.copies})):''}</span></button>`).join('');
+    $('#gGrid').querySelectorAll('[data-gid]').forEach(b=>b.onclick=()=>openGalleryItem(b.dataset.gid));
+    $('#gCount').textContent=t('galCount',{n:gal.total});
+    $('#gMsg').textContent=gal.items.length?'':t('galEmpty');$('#gMore').hidden=gal.items.length>=gal.total;
+  }catch(e){$('#gMsg').textContent=t('galOffline')}
+  finally{gal.loading=false}
+}
+function openGallery(){if(narrow())setExploreOpen(false);$('#gallery').hidden=false;loadGallery(false);try{$('#gClose').focus({preventScroll:true})}catch(_){}}
+function closeGallery(){$('#gallery').hidden=true}
+$('#xBrowse').onclick=openGallery;$('#gClose').onclick=closeGallery;$('#gMore').onclick=()=>loadGallery(true);
+$('#gallery').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();closeGallery()}});
+async function openGalleryItem(id){
+  const there=scenes.find(x=>x.temp&&x.share&&x.share.gallery===id);
+  if(there){closeGallery();switchScene(there.id);return}
+  $('#gMsg').textContent=t('galOpening');
+  try{
+    const r=await rpc('am_gallery_get',{p_id:id});
+    if(r.error||!valid(r.data)){$('#gMsg').textContent=t('shareNotFound');return}
+    const n=wrapScene({id:newId(),name:String(r.name||t('sceneWord')).slice(0,40),view:'34',state:normalize(clone(r.data)),updated:0});
+    n.temp=true;n.share={from:r.from,gallery:id};
+    closeGallery();$('#start').hidden=true;closeFixPop();storeCurrent();scenes.unshift(n);openScene(n);$('#gMsg').textContent='';
+  }catch(e){$('#gMsg').textContent=t('galOffline')}
+}
+/* report: one tap arms, a second sends; a device counts once; 3 reports hide it */
+const reporterId=(()=>{try{let v=localStorage.getItem('atelier-reporter');if(!v){v=Array.from(crypto.getRandomValues(new Uint8Array(12)),x=>(x%36).toString(36)).join('');localStorage.setItem('atelier-reporter',v)}return v}catch(_){return Math.random().toString(36).slice(2,14)}})();
+$('#sbReport').onclick=async()=>{
+  const n=cur();if(!n||!n.share||!n.share.gallery)return;const b=$('#sbReport');
+  if(!b.classList.contains('armed')){b.classList.add('armed');b.textContent=t('reportQ');setTimeout(()=>{if(b.classList.contains('armed')){b.classList.remove('armed');b.textContent=t('report')}},3000);return}
+  b.classList.remove('armed');b.textContent=t('report');
+  try{await rpc('am_gallery_report',{p_id:n.share.gallery,p_reporter:reporterId})}catch(_){}
+  showMsg(t('report'),t('reported'));
+};
+/* publish window: my published ones (with Remove), then my installations to pick from */
+async function openPublish(){
+  if(!acct){afterSignIn=openPublish;openAcct(t('pubNeedsId'));return}
+  if(narrow())setExploreOpen(false);
+  storeCurrent();$('#pubDlg').hidden=false;$('#pubErr').textContent='';$('#pubTitle').textContent=t('pubTitle');$('#pubLead').textContent=t('pubLead');
+  $('#pubMineH').textContent=t('pubMineH',{n:'…'});$('#pubMine').innerHTML='';$('#pubPickH').textContent=t('pubPickH');
+  let mine=[];
+  try{const r=await rpc('am_gallery_mine',{p_token:acct.token});if(r.error==='signed_out'){$('#pubDlg').hidden=true;signOutLocal(t('sessionEnded'));return}mine=r.items||[]}
+  catch(e){$('#pubErr').textContent=t('galOffline')}
+  $('#pubMineH').textContent=t('pubMineH',{n:mine.length});
+  $('#pubMine').innerHTML=mine.length?mine.map(it=>`<button type="button" class="gcard" data-mine="${esc(it.id)}">${thumbHtml(it.thumb,t('emptyThumb'))}<b>${esc(it.name)}</b><span class="by">${it.hidden?esc(t('pubHidden')):esc(t('galCopies',{n:it.copies||0}))}</span><span class="gact warn">${esc(t('pubRemove'))}</span></button>`).join(''):`<p class="note">${esc(t('pubEmptyMine'))}</p>`;
+  $('#pubMine').querySelectorAll('[data-mine]').forEach(b=>b.onclick=async()=>{
+    if(!b.classList.contains('armed')){$('#pubDlg').querySelectorAll('.gcard.armed').forEach(x=>{x.classList.remove('armed');x.querySelector('.gact').textContent=x.dataset.mine?t('pubRemove'):''});b.classList.add('armed');b.querySelector('.gact').textContent=t('pubRemoveQ');return}
+    try{await rpc('am_gallery_unpublish',{p_token:acct.token,p_id:b.dataset.mine})}catch(_){$('#pubErr').textContent=t('galOffline');return}
+    openPublish();
+  });
+  const full=mine.length>=10,pick=scenes.filter(x=>!x.temp);
+  $('#pubPick').innerHTML=pick.map(x=>`<button type="button" class="gcard" data-pick="${esc(x.id)}" ${full||!x.state.lines.length?'disabled':''}>${thumbHtml(x.thumb,t('emptyThumb'))}<b>${esc(x.name)}</b><span class="by">${esc(t('nLogs',{n:x.state.lines.length}))}</span><span class="gact"></span></button>`).join('')||`<p class="note">${esc(t('pubEmptyPick'))}</p>`;
+  if(full)$('#pubErr').textContent=t('pubLimit');
+  $('#pubPick').querySelectorAll('[data-pick]').forEach(b=>b.onclick=async()=>{
+    if(!b.classList.contains('armed')){$('#pubDlg').querySelectorAll('.gcard.armed').forEach(x=>{x.classList.remove('armed');x.querySelector('.gact').textContent=x.dataset.mine?t('pubRemove'):''});b.classList.add('armed');b.querySelector('.gact').textContent=t('pubTap');return}
+    const sc=sceneById(b.dataset.pick);if(!sc)return;b.disabled=true;b.querySelector('.gact').textContent='…';
+    try{
+      const r=await rpc('am_gallery_publish',{p_token:acct.token,p_name:sc.name,p_data:sc.state,p_thumb:sc.thumb||null});
+      if(r.error){$('#pubErr').textContent=r.error==='limit'?t('pubLimit'):t('shareFailed',{e:r.error});b.disabled=false;return}
+      openPublish();
+    }catch(e){$('#pubErr').textContent=t('galOffline');b.disabled=false}
+  });
+}
+$('#xPublish').onclick=openPublish;$('#pubClose').onclick=()=>{$('#pubDlg').hidden=true};
+$('#pubDlg').addEventListener('pointerdown',e=>{if(e.target===$('#pubDlg'))$('#pubDlg').hidden=true});
+$('#pubDlg').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();$('#pubDlg').hidden=true}});
 
 /* ---------- install as an app (only on the real site, where the manifest is) ---------- */
 const PWA=!!document.querySelector('link[rel=manifest]');
