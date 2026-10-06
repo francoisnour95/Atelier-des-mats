@@ -131,6 +131,16 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-vi
 .snap.grid,.snap.free,.snap.level,.snap.plumb{border-color:#9aa79c;width:8px;height:8px}
 .etools{position:absolute;display:flex;gap:2px;transform:translate(-50%,-50%);background:rgba(14,17,15,.9);border:1px solid #3c473f;border-radius:8px;padding:3px;z-index:3}
 .etools[hidden],.midtools[hidden]{display:none}
+.ptmenu{position:absolute;display:flex;gap:2px;transform:translate(-50%,-50%);z-index:3;background:rgba(14,17,15,.9);border:1px solid #3c473f;border-radius:12px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.ptmenu[hidden]{display:none}
+.ptmenu button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:48px;height:46px;border:0;border-radius:9px;background:transparent;color:#dfe6dd;cursor:pointer;padding:0 6px;font:600 10.5px var(--f-body)}
+.ptmenu button svg{width:18px;height:18px;fill:currentColor}
+.ptmenu button:hover:not(:disabled){background:#2c352f}
+.ptmenu button.on,.ptmenu button.on:hover{background:#e2a84c;color:#1a1408}
+.ptmenu button:disabled{opacity:.35;cursor:default}
+.ptmenu button[hidden]{display:none}
+.ptmenu button.del{color:#ff8a8d}
+.ptmenu button.del.armed{background:#e5484d;color:#fff;font-size:12px;min-width:110px}
 .midtools{position:absolute;display:flex;gap:6px;transform:translate(-50%,-50%);z-index:3}
 .etools button{display:inline-flex;align-items:center;gap:4px;height:30px;min-width:30px;justify-content:center;border:0;border-radius:6px;background:transparent;color:#dfe6dd;cursor:pointer;padding:0 6px;font:600 12px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
 .etools button svg,.midbtn svg{width:17px;height:17px;fill:currentColor}
@@ -487,12 +497,12 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 24 · three tools</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 25 · point menus</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
       <label class="chk"><input type="checkbox" id="cBase"> Base drawing</label>
-      <label class="chk"><input type="checkbox" id="cLabels" checked> Labels</label>
+      <label class="chk"><input type="checkbox" id="cLabels"> Labels</label>
     </div>
     <div class="barend">
       <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
@@ -542,9 +552,15 @@ details[open] summary{margin-bottom:8px}
         <button type="button" data-act="rotate" title="Rotate the beam around this end"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L7.5 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg></button>
         <button type="button" data-act="flip" title="Flip this end front / back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2 2.5 7h3.3v8h2.4V7h3.3zM17 22l4.5-5h-3.3V9h-2.4v8h-3.3z"/></svg><span></span></button>
       </div>
+      <div class="ptmenu" id="ptMenu" role="toolbar" hidden>
+        <button type="button" data-act="move"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.5 3.5h-2.5v5h5V8l3.5 3.5-3.5 3.5v-2.5h-5v5h2.5L12 21l-3.5-3.5H11v-5H6V15l-3.5-3.5L6 8v2.5h5v-5H8.5z"/></svg><span class="pl">Move</span></button>
+        <button type="button" data-act="rotate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L7.5 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><span class="pl">Turn</span></button>
+        <button type="button" data-act="flip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l5 4.5-5 4.5V9H6V6h11zM7 12v3h11v3H7v3l-5-4.5z"/></svg><span class="pl">Flip</span></button>
+        <button type="button" data-act="dup"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h12a2 2 0 0 1 2 2v12h-2V4H8zM4 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2v12h12V8z"/></svg><span class="pl">Copy</span></button>
+        <button type="button" data-act="del" class="del" id="etMidDel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 12H7zm3 2v8h2v-8zm4 0v8h2v-8z"/></svg><span class="pl">Delete</span></button>
+      </div>
       <div class="midtools" id="midTools" hidden>
         <button class="midbtn" id="etMidMove" type="button" title="Move the whole log from its centre" aria-label="Move the whole log"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.5 3.5h-2.5v5h5V8l3.5 3.5-3.5 3.5v-2.5h-5v5h2.5L12 21l-3.5-3.5H11v-5H6V15l-3.5-3.5L6 8v2.5h5v-5H8.5z"/></svg></button>
-        <button class="midbtn del" id="etMidDel" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 12H7zm3 2v8h2v-8zm4 0v8h2v-8z"/></svg></button>
         <button class="midbtn" id="etMid" type="button" title="Flip both ends front / back" aria-label="Flip both ends front / back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l5 4.5-5 4.5V9H6V6h11zM7 12v3h11v3H7v3l-5-4.5z"/></svg></button>
       </div>
 
@@ -612,8 +628,8 @@ en:{
 'hint.drawTouch':'Tap two points on the grid plane · snap to ends to connect depths · two fingers to orbit',
 'hint.drawMouse':'Click two points on the grid plane · snap to an existing end to start from its depth · right-drag to orbit · Esc cancels',
 'hint.inv':'Drag logs from My beams into the view · ',
-'hint.selTouch':'Tap a log for its tools · green sphere: add brelage · red sphere: remove it',
-'hint.selMouse':'Select a log: end buttons move / rotate / flip front-back · centre buttons move the whole log / flip both · green sphere adds a brelage, red sphere removes it',
+'hint.selTouch':'Tap a log, then one of its dots (ends or middle) for its menu · green and red spheres add or remove brelages',
+'hint.selMouse':'Click a log, then one of its dots (ends or middle) for its menu: move, turn, flip, copy, delete · green and red spheres add or remove brelages',
 clearConfirm:'Click again to clear',clearAll:'Clear all',copyBlocked:'Copying was blocked. The JSON is selected above, copy it manually.',copied:'Copied',copyJson:'Copy design JSON',
 loaded:'Loaded {n} beams.',notDesign:'That is not a design file. It needs a "lines" list with a and b points.',
 possible:v=>`${v.n} possible brelage${v.n>1?'s':''} not tied yet`,logsWord:'Beams',nJeux:v=>v.n+' jeu'+(v.n>1?'x':''),
@@ -661,7 +677,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 24 · three tools','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'proto 25 · point menus','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -678,14 +694,14 @@ sharedBy:'Shared by {from} · not saved',sharedTag:'Shared · not saved',saveCop
 openingShared:'Opening the shared installation…',sharedH:'Shared installation',shareNotFound:'This link does not work. Check that it was copied whole.',
 shareExpired:'This link has expired. Links last 14 days: ask for a new one.',shareOffline:'Cannot reach the server to open this link. Check your connection.',
 ok:'OK',retry:'Try again',keptCopy:'Saved in your installations.',
-delLogT:'Delete this log','hint.jeux':'Tap a face to choose it · faces with a dotted side are open · + Jeu de ficelles adds strings',jeuxNote:'Tap a face (a letter) to see its string art, or add one. Open faces have a dotted side with no wood.',openFace:'open',openNote:'Open face: the dotted side has no wood, so no strings go there. Strings join each chosen piece of wood to the next one along the chain.','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
+delLogT:'Delete this log',pMove:'Move',pTurn:'Turn',pFlip:'Flip',pCopy:'Copy',pDelete:'Delete',pRemove:'Remove',dupT:'Make a copy of this log beside it',rotMidT:'Turn the log around its middle','hint.jeux':'Tap a face to choose it · faces with a dotted side are open · + Jeu de ficelles adds strings',jeuxNote:'Tap a face (a letter) to see its string art, or add one. Open faces have a dotted side with no wood.',openFace:'open',openNote:'Open face: the dotted side has no wood, so no strings go there. Strings join each chosen piece of wood to the next one along the chain.','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
 'hint.drawMouse':'Cliquez deux points sur la grille · partez d’un bout existant pour garder sa profondeur · clic droit glissé pour tourner · Échap annule',
 'hint.inv':'Glissez des perches de Mes perches dans la vue · ',
-'hint.selTouch':'Touchez une perche pour ses outils · sphère verte : ajouter un brelage · sphère rouge : l’enlever',
-'hint.selMouse':'Sélectionnez une perche : les boutons des bouts déplacent / tournent / passent devant-derrière · ceux du milieu déplacent toute la perche / inversent les deux · sphère verte : ajouter un brelage, sphère rouge : l’enlever',
+'hint.selTouch':'Touchez une perche, puis un de ses points (bouts ou milieu) pour son menu · sphères vertes et rouges : ajouter ou enlever un brelage',
+'hint.selMouse':'Cliquez une perche, puis un de ses points (bouts ou milieu) pour son menu : déplacer, tourner, inverser, copier, supprimer · sphères vertes et rouges : ajouter ou enlever un brelage',
 clearConfirm:'Cliquez encore pour tout effacer',clearAll:'Tout effacer',copyBlocked:'La copie est bloquée. Le JSON est sélectionné plus haut, copiez-le à la main.',copied:'Copié',copyJson:'Copier le JSON du projet',
 loaded:'{n} perches chargées.',notDesign:'Ce n’est pas un fichier de projet. Il faut une liste « lines » avec des points a et b.',
 possible:v=>v.n>1?`${v.n} brelages possibles pas encore faits`:'1 brelage possible pas encore fait',logsWord:'Perches',nJeux:v=>v.n+' jeu'+(v.n>1?'x':''),
@@ -732,7 +748,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 24 · three tools','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'proto 25 · point menus','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -749,7 +765,7 @@ sharedBy:'Partagée par {from} · pas enregistrée',sharedTag:'Partagée · pas 
 openingShared:'Ouverture de l’installation partagée…',sharedH:'Installation partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
 shareExpired:'Ce lien a expiré. Les liens durent 14 jours : demandez-en un nouveau.',shareOffline:'Impossible de joindre le serveur pour ouvrir ce lien. Vérifiez votre connexion.',
 ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos installations.',
-delLogT:'Supprimer cette perche','hint.jeux':'Touchez une face pour la choisir · les faces à côté pointillé sont ouvertes · + Jeu de ficelles en ajoute un',jeuxNote:'Touchez une face (une lettre) pour voir ses jeux de ficelles, ou en ajouter un. Les faces ouvertes ont un côté en pointillés sans bois.',openFace:'ouverte',openNote:'Face ouverte : le côté en pointillés n’a pas de bois, aucune ficelle n’y va. Les ficelles relient chaque morceau de bois choisi au suivant le long de la chaîne.','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
+delLogT:'Supprimer cette perche',pMove:'Déplacer',pTurn:'Tourner',pFlip:'Inverser',pCopy:'Copier',pDelete:'Supprimer',pRemove:'Retirer',dupT:'Faire une copie de cette perche à côté',rotMidT:'Tourner la perche autour de son milieu','hint.jeux':'Touchez une face pour la choisir · les faces à côté pointillé sont ouvertes · + Jeu de ficelles en ajoute un',jeuxNote:'Touchez une face (une lettre) pour voir ses jeux de ficelles, ou en ajouter un. Les faces ouvertes ont un côté en pointillés sans bois.',openFace:'ouverte',openNote:'Face ouverte : le côté en pointillés n’a pas de bois, aucune ficelle n’y va. Les ficelles relient chaque morceau de bois choisi au suivant le long de la chaîne.','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -851,7 +867,7 @@ let libDeleted={},libOrderAt=0;
 })();
 let state=scenes.find(x=>x.id===active).state;
 const cur=()=>scenes.find(x=>x.id===active);
-let showLabels=true,drawD=R.defaultD,dropOrient='up';
+let showLabels=(()=>{try{return localStorage.getItem('atelier-labels')==='1'}catch(_){return false}})(),drawD=R.defaultD,dropOrient='up';
 let jeuxMode=false; /* the third tool: faces and jeux de ficelles are only shown and edited here */
 let mode='draw', sel=null, pending=null, hover=null, snapGrid=true, showBase=false, workZ=0;
 let model=null, history=[], future=[];
@@ -1287,7 +1303,7 @@ const faceMatSel=new THREE.MeshBasicMaterial({color:0xe2a84c,transparent:true,op
 const faceMatOpen=new THREE.MeshBasicMaterial({color:0x7fb2ff,transparent:true,opacity:0.1,side:THREE.DoubleSide,depthWrite:false});
 const faceMatOpenSel=new THREE.MeshBasicMaterial({color:0x7fb2ff,transparent:true,opacity:0.3,side:THREE.DoubleSide,depthWrite:false});
 const gapMat=new THREE.LineDashedMaterial({color:0x9cc4ff,dashSize:0.07,gapSize:0.06,transparent:true,opacity:0.9,depthTest:false});
-const handleGeo=new THREE.SphereGeometry(0.05,16,10),handleMat=new THREE.MeshBasicMaterial({color:0xe2a84c,depthTest:false}),handleMatOn=new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false});
+const handleGeo=new THREE.SphereGeometry(0.075,16,10),handleMat=new THREE.MeshBasicMaterial({color:0xe2a84c,depthTest:false}),handleMatOn=new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false});
 const sideMat=new THREE.MeshBasicMaterial({color:0x8fbcff,transparent:true,opacity:0.35,depthWrite:false});
 const sideMatOn=new THREE.MeshBasicMaterial({color:0xffb52e,transparent:true,opacity:0.7,depthWrite:false});
 const lineMat=(c,o,dt=false)=>new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o,depthTest:dt});
@@ -1552,8 +1568,9 @@ function buildScene(){
   }
   if(mode==='select'&&sel&&sel.type==='beam'){
     const b=model.beams.find(x=>x.l.id===sel.id);
-    if(b)for(const [end,P] of [['a',b.G1],['b',b.G2]]){
+    if(b)for(const [end,P] of [['a',b.G1],['b',b.G2],['mid',mul(add(b.G1,b.G2),0.5)]]){
       const h=new THREE.Mesh(handleGeo,sel.end===end?handleMatOn:handleMat);h.position.copy(V(P));h.renderOrder=6;group.add(h);handles.push({end,mesh:h});
+      if(end==='mid')continue;
       /* drop line to the ground shows where the end sits in depth */
       const g=new THREE.BufferGeometry().setFromPoints([V(P),V([P[0],0,P[2]])]);const dl=new THREE.Line(g,lineMat(0xe2a84c,.45));dl.userData.own=true;dl.renderOrder=5;group.add(dl);
     }
@@ -1624,7 +1641,7 @@ const tc=new THREE.TransformControls(camera,el);
 tc.setSize(0.8);tc.setTranslationSnap(0.05);scene.add(tc);
 let gizmoDrag=null,gizmoUsed=false;
 function syncGizmo(){
-  const l=(mode==='select'&&sel&&sel.type==='beam'&&sel.end)?lineById(sel.id):null;
+  const l=(mode==='select'&&sel&&sel.type==='beam'&&sel.end&&sel.tool)?lineById(sel.id):null;
   if(!l){if(tc.object)tc.detach();return}
   const want=sel.tool==='rotate'?'rotate':'translate';
   const b=model.beams.find(x=>x.l.id===l.id);if(!b){tc.detach();return}
@@ -1641,6 +1658,7 @@ tc.addEventListener('dragging-changed',e=>{
     gizmoUsed=true;const l=lineById(sel.id);
     const base={snap:JSON.stringify(state),l,p0:[pivot.position.x,pivot.position.y,pivot.position.z],a0:[...l.a],b0:[...l.b]};
     if(sel.tool==='moveAll')gizmoDrag={...base,moveAll:true,net:buildNetwork(l,'a','b')};
+    else if(sel.tool==='rotate'&&sel.end==='mid')gizmoDrag={...base,rotMid:true,c0:mul(add(l.a,l.b),0.5),q0:pivot.quaternion.clone(),net:buildNetwork(l,'a','b')};
     else if(sel.tool==='rotate'){
       /* rotate: the chosen end stays put, the other end swings around it */
       const other=sel.end==='a'?'b':'a';
@@ -1655,6 +1673,11 @@ tc.addEventListener('objectChange',()=>{
     if(l.fixA||l.fixB)d[1]=0; /* a fixed log slides along the ground */
     let a=add(g.a0,d),b=add(g.b0,d);
     const lift=Math.max(0,-Math.min(a[1],b[1]));if(lift>0){a[1]+=lift;b[1]+=lift}
+    l.a=a;l.b=b;relax(g.net,l);rebuild(false);return;
+  }
+  if(g.rotMid){
+    const dq=pivot.quaternion.clone().multiply(g.q0.clone().invert()),turn=p=>{const v=new THREE.Vector3(...sub(p,g.c0)).applyQuaternion(dq);return add(g.c0,[v.x,v.y,v.z])};
+    let a=turn(g.a0),b=turn(g.b0);const lift=Math.max(0,-Math.min(a[1],b[1]));if(lift>0){a[1]+=lift;b[1]+=lift}
     l.a=a;l.b=b;relax(g.net,l);rebuild(false);return;
   }
   if(g.pivotEnd){
@@ -1715,9 +1738,9 @@ remMesh.renderOrder=8;remMesh.visible=false;scene.add(remMesh);
 let hoverPot=null,hoverNode=null;
 /* with a log selected in Brelages, every place it could be tied (green) and every brelage it has (red) is shown */
 const markGroup=new THREE.Group();markGroup.renderOrder=7;scene.add(markGroup);
-const markGeo=new THREE.SphereGeometry(0.12,20,14);
-const markPot=new THREE.MeshBasicMaterial({color:0x5ee08a,transparent:true,opacity:0.6,depthTest:false,depthWrite:false});
-const markRem=new THREE.MeshBasicMaterial({color:0xe5484d,transparent:true,opacity:0.6,depthTest:false,depthWrite:false});
+const markGeo=new THREE.SphereGeometry(0.13,20,14);
+const markPot=new THREE.MeshBasicMaterial({color:0x5ee08a,transparent:true,opacity:0.28,depthTest:false,depthWrite:false});
+const markRem=new THREE.MeshBasicMaterial({color:0xe5484d,transparent:true,opacity:0.22,depthTest:false,depthWrite:false});
 var focusBeam=null;
 function screenNearest(e,items,getP,th){
   const r=el.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=null,bd=th;
@@ -1799,7 +1822,7 @@ function pickAt(e){
     rebuild(false);return;
   }
   const h=handleHit(e);
-  if(h&&sel&&sel.type==='beam'){sel={type:'beam',id:sel.id,end:h};rebuild(false);return}
+  if(h&&sel&&sel.type==='beam'){sel={type:'beam',id:sel.id,end:sel.end===h?null:h,tool:null};rebuild(false);return}
   const nh=nodeHit(e);if(nh){sel={type:'node',key:nh.js[0].key};rebuild(false);return}
   const ph=potHit(e);if(ph){sel={type:'potential',key:ph.key};rebuild(false);return}
   ray.setFromCamera(ndc(e),camera);const hits=ray.intersectObjects(pickables,false);
@@ -1811,7 +1834,7 @@ function pickAt(e){
   else if(hit.object.userData.kind==='beam'){
     const id=hit.object.userData.id,l=lineById(id),r=el.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
     const bb=model.beams.find(x=>x.l.id===id),da=toScreen(V(bb.G1)),db=toScreen(V(bb.G2));
-    sel={type:'beam',id,end:Math.hypot(da.x-mx,da.y-my)<=Math.hypot(db.x-mx,db.y-my)?'a':'b'};
+    sel=(sel&&sel.type==='beam'&&sel.id===id)?sel:{type:'beam',id,end:null,tool:null}; /* first tap selects; the dots open the menus */
   }
   else if(!(sel&&sel.type==='face'&&sel.key===hit.object.userData.key))sel={type:'face',key:hit.object.userData.key};
   rebuild(false);
@@ -1854,7 +1877,7 @@ $('#cGrid').onchange=e=>{gridGroup.visible=groundLines.visible=e.target.checked;
 try{if(localStorage.getItem('atelier-grid')==='0'){$('#cGrid').checked=false;gridGroup.visible=groundLines.visible=false}}catch(_){}
 $('#cSnap').onchange=e=>{snapGrid=e.target.checked;tc.setTranslationSnap(snapGrid?0.05:null)};
 $('#cBase').onchange=e=>{showBase=e.target.checked;rebuild(false)};
-$('#cLabels').onchange=e=>{showLabels=e.target.checked;rebuild(false)};
+$('#cLabels').checked=showLabels;$('#cLabels').onchange=e=>{showLabels=e.target.checked;try{localStorage.setItem('atelier-labels',showLabels?'1':'0')}catch(_){}rebuild(false)};
 
 let clearArmed=null;
 $('#bClear').onclick=e=>{const b=e.currentTarget;
@@ -2047,7 +2070,7 @@ function updateFixChips(){
   const b=(mode==='select'&&sel&&sel.type==='beam')?model.beams.find(x=>x.l.id===sel.id):null;
   for(const end of ['a','b']){
     const c=$('#fixChip'+end.toUpperCase()),f=b?b.l['fix'+end.toUpperCase()]:null;
-    c.hidden=!b||!(f||nearGround(b,end));if(c.hidden)continue;
+    c.hidden=!b||sel.end!==end||!(f||nearGround(b,end));if(c.hidden)continue;
     c.textContent=f?FIX_NAME[f]:t('fixGround');c.classList.toggle('set',!!f);
     c.title=t(f?'fixSetTitle':'fixNearTitle');
   }
@@ -2106,53 +2129,65 @@ function placeFixChips(){
 }
 /* on-canvas beam tools: state (buttons) here, position every frame in the loop */
 function flipEnd(id,end){const l=lineById(id);if(!l)return;pushHistory();const k=end==='a'?'sideA':'sideB';l[k]=-l[k];rebuild()}
+/* a selected log shows three dots (its two ends and its middle); tapping a dot opens its small menu */
 function updateBeamTools(){
-  const b=(mode==='select'&&sel&&sel.type==='beam')?model.beams.find(x=>x.l.id===sel.id):null;
-  for(const end of ['a','b']){
-    const box=$('#et'+end.toUpperCase());box.hidden=!b;if(!b)continue;
-    const info=endInfo(b,end),side=(end==='a'?b.l.sideA:b.l.sideB)>=0;
-    box.querySelector('[data-act=move]').classList.toggle('on',sel.end===end&&sel.tool!=='rotate');
-    const rb=box.querySelector('[data-act=rotate]'),oppFixed=b.l['fix'+(end==='a'?'B':'A')];
-    rb.classList.toggle('on',sel.end===end&&sel.tool==='rotate');rb.disabled=!!oppFixed;
-    rb.title=t(oppFixed?'rotOppFixed':'rotTitle');
-    const fb=box.querySelector('[data-act=flip]');fb.disabled=!info.ctl.length;
-    fb.querySelector('span').textContent=info.ctl.length?t(side?'front':'back'):'–';
-    fb.title=info.ctl.length?t(side?'flipFront':'flipBack',{ids:[...new Set(info.ctl.map(J=>model.beams[J.i===b.i?J.j:J.i].l.id))].join(', ')}):t('flipNone');
-  }
-  $('#midTools').hidden=!b;if(b&&delArmed&&delArmed.id!==b.l.id)disarmDel();if(b){const db=$('#etMidDel'),tt=t(b.pick.inv?'takeOutT':'delLogT');db.title=tt;db.setAttribute('aria-label',tt);$('#etMid').disabled=!b.earlier;$('#etMidMove').classList.toggle('on',sel.tool==='moveAll')}
+  const b=(mode==='select'&&!jeuxMode&&sel&&sel.type==='beam')?model.beams.find(x=>x.l.id===sel.id):null;
+  $('#etA').hidden=$('#etB').hidden=$('#midTools').hidden=true;
+  const menu=$('#ptMenu');menu.hidden=!b||!sel.end;
+  if(b&&delArmed&&delArmed.id!==b.l.id)disarmDel();
+  if(menu.hidden){disarmDel();return}
+  const end=sel.end,l=b.l,mid=end==='mid',q=k=>menu.querySelector('[data-act='+k+']');
+  const mv=q('move'),rt=q('rotate'),fl=q('flip'),dp=q('dup'),dl=q('del');
+  mv.classList.toggle('on',mid?sel.tool==='moveAll':sel.tool==='move');
+  rt.classList.toggle('on',sel.tool==='rotate');
+  const rotOff=mid?!!(l.fixA||l.fixB):!!l['fix'+(end==='a'?'B':'A')];rt.disabled=rotOff;
+  mv.title=t(mid?'s.moveAllT':'s.moveEnd');rt.title=rotOff?t('rotOppFixed'):t(mid?'rotMidT':'rotTitle');dp.title=t('dupT');
+  let flipOk,flipTitle;
+  if(mid){flipOk=!!b.earlier;flipTitle=t('s.flipBoth')}
+  else{const info=endInfo(b,end),side=(end==='a'?l.sideA:l.sideB)>=0;flipOk=!!info.ctl.length;
+    flipTitle=flipOk?t(side?'flipFront':'flipBack',{ids:[...new Set(info.ctl.map(J=>model.beams[J.i===b.i?J.j:J.i].l.id))].join(', ')}):t('flipNone')}
+  fl.hidden=!flipOk;fl.title=flipTitle;
+  const lab={move:'pMove',rotate:'pTurn',flip:'pFlip',dup:'pCopy'};
+  for(const k in lab){const sp=q(k).querySelector('.pl');if(sp)sp.textContent=t(lab[k])}
+  if(!delArmed){const sp=dl.querySelector('.pl');if(sp)sp.textContent=t(l.inv?'pRemove':'pDelete')}
+  const tt=t(l.inv?'takeOutT':'delLogT');dl.title=tt;dl.setAttribute('aria-label',tt);
 }
-for(const end of ['a','b'])$('#et'+end.toUpperCase()).addEventListener('click',e=>{
-  const btn=e.target.closest('button');if(!btn||btn.disabled||!sel||sel.type!=='beam')return;
-  const act=btn.dataset.act;
-  if(act==='flip')flipEnd(sel.id,end);
-  else{sel={type:'beam',id:sel.id,end,tool:act};rebuild(false)}
+$('#ptMenu').addEventListener('click',e=>{
+  const btn=e.target.closest('button');if(!btn||btn.disabled||!sel||sel.type!=='beam'||!sel.end)return;
+  const act=btn.dataset.act,end=sel.end,mid=end==='mid';
+  if(act==='move'){const tool=mid?'moveAll':'move';sel={type:'beam',id:sel.id,end,tool:sel.tool===tool?null:tool};rebuild(false)}
+  else if(act==='rotate'){sel={type:'beam',id:sel.id,end,tool:sel.tool==='rotate'?null:'rotate'};rebuild(false)}
+  else if(act==='flip'){if(mid)flip(sel.id);else flipEnd(sel.id,end)}
+  else if(act==='dup')duplicateLog(sel.id);
 });
-$('#etMid').onclick=()=>{if(sel&&sel.type==='beam')flip(sel.id)};
-/* delete from the log itself: first tap arms the button, a second tap within 3 s deletes (Undo brings it back) */
-var delArmed=null;const DEL_ICON=$('#etMidDel').innerHTML;
-function disarmDel(){if(!delArmed)return;clearTimeout(delArmed.timer);delArmed=null;const d=$('#etMidDel');d.classList.remove('armed');d.innerHTML=DEL_ICON}
-$('#etMidDel').onclick=()=>{
-  if(!sel||sel.type!=='beam')return;
-  if(delArmed&&delArmed.id===sel.id){const id=sel.id;disarmDel();del(id);return}
-  disarmDel();const d=$('#etMidDel');d.classList.add('armed');d.textContent=t('confirmDel');
+/* a copy of the log, beside it, ready to be moved; a log from the list becomes an extra drawn log */
+function duplicateLog(id){
+  const l=lineById(id);if(!l)return;pushHistory();
+  const right=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,0);right.y=0;if(right.lengthSq()<1e-6)right.set(1,0,0);right.normalize().multiplyScalar(0.4);
+  const off=[right.x,0,right.z],c=JSON.parse(JSON.stringify(l));
+  c.id=state.nextId++;delete c.inv;c.a=add(l.a,off);c.b=add(l.b,off);c.d=l.d||beamSpec(l).r*2;
+  state.lines.push(c);sel={type:'beam',id:c.id,end:'mid',tool:'moveAll'};rebuild();
+}
+/* delete: first tap arms the button, a second tap within 3 s deletes (Undo brings it back) */
+var delArmed=null;
+function disarmDel(){if(!delArmed)return;clearTimeout(delArmed.timer);delArmed=null;const d=$('#etMidDel');d.classList.remove('armed');updateBeamTools()}
+$('#etMidDel').onclick=e=>{
+  e.stopPropagation();if(!sel||sel.type!=='beam')return;
+  if(delArmed&&delArmed.id===sel.id){const id=sel.id;clearTimeout(delArmed.timer);delArmed=null;$('#etMidDel').classList.remove('armed');del(id);return}
+  disarmDel();const d=$('#etMidDel');d.classList.add('armed');d.querySelector('.pl').textContent=t('confirmDel');
   delArmed={id:sel.id,timer:setTimeout(disarmDel,3000)};
 };
-$('#etMidMove').onclick=()=>{if(sel&&sel.type==='beam'){sel={type:'beam',id:sel.id,end:'mid',tool:'moveAll'};rebuild(false)}};
 function placeBeamTools(){
-  const b=(!$('#midTools').hidden&&sel&&sel.type==='beam')?model.beams.find(x=>x.l.id===sel.id):null;if(!b)return;
-  const hide=!!gizmoDrag;
-  const sa=toScreen(V(b.G1)),sb=toScreen(V(b.G2));
-  for(const [end,s0,s1] of [['a',sa,sb],['b',sb,sa]]){
-    const box=$('#et'+end.toUpperCase());let dx=s0.x-s1.x,dy=s0.y-s1.y;const L=Math.hypot(dx,dy)||1;dx/=L;dy/=L;
-    /* beside the end, on the upper side of the beam; pushed clear of the gizmo on the active end */
-    let px=-dy,py=dx;if(py>0){px=-px;py=-py}
-    const act=sel.end===end,out=act?40:30,side=act?150:46;
-    box.style.left=(s0.x+dx*out+px*side)+'px';box.style.top=(s0.y+dy*out+py*side)+'px';box.style.visibility=(hide||!s0.vis)?'hidden':'visible';
-  }
-  const sm=toScreen(V(mul(add(b.A,b.B),0.5)));let mx=sb.x-sa.x,my=sb.y-sa.y;const ml=Math.hypot(mx,my)||1;let qx=-my/ml,qy=mx/ml;if(qy<0){qx=-qx;qy=-qy}
-  const mid=$('#midTools'),mo=sel.tool==='moveAll'?120:34;mid.style.left=(sm.x+qx*mo)+'px';mid.style.top=(sm.y+qy*mo)+'px';mid.style.visibility=(hide||!sm.vis)?'hidden':'visible';
+  const menu=$('#ptMenu');
+  const b=(!menu.hidden&&sel&&sel.type==='beam'&&sel.end)?model.beams.find(x=>x.l.id===sel.id):null;if(!b)return;
+  const P=sel.end==='mid'?mul(add(b.G1,b.G2),0.5):(sel.end==='a'?b.G1:b.G2);
+  const s0=toScreen(V(P)),sa=toScreen(V(b.G1)),sb=toScreen(V(b.G2));
+  let dx=sb.x-sa.x,dy=sb.y-sa.y;const L=Math.hypot(dx,dy)||1;let px=-dy/L,py=dx/L;if(py>0){px=-px;py=-py} /* the upper side of the log */
+  const away=sel.tool?120:52; /* clear of the gizmo when one is showing */
+  const vw=view.clientWidth,vh=view.clientHeight,mw=menu.offsetWidth||260,mh=menu.offsetHeight||54;
+  const x=clamp(s0.x+px*away,mw/2+8,vw-mw/2-8),y=clamp(s0.y+py*away,mh/2+8,vh-mh/2-90);
+  menu.style.left=x+'px';menu.style.top=y+'px';menu.style.visibility=(gizmoDrag||!s0.vis)?'hidden':'visible';
 }
-
 /* ---------- the troop's beam list ---------- */
 function parseList(txt){
   const out=[],bad=[];let n=0;
