@@ -64,7 +64,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-vi
 .scenelist{overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:0}
 .scenelist h3{font:600 11px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 2px 0}
 .snew{margin:10px 10px 0;border:1.5px dashed var(--line);background:transparent;color:var(--muted);border-radius:8px;padding:9px;cursor:pointer;font:600 13px var(--f-display);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px}
-.snew span{font:600 18px/1 var(--f-body)}
+.snew span[aria-hidden]{font:600 18px/1 var(--f-body)}
+.snew .snl{white-space:nowrap}
 .snew:hover{border-color:var(--accent);color:var(--accent)}
 .scenes.closed .snew{display:none}
 .scard .thumb{position:relative;touch-action:none;cursor:grab}
@@ -183,6 +184,11 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .acctbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--glass-sep);background:var(--glass-2);color:var(--fg);border-radius:99px;padding:5px 12px;font:600 13px var(--f-body);cursor:pointer;max-width:170px}
 .acctbtn span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .acctbtn:hover{border-color:var(--accent)}
+.langbtn{display:inline-flex;border:1px solid var(--glass-sep);background:var(--glass-2);border-radius:99px;padding:2px;cursor:pointer;font:700 11px var(--f-body);color:var(--muted)}
+.startbox{position:relative}.startlang{position:absolute;top:14px;right:14px}#start h1{padding-right:84px}
+.langbtn:hover{border-color:var(--accent)}
+.langbtn span{padding:4px 8px;border-radius:99px;letter-spacing:.04em}
+.langbtn span.on{background:var(--accent);color:#fff}
 .acctbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
 .acctbtn .dot.ok{background:var(--ok)}.acctbtn .dot.busy{background:var(--accent)}.acctbtn .dot.err{background:var(--warn)}
 .acctbox{width:min(440px,100%)}
@@ -307,6 +313,7 @@ details[open] summary{margin-bottom:8px}
 
 <div class="start" id="start" hidden>
   <div class="startbox">
+    <button class="langbtn startlang" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
     <div class="startstep" id="stepChoose">
       <h1>Atelier des Mâts</h1>
       <div class="choices">
@@ -362,7 +369,7 @@ details[open] summary{margin-bottom:8px}
       </form>
     </div>
     <div id="acctIn" hidden>
-      <p class="lead">Signed in as <b id="aName"></b></p>
+      <p class="lead"><span id="aNameLbl">Signed in as</span> <b id="aName"></b></p>
       <p class="note" id="aSync"></p>
       <div class="row"><button class="btn primary" id="aSyncNow" type="button">Sync now</button><button class="btn" id="aOutBtn" type="button">Sign out</button></div>
       <p class="note">Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.</p>
@@ -373,8 +380,9 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><h1>Atelier des Mâts</h1><span>proto 16 · my ID</span></div>
+    <div class="brand"><h1>Atelier des Mâts</h1><span>proto 17 · FR/EN</span></div>
     <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
+    <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
     <div class="barbody" id="barBody">
     <button class="wfchip" id="wfChip" type="button" title="Start a new design">Free drawing</button>
     <div class="seg" role="group" aria-label="Mode">
@@ -394,7 +402,7 @@ details[open] summary{margin-bottom:8px}
   <main class="work" id="work">
     <aside class="scenes" id="scenes">
       <button class="scenetab" id="sceneTab" type="button" aria-expanded="true" aria-controls="sceneList"><span class="arr" aria-hidden="true">‹</span><span class="stl">Scenes</span></button>
-      <button class="snew" id="sceneNew" type="button"><span aria-hidden="true">+</span> New scene</button>
+      <button class="snew" id="sceneNew" type="button"><span aria-hidden="true">+</span> <span class="snl">New scene</span></button>
       <div class="scenelist" id="sceneList"></div>
     </aside>
     <div class="view draw" id="view">
@@ -482,6 +490,165 @@ details[open] summary{margin-bottom:8px}
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
 <script>
 (function(){
+/* ---------- languages: English / français ---------- */
+const I18N={
+en:{
+'hint.drawTouch':'Tap two points on the grid plane · snap to ends to connect depths · two fingers to orbit',
+'hint.drawMouse':'Click two points on the grid plane · snap to an existing end to start from its depth · right-drag to orbit · Esc cancels',
+'hint.inv':'Drag logs from My beams into the view · ',
+'hint.selTouch':'Tap a log for its tools · green sphere: add brelage · red sphere: remove it',
+'hint.selMouse':'Select a log: end buttons move / rotate / flip front-back · centre buttons move the whole log / flip both · green sphere adds a brelage, red sphere removes it',
+clearConfirm:'Click again to clear',clearAll:'Clear all',copyBlocked:'Copying was blocked. The JSON is selected above, copy it manually.',copied:'Copied',copyJson:'Copy design JSON',
+loaded:'Loaded {n} beams.',notDesign:'That is not a design file. It needs a "lines" list with a and b points.',
+possible:v=>`${v.n} possible brelage${v.n>1?'s':''} not tied yet`,logsWord:'Beams',nJeux:v=>v.n+' jeu'+(v.n>1?'x':''),
+noFaces:'No closed faces yet. Faces appear when beams close a loop through their brelages.',
+endFixed:'End {n} fixed',dugBuried:'dug in · {cm} buried',metalBrackets:'metal L brackets',fromList:'From your list',length:'Length',lengthToCut:'Length to cut',diameter:'Diameter',
+noContact:'No contact',restsOn:'Rests on beam {ids}',lashedGap:'Lashed across {cm} gap to beam {id}',floating:'Floating {cm} from beam {id}',
+jeuMin2:'A jeu needs at least 2 borders. Delete it instead.',jeuPick:'Tap the borders to link · <b>{k}</b> chosen',jeuBorders:'<b>{k}</b> borders',nStrings:'{n} strings',create:'Create',done:'Done',
+selectedLog:'Selected log',logN:'Log {id}',tie:'Tie',knot:'Knot',gap:'Gap',apart:'{cm} apart',touching:'touching',remove:'Remove',
+knotRule:'The knot follows the angle: parallel (under 15°) is a brelage long, 90° ± 15° a brelage carré, anything else a brelage en X. Tied beams move together; remove the brelage to move a beam on its own.',
+possibleBrelage:'Possible brelage',axesDist:'Distance between axes',possibleNote:'These beams are close but not tied, so they ignore each other. Add a brelage to lash them: they will then rest on each other and move together.',addBrelage:'Add brelage',removeBrelage:'Remove brelage',
+mCord:'{m} m of cord',needs2:'needs 2 borders',selectedFace:'Selected face',faceN:'Face {l}',area:'Area',outOfFlat:'Out of flat',jeuxOnFace:'Jeux de ficelles on this face',newJeu:'New jeu',jeuN:'Jeu {n}',
+bordersHelp:'Borders, in order around the face. Pick at least 2, here or on the logs in the view.',density:'Density',ptsPerBorder:'{n} points per border',createJeu:'Create jeu',cancel:'Cancel',deleteJeu:'Delete jeu',addJeu:'Add a jeu de ficelles',
+selection:'Selection',newLogsDiam:'Diameter of new logs',selDrawNote:'Draw a log with two clicks. Start on an existing log end to join logs at different depths.',selNote:'Click a log to see its tools. Hover where two logs meet: green adds a brelage, red removes one.',
+dugIn:'Dug in',metalL:'Metal L',fixGround:'Fix to the ground',fixSetTitle:'Fixed to the ground. Click to change.',fixNearTitle:'This end is near the ground. Click to fix it.',
+rotOppFixed:'The other end is fixed to the ground: rotate around that end instead',rotTitle:'Rotate the beam around this end',front:'Front',back:'Back',
+flipFront:'This end sits in front of beam {ids}. Click to flip.',flipBack:'This end sits behind beam {ids}. Click to flip.',flipNone:'Nothing to flip: this end is not tied to an earlier beam',
+takeOut:'Take {x} out of scene',deleteLog:'Delete log {id}',
+myBeams:'My beams · {u}/{n} in scene',editList:'Edit list',dropAs:'Drop as',dropOrient:'Drop orientation',standing:'Standing',lying:'Lying',
+inSceneTitle:'In the scene: click to select it',dragTitle:'Drag into the scene',inScene:'In scene',drag:'Drag',
+dragNote:'Drag a log into the view to place it. Logs turn green once they are in the scene.',emptyList:'Your list is empty. Use Edit list to add your logs.',
+extraBeams:'<b>Extra beams</b> (drawn, to find or cut) · {n}',drawn:'Drawn',drawing:'Drawing… click two points',drawExtra:'Draw an extra beam',
+logsToCut:'Logs to cut · {n}',colLog:'Log',totalWood:'Total {m} m of wood.',drawNoteCut:'Draw a log with two clicks. Each drawn log is listed here with its exact length.',
+listCount:v=>`${v.n} log${v.n===1?'':'s'}`,badLines:v=>` · ${v.n} line${v.n>1?'s':''} not understood`,continueFrom:'Continue where I left off: {name}',
+wfInv:'My beams',wfDraw:'Free drawing',
+sceneCardTitle:'Click to open · drag the picture to reorder · double-click the name to rename',emptyThumb:'Empty',renameScene:'Rename this scene',dupScene:'Duplicate this scene',delScene:'Delete this scene',deleteQ:'Delete?',
+nLogs:v=>`${v.n} log${v.n===1?'':'s'}`,nBrelages:v=>`${v.n} brelage${v.n===1?'':'s'}`,sceneWord:'Scene',copySuffix:' copy',
+sideHide:'Hide the details panel',sideShow:'Show the details panel',barHide:'Hide the toolbar',barShow:'Show the toolbar',
+signIn:'Sign in',synced:'Synced',saveOnlineTitle:'Save online with a nickname and PIN',syncWaiting:'Changes waiting to sync…',syncing:'Syncing…',
+sessionEnded:'Your session ended. Sign in again to keep syncing.',syncedAt:'Synced at {t}',tooBig:'Too much to sync at once. Delete a few unused scenes.',syncFailed:'Sync failed: {e}',
+anotherDevice:'Another device keeps saving. Try again in a moment.',offlineSaved:'Offline. Your work is saved on this device and will sync later.',syncFailedP:'Sync failed ({e}).',
+createId:'Create my ID',lastSynced:'Last synced {d}',notSynced:'Not synced yet',noServer:'Online saving is not available right now. Your work is saved on this device.',
+'err.bad_username':'Nickname: 3 to 20 letters, numbers, dots, dashes or underscores.','err.bad_pin':'PIN: 4 to 8 digits.','err.taken':'That nickname is taken. Try another one.',
+'err.offline':'Cannot reach the server. Check your connection; your work is saved on this device.',
+pinsDiffer:'The two PINs are different.',creating:'Creating…',signingIn:'Signing in…',wrongPin:'Wrong nickname or PIN.',triesLeft:v=>` ${v.n} tr${v.n===1?'y':'ies'} left before a 15-minute pause.`,
+locked:'Too many wrong PINs. Try again after {t}.',somethingWrong:'Something went wrong ({e}).',
+savedAt:'All scenes saved in this browser · {t}',saveBlocked:'This browser blocks saving. Use Copy design JSON.',
+tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',depth:'depth {d}',
+myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',
+/* fixed page text */
+'s.chInv':'Enter my list of wood beams','s.chDraw':'Use the draw beams tool','s.yourBeams':'Your beams',
+'s.listLead':'One line per log: length, then diameter. Put <b>4x</b> in front for several identical logs, and a name before a colon if you like.',
+'s.yourList':'Your list','s.examples':'Examples: <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diameter defaults to 10 cm.',
+'s.preview':'Preview','s.back':'Back','s.startBuilding':'Start building',
+'s.myId':'My ID','s.close':'Close','s.acctLead':'Save your scenes online and find them on your phone, tablet or computer. No email: just a nickname and a PIN.',
+'s.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
+'s.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
+'s.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
+'s.brandTag':'proto 17 · FR/EN','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Select','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.gridSnap':'Grid snap','s.showGrid':'Show grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
+'s.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
+'s.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
+'s.moveAllT':'Move the whole log from its centre','s.moveAll':'Move the whole log','s.flipBoth':'Flip both ends front / back',
+'s.fewer':'Fewer points','s.more':'More points','s.points':'points','s.delete':'Delete','s.details':'Details','s.logs':'logs','s.connectAll':'Connect all',
+'s.facesH':'Faces for jeux de ficelles','s.session':'Session','s.autosaves':'Autosaves in this browser','s.importH':'Import a design','s.pastePh':'Paste design JSON here',
+'s.loadPasted':'Load pasted design','s.openJson':'Open .json file','s.langT':'Langue : français'
+},
+fr:{
+'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
+'hint.drawMouse':'Cliquez deux points sur la grille · partez d’un bout existant pour garder sa profondeur · clic droit glissé pour tourner · Échap annule',
+'hint.inv':'Glissez des perches de Mes perches dans la vue · ',
+'hint.selTouch':'Touchez une perche pour ses outils · sphère verte : ajouter un brelage · sphère rouge : l’enlever',
+'hint.selMouse':'Sélectionnez une perche : les boutons des bouts déplacent / tournent / passent devant-derrière · ceux du milieu déplacent toute la perche / inversent les deux · sphère verte : ajouter un brelage, sphère rouge : l’enlever',
+clearConfirm:'Cliquez encore pour tout effacer',clearAll:'Tout effacer',copyBlocked:'La copie est bloquée. Le JSON est sélectionné plus haut, copiez-le à la main.',copied:'Copié',copyJson:'Copier le JSON du projet',
+loaded:'{n} perches chargées.',notDesign:'Ce n’est pas un fichier de projet. Il faut une liste « lines » avec des points a et b.',
+possible:v=>v.n>1?`${v.n} brelages possibles pas encore faits`:'1 brelage possible pas encore fait',logsWord:'Perches',nJeux:v=>v.n+' jeu'+(v.n>1?'x':''),
+noFaces:'Pas encore de face fermée. Une face apparaît quand des perches forment une boucle par leurs brelages.',
+endFixed:'Bout {n} fixé',dugBuried:'enterré · {cm} sous terre',metalBrackets:'équerres en métal',fromList:'De votre liste',length:'Longueur',lengthToCut:'Longueur à couper',diameter:'Diamètre',
+noContact:'Aucun contact',restsOn:'Repose sur la perche {ids}',lashedGap:'Brelage sur un écart de {cm} avec la perche {id}',floating:'Flotte à {cm} de la perche {id}',
+jeuMin2:'Un jeu a besoin d’au moins 2 bords. Supprimez-le plutôt.',jeuPick:'Touchez les bords à relier · <b>{k}</b> choisi(s)',jeuBorders:'<b>{k}</b> bords',nStrings:'{n} ficelles',create:'Créer',done:'Terminé',
+selectedLog:'Perche choisie',logN:'Perche {id}',tie:'Liaison',knot:'Nœud',gap:'Écart',apart:'{cm} d’écart',touching:'se touchent',remove:'Enlever',
+knotRule:'Le nœud suit l’angle : parallèles (moins de 15°) c’est un brelage long, 90° ± 15° un brelage carré, sinon un brelage en X. Les perches liées bougent ensemble ; enlevez le brelage pour bouger une perche seule.',
+possibleBrelage:'Brelage possible',axesDist:'Distance entre les axes',possibleNote:'Ces perches sont proches mais pas liées, donc elles s’ignorent. Ajoutez un brelage pour les attacher : elles reposeront l’une sur l’autre et bougeront ensemble.',addBrelage:'Ajouter un brelage',removeBrelage:'Enlever le brelage',
+mCord:'{m} m de ficelle',needs2:'il faut 2 bords',selectedFace:'Face choisie',faceN:'Face {l}',area:'Surface',outOfFlat:'Écart au plan',jeuxOnFace:'Jeux de ficelles sur cette face',newJeu:'Nouveau jeu',jeuN:'Jeu {n}',
+bordersHelp:'Les bords, dans l’ordre autour de la face. Choisissez-en au moins 2, ici ou sur les perches dans la vue.',density:'Densité',ptsPerBorder:'{n} points par bord',createJeu:'Créer le jeu',cancel:'Annuler',deleteJeu:'Supprimer le jeu',addJeu:'Ajouter un jeu de ficelles',
+selection:'Sélection',newLogsDiam:'Diamètre des nouvelles perches',selDrawNote:'Dessinez une perche en deux clics. Partez du bout d’une perche pour relier des perches à des profondeurs différentes.',selNote:'Cliquez une perche pour voir ses outils. Survolez l’endroit où deux perches se croisent : vert ajoute un brelage, rouge l’enlève.',
+dugIn:'Enterré',metalL:'Équerres',fixGround:'Fixer au sol',fixSetTitle:'Fixé au sol. Cliquez pour changer.',fixNearTitle:'Ce bout est près du sol. Cliquez pour le fixer.',
+rotOppFixed:'L’autre bout est fixé au sol : tournez plutôt autour de ce bout-là',rotTitle:'Faire tourner la perche autour de ce bout',front:'Devant',back:'Derrière',
+flipFront:'Ce bout passe devant la perche {ids}. Cliquez pour inverser.',flipBack:'Ce bout passe derrière la perche {ids}. Cliquez pour inverser.',flipNone:'Rien à inverser : ce bout n’est pas lié à une perche plus ancienne',
+takeOut:'Retirer {x} de la scène',deleteLog:'Supprimer la perche {id}',
+myBeams:'Mes perches · {u}/{n} dans la scène',editList:'Modifier la liste',dropAs:'Poser',dropOrient:'Sens de pose',standing:'Debout',lying:'Couchée',
+inSceneTitle:'Dans la scène : cliquez pour la choisir',dragTitle:'Glissez dans la scène',inScene:'Placée',drag:'Glisser',
+dragNote:'Glissez une perche dans la vue pour la placer. Les perches deviennent vertes une fois dans la scène.',emptyList:'Votre liste est vide. Utilisez Modifier la liste pour ajouter vos perches.',
+extraBeams:'<b>Perches en plus</b> (dessinées, à trouver ou couper) · {n}',drawn:'Dessinée',drawing:'Dessin… cliquez deux points',drawExtra:'Dessiner une perche en plus',
+logsToCut:'Perches à couper · {n}',colLog:'Perche',totalWood:'Total : {m} m de bois.',drawNoteCut:'Dessinez une perche en deux clics. Chaque perche dessinée apparaît ici avec sa longueur exacte.',
+listCount:v=>`${v.n} perche${v.n>1?'s':''}`,badLines:v=>` · ${v.n} ligne${v.n>1?'s':''} pas comprise${v.n>1?'s':''}`,continueFrom:'Reprendre où j’en étais : {name}',
+wfInv:'Mes perches',wfDraw:'Dessin libre',
+sceneCardTitle:'Cliquez pour ouvrir · glissez l’image pour réordonner · double-cliquez le nom pour le changer',emptyThumb:'Vide',renameScene:'Renommer cette scène',dupScene:'Dupliquer cette scène',delScene:'Supprimer cette scène',deleteQ:'Supprimer ?',
+nLogs:v=>`${v.n} perche${v.n>1?'s':''}`,nBrelages:v=>`${v.n} brelage${v.n>1?'s':''}`,sceneWord:'Scène',copySuffix:' copie',
+sideHide:'Cacher le panneau de détails',sideShow:'Montrer le panneau de détails',barHide:'Cacher la barre d’outils',barShow:'Montrer la barre d’outils',
+signIn:'Se connecter',synced:'Synchronisé',saveOnlineTitle:'Sauvegarder en ligne avec un pseudo et un code',syncWaiting:'Changements en attente de synchro…',syncing:'Synchro…',
+sessionEnded:'Votre session est terminée. Reconnectez-vous pour continuer la synchro.',syncedAt:'Synchronisé à {t}',tooBig:'Trop de choses à synchroniser d’un coup. Supprimez quelques scènes inutiles.',syncFailed:'Échec de la synchro : {e}',
+anotherDevice:'Un autre appareil sauvegarde en boucle. Réessayez dans un instant.',offlineSaved:'Hors ligne. Votre travail est gardé sur cet appareil et sera synchronisé plus tard.',syncFailedP:'Échec de la synchro ({e}).',
+createId:'Créer mon identifiant',lastSynced:'Dernière synchro {d}',notSynced:'Pas encore synchronisé',noServer:'La sauvegarde en ligne n’est pas disponible pour l’instant. Votre travail est gardé sur cet appareil.',
+'err.bad_username':'Pseudo : 3 à 20 lettres, chiffres, points, tirets ou tirets bas.','err.bad_pin':'Code : 4 à 8 chiffres.','err.taken':'Ce pseudo est déjà pris. Essayez-en un autre.',
+'err.offline':'Impossible de joindre le serveur. Vérifiez votre connexion ; votre travail est gardé sur cet appareil.',
+pinsDiffer:'Les deux codes sont différents.',creating:'Création…',signingIn:'Connexion…',wrongPin:'Pseudo ou code incorrect.',triesLeft:v=>` Encore ${v.n} essai${v.n>1?'s':''} avant une pause de 15 minutes.`,
+locked:'Trop de codes faux. Réessayez après {t}.',somethingWrong:'Un problème est survenu ({e}).',
+savedAt:'Toutes les scènes sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde. Utilisez Copier le JSON du projet.',
+tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
+myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',
+'s.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
+'s.listLead':'Une ligne par perche : la longueur, puis le diamètre. Mettez <b>4x</b> devant pour plusieurs perches identiques, et un nom suivi de deux-points si vous voulez.',
+'s.yourList':'Votre liste','s.examples':'Exemples : <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diamètre par défaut : 10 cm.',
+'s.preview':'Aperçu','s.back':'Retour','s.startBuilding':'Commencer',
+'s.myId':'Mon identifiant','s.close':'Fermer','s.acctLead':'Sauvegardez vos scènes en ligne et retrouvez-les sur téléphone, tablette ou ordinateur. Pas d’e-mail : juste un pseudo et un code.',
+'s.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
+'s.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
+'s.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos scènes sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
+'s.brandTag':'proto 17 · FR/EN','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Choisir','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.gridSnap':'Aimant grille','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
+'s.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
+'s.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
+'s.moveAllT':'Déplacer toute la perche depuis son centre','s.moveAll':'Déplacer toute la perche','s.flipBoth':'Passer les deux bouts devant / derrière',
+'s.fewer':'Moins de points','s.more':'Plus de points','s.points':'points','s.delete':'Supprimer','s.details':'Détails','s.logs':'perches','s.connectAll':'Tout relier',
+'s.facesH':'Faces pour jeux de ficelles','s.session':'Session','s.autosaves':'Sauvegarde automatique dans ce navigateur','s.importH':'Importer un projet','s.pastePh':'Collez le JSON du projet ici',
+'s.loadPasted':'Charger le projet collé','s.openJson':'Ouvrir un fichier .json','s.langT':'Language: English'
+}};
+let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
+  return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
+function t(k,v={}){const d=I18N[lang]||I18N.en;let x=k in d?d[k]:I18N.en[k];if(x==null)return k;if(typeof x==='function')return x(v);
+  return x.replace(/\{(\w+)\}/g,(m,n)=>n in v?v[n]:m)}
+/* page text that is written once in the HTML: [selector, what to set, key] */
+const STATIC=[
+ ['#chInv .ctitle','text','s.chInv'],['#chDraw .ctitle','text','s.chDraw'],['#stepList h1','text','s.yourBeams'],['#stepList .lead','html','s.listLead'],
+ ['label[for=invText]','text','s.yourList'],['#stepList .lecol p.note','html','s.examples'],['#invCount','text','s.preview'],['#listBack','text','s.back'],['#listGo','text','s.startBuilding'],
+ ['#acctTitle','text','s.myId'],['#acctClose','text','s.close'],['#acctClose','aria','s.close'],['#acctOut .lead','text','s.acctLead'],['#tabIn','text','signIn'],['#tabNew','text','createId'],
+ ['label[for=aUser]','text','s.nickname'],['#aUser','ph','s.nickPh'],['label[for=aPin]','text','s.pinLabel'],['label[for=aPin2]','text','s.repeatPin'],['#acctForm p.note','text','s.nickNote'],
+ ['#aNameLbl','text','s.signedAs'],['#aSyncNow','text','s.syncNow'],['#aOutBtn','text','s.signOut'],['#acctIn > p.note:last-child','text','s.acctInNote'],
+ ['.brand span','text','s.brandTag'],['#wfChip','title','s.newDesign'],['.bar .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],
+ ['#bUndo','text','s.undo'],['#bUndo','title','s.undoT'],['#bRedo','text','s.redo'],['#bRedo','title','s.redoT'],
+ ['#cSnap','tail','s.gridSnap'],['#cGrid','tail','s.showGrid'],['#cBase','tail','s.baseDrawing'],['#cLabels','tail','s.labels'],
+ ['#sceneTab .stl','text','s.scenes'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
+ ['#fixPop','aria','fixGround'],['#fixPop > b','text','s.fixThis'],['[data-fix=dig] .ft','text','s.digIn'],['[data-fix=dig] .fd','text','s.digInD'],
+ ['[data-fix=plate] .ft','text','s.metalLB'],['[data-fix=plate] .fd','text','s.metalD'],['[data-fix=none] .ft','text','s.notFixed'],['[data-fix=none] .fd','text','s.notFixedD'],
+ ['#etA [data-act=move]','title','s.moveEnd'],['#etB [data-act=move]','title','s.moveEnd'],['#etA [data-act=flip]','title','s.flipEnd'],['#etB [data-act=flip]','title','s.flipEnd'],
+ ['#etMidMove','title','s.moveAllT'],['#etMidMove','aria','s.moveAll'],['#etMid','title','s.flipBoth'],['#etMid','aria','s.flipBoth'],
+ ['#jbMinus','aria','s.fewer'],['#jbPlus','aria','s.more'],['#jbN + button + span','text','s.points'],['#jbDel','text','s.delete'],['#jbCancel','text','cancel'],
+ ['#sideTab .stl','text','s.details'],['#sBeams + span','text','s.logs'],['#bConnectAll','text','s.connectAll'],['#faceList','prevh2','s.facesH'],['#savedMsg','prevh2','s.session'],
+ ['#savedMsg','text','s.autosaves'],['#bCopy','text','copyJson'],['#bClear','text','clearAll'],['details > summary','text','s.importH'],['#tImport','ph','s.pastePh'],
+ ['#bImport','text','s.loadPasted'],['label[for=fImport]','text','s.openJson']
+];
+function applyStatic(){
+  document.documentElement.lang=lang;
+  for(const [sel,kind,k] of STATIC){const e=document.querySelector(sel);if(!e)continue;const v=t(k);
+    if(kind==='text')e.textContent=v;else if(kind==='html')e.innerHTML=v;else if(kind==='title')e.title=v;
+    else if(kind==='aria')e.setAttribute('aria-label',v);else if(kind==='ph')e.placeholder=v;
+    else if(kind==='tail'){const lb=e.parentNode;const n=[...lb.childNodes].reverse().find(c=>c.nodeType===3);if(n)n.textContent=' '+v}
+    else if(kind==='prevh2'){const h=e.parentNode.querySelector('h2');if(h)h.textContent=v}}
+  document.querySelectorAll('.langbtn').forEach(lb=>{lb.querySelectorAll('[data-l]').forEach(x=>x.classList.toggle('on',x.dataset.l===lang));lb.title=t('s.langT');lb.setAttribute('aria-label',t('s.langT'))});
+}
+applyStatic();
 /* ---------- rules ---------- */
 const R = { lashGap:0.08, jointTol:0.25, endReach:0.1, nodeTol:0.2, gap:0.004, minLen:0.3, minFaceArea:0.02, defaultD:0.10 };
 const DIAMETERS=[0.06,0.08,0.10,0.12,0.14,0.16];
@@ -536,10 +703,10 @@ let libDeleted={},libOrderAt=0;
   if(!scenes||!scenes.length){
     const mine=load();
     scenes=[
-      wrapScene({id:'mine',name:'My design',state:mine||emptyState()}),
-      wrapScene({id:'ex-types',name:'Brelage types',state:exState(EX_TYPES),view:'demo'}),
-      wrapScene({id:'ex-flat',name:'Flat portal',state:exState(EX_FLAT),view:'34'}),
-      wrapScene({id:'ex-depth',name:'Portal with depth',state:exState(EX_DEPTH),view:'34'})
+      wrapScene({id:'mine',name:t('myDesign'),state:mine||emptyState()}),
+      wrapScene({id:'ex-types',name:t('exTypes'),state:exState(EX_TYPES),view:'demo'}),
+      wrapScene({id:'ex-flat',name:t('exFlat'),state:exState(EX_FLAT),view:'34'}),
+      wrapScene({id:'ex-depth',name:t('exDepth'),state:exState(EX_DEPTH),view:'34'})
     ];
     active='mine';
   }
@@ -568,7 +735,8 @@ function previousSave(){try{for(const k of OLD_STORES){const s=localStorage.getI
 function load(){try{const s=localStorage.getItem(STORE);const d=s?JSON.parse(s):previousSave();return d&&valid(d)?normalize(d):null}catch(e){return null}}
 function valid(d){return d&&Array.isArray(d.lines)&&d.lines.every(l=>Array.isArray(l.a)&&Array.isArray(l.b)&&l.a.length>=2&&l.b.length>=2)}
 function libPayload(){return {scenes:scenes.map(x=>({id:x.id,name:x.name,view:x.view,state:x.state,updated:x.updated||0})),deleted:libDeleted,order:scenes.map(x=>x.id),orderAt:libOrderAt}}
-function save(){try{localStorage.setItem(LIB,JSON.stringify({active,...libPayload()}));if(typeof scheduleSync==='function')scheduleSync();$('#savedMsg').textContent='All scenes saved in this browser · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}catch(e){$('#savedMsg').textContent='This browser blocks saving. Use Copy design JSON.'}}
+const hm=d=>d.toLocaleTimeString(lang, {hour:'2-digit',minute:'2-digit'});
+function save(){try{localStorage.setItem(LIB,JSON.stringify({active,...libPayload()}));if(typeof scheduleSync==='function')scheduleSync();$('#savedMsg').textContent=t('savedAt',{t:hm(new Date())})}catch(e){$('#savedMsg').textContent=t('saveBlocked')}}
 function pushHistory(){history.push(JSON.stringify(state));if(history.length>80)history.shift();future=[]}
 
 /* ---------- vector math (arrays) ---------- */
@@ -1145,7 +1313,7 @@ function updatePreview(){
   prevGeo.computeBoundingSphere();preview.computeLineDistances();preview.visible=true;
   const len=d3(pending,hover.p);
   tip.hidden=false;
-  tip.textContent=len<R.minLen?'too short':`log ${m2(len)} · Ø${cm(drawD)}${hover.kind==='level'?' · level':hover.kind==='plumb'?' · plumb':''}${Math.abs(hover.p[2]-pending[2])>0.01?' · depth '+sgn(hover.p[2]-pending[2]):''}`;
+  tip.textContent=len<R.minLen?t('tipShort'):`${t('tipLog',{len:m2(len),d:cm(drawD)})}${hover.kind==='level'?' · '+t('level'):hover.kind==='plumb'?' · '+t('plumb'):''}${Math.abs(hover.p[2]-pending[2])>0.01?' · '+t('depth',{d:sgn(hover.p[2]-pending[2])}):''}`;
   const s=toScreen(V(hover.p));tip.style.left=s.x+'px';tip.style.top=s.y+'px';
 }
 
@@ -1377,8 +1545,8 @@ function setMode(m){
 function updateHint(){
   const touch=matchMedia('(pointer:coarse)').matches;
   $('#hint').textContent=mode==='draw'
-    ?(touch?'Tap two points on the grid plane · snap to ends to connect depths · two fingers to orbit':'Click two points on the grid plane · snap to an existing end to start from its depth · right-drag to orbit · Esc cancels')
-    :(state.workflow==='inventory'?'Drag logs from My beams into the view · ':'')+(touch?'Tap a log for its tools · green sphere: add brelage · red sphere: remove it':'Select a log: end buttons move / rotate / flip front-back · centre buttons move the whole log / flip both · green sphere adds a brelage, red sphere removes it');
+    ?t(touch?'hint.drawTouch':'hint.drawMouse')
+    :(state.workflow==='inventory'?t('hint.inv'):'')+t(touch?'hint.selTouch':'hint.selMouse');
 }
 function flip(id){const l=lineById(id);if(!l)return;pushHistory();l.sideA=-l.sideA;l.sideB=-l.sideB;rebuild()}
 function del(id){pushHistory();state.lines=state.lines.filter(l=>l.id!==id);state.brelages=state.brelages.filter(q=>q.a!==id&&q.b!==id);sel=null;rebuild()}
@@ -1402,12 +1570,12 @@ $('#cLabels').onchange=e=>{showLabels=e.target.checked;rebuild(false)};
 
 let clearArmed=null;
 $('#bClear').onclick=e=>{const b=e.currentTarget;
-  if(!clearArmed){b.classList.add('armed');b.textContent='Click again to clear';clearArmed=setTimeout(()=>{b.classList.remove('armed');b.textContent='Clear all';clearArmed=null},3000);return}
-  clearTimeout(clearArmed);clearArmed=null;b.classList.remove('armed');b.textContent='Clear all';pushHistory();state={version:5,nextId:1,lines:[],brelages:[],ficelles:[],inventory:state.inventory,workflow:state.workflow};sel=null;rebuild()};
+  if(!clearArmed){b.classList.add('armed');b.textContent=t('clearConfirm');clearArmed=setTimeout(()=>{b.classList.remove('armed');b.textContent=t('clearAll');clearArmed=null},3000);return}
+  clearTimeout(clearArmed);clearArmed=null;b.classList.remove('armed');b.textContent=t('clearAll');pushHistory();state={version:5,nextId:1,lines:[],brelages:[],ficelles:[],inventory:state.inventory,workflow:state.workflow};sel=null;rebuild()};
 $('#bCopy').onclick=()=>{const txt=JSON.stringify(state,null,1);const b=$('#bCopy');
-  const fallback=()=>{const d=document.querySelector('details');d.open=true;const t=$('#tImport');t.value=txt;t.select();$('#importMsg').textContent='Copying was blocked. The JSON is selected above, copy it manually.'};
-  try{navigator.clipboard.writeText(txt).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy design JSON',1500)},fallback)}catch(_){fallback()}};
-function importText(txt){try{const d=JSON.parse(txt);if(!valid(d))throw 0;pushHistory();state=normalize(d);sel=null;rebuild();$('#importMsg').textContent=`Loaded ${state.lines.length} beams.`}catch(_){$('#importMsg').textContent='That is not a design file. It needs a "lines" list with a and b points.'}}
+  const fallback=()=>{const d=document.querySelector('details');d.open=true;const ta=$('#tImport');ta.value=txt;ta.select();$('#importMsg').textContent=t('copyBlocked')};
+  try{navigator.clipboard.writeText(txt).then(()=>{b.textContent=t('copied');setTimeout(()=>b.textContent=t('copyJson'),1500)},fallback)}catch(_){fallback()}};
+function importText(txt){try{const d=JSON.parse(txt);if(!valid(d))throw 0;pushHistory();state=normalize(d);sel=null;rebuild();$('#importMsg').textContent=t('loaded',{n:state.lines.length})}catch(_){$('#importMsg').textContent=t('notDesign')}}
 $('#bImport').onclick=()=>importText($('#tImport').value);
 $('#fImport').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>importText(r.result);r.readAsText(f);e.target.value=''};
 window.addEventListener('keydown',e=>{
@@ -1426,17 +1594,17 @@ window.addEventListener('keydown',e=>{
 /* ---------- panel ---------- */
 function renderStats(){
   $('#sBeams').textContent=model.beams.length;$('#sJoints').textContent=model.nodes.length;$('#sFaces').textContent=model.faces.length;
-  const np=model.potentials.length;$('#possRow').hidden=!np;$('#possTxt').textContent=`${np} possible brelage${np>1?'s':''} not tied yet`;
+  const np=model.potentials.length;$('#possRow').hidden=!np;$('#possTxt').textContent=t('possible',{n:np});
   const fl=$('#faceList');
-  fl.innerHTML=model.faces.length?model.faces.map(f=>`<li><button type="button" data-key="${f.key}" class="${sel&&sel.type==='face'&&sel.key===f.key?'on':''}"><span class="letter">${f.letter}</span>Beams ${f.beams.join(', ')}<span class="meta">${(n=>n?n+' jeu'+(n>1?'x':'')+' · ':'')(state.ficelles.filter(j=>j.face===f.key).length)}${f.area.toFixed(2)} m²</span></button></li>`).join('')
-    :'<li class="note">No closed faces yet. Faces appear when beams close a loop through their brelages.</li>';
+  fl.innerHTML=model.faces.length?model.faces.map(f=>`<li><button type="button" data-key="${f.key}" class="${sel&&sel.type==='face'&&sel.key===f.key?'on':''}"><span class="letter">${f.letter}</span>${t('logsWord')} ${f.beams.join(', ')}<span class="meta">${(n=>n?t('nJeux',{n})+' · ':'')(state.ficelles.filter(j=>j.face===f.key).length)}${f.area.toFixed(2)} m²</span></button></li>`).join('')
+    :`<li class="note">${t('noFaces')}</li>`;
   fl.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(sel&&sel.type==='face'&&sel.key===b.dataset.key)return;sel={type:'face',key:b.dataset.key};if(mode==='draw')setMode('select');else rebuild(false)});
   renderStock();
   $('#bUndo').disabled=!history.length;$('#bRedo').disabled=!future.length;
 }
 function beamFacts(b){
-  const fx=['a','b'].filter(e=>b.l['fix'+e.toUpperCase()]).map(e=>{const f=b.l['fix'+e.toUpperCase()];return `<dt>End ${e==='a'?1:2} fixed</dt><dd>${f==='dig'?`dug in · ${cm(b.pick.len*BURY)} buried`:'metal L brackets'}</dd>`}).join('');
-  return (b.pick.inv?`<dt>From your list</dt><dd>${b.pick.label}</dd><dt>Length</dt><dd>${m2(b.pick.len)}</dd><dt>Diameter</dt><dd>${cm(b.pick.r*2)}</dd>`:`<dt>Length${b.buryA+b.buryB>0?' to cut':''}</dt><dd>${m2(b.pick.len)}</dd>`)+fx;
+  const fx=['a','b'].filter(e=>b.l['fix'+e.toUpperCase()]).map(e=>{const f=b.l['fix'+e.toUpperCase()];return `<dt>${t('endFixed',{n:e==='a'?1:2})}</dt><dd>${f==='dig'?t('dugBuried',{cm:cm(b.pick.len*BURY)}):t('metalBrackets')}</dd>`}).join('');
+  return (b.pick.inv?`<dt>${t('fromList')}</dt><dd>${b.pick.label}</dd><dt>${t('length')}</dt><dd>${m2(b.pick.len)}</dd><dt>${t('diameter')}</dt><dd>${cm(b.pick.r*2)}</dd>`:`<dt>${t(b.buryA+b.buryB>0?'lengthToCut':'length')}</dt><dd>${m2(b.pick.len)}</dd>`)+fx;
 }
 function endInfo(b,end){
   const near=b.joints.filter(J=>{const t=J.i===b.i?J.ti:J.tj;return end==='a'?t<0.5:t>=0.5});
@@ -1444,10 +1612,10 @@ function endInfo(b,end){
   const ctl=near.filter(J=>other(J).i<b.i);
   const worst=near.reduce((m,J)=>!m||J.loose>m.loose?J:m,null);
   let status,cls='';
-  if(!near.length)status='No contact';
-  else if(worst.loose<=0.02)status='Rests on beam '+[...new Set(near.map(J=>other(J).l.id))].join(', ');
-  else if(worst.loose<=R.lashGap)status=`Lashed across ${cm(worst.loose)} gap to beam ${other(worst).l.id}`;
-  else{status=`Floating ${cm(worst.loose)} from beam ${other(worst).l.id}`;cls='warn'}
+  if(!near.length)status=t('noContact');
+  else if(worst.loose<=0.02)status=t('restsOn',{ids:[...new Set(near.map(J=>other(J).l.id))].join(', ')});
+  else if(worst.loose<=R.lashGap)status=t('lashedGap',{cm:cm(worst.loose),id:other(worst).l.id});
+  else{status=t('floating',{cm:cm(worst.loose),id:other(worst).l.id});cls='warn'}
   const off=end==='a'?b.offA:b.offB;
   return {near,ctl,status,cls,off};
 }
@@ -1459,7 +1627,7 @@ function endBlock(b,end,label){
     <div class="xyz">x ${p[0].toFixed(2)} · y ${p[1].toFixed(2)} · depth ${p[2].toFixed(2)} m</div>
   </div>`;
 }
-const dChips=cur=>`<div class="dchips" role="group" aria-label="Diameter">${DIAMETERS.map(v=>`<button type="button" data-d="${v}" class="${Math.abs(v-cur)<1e-4?'on':''}">Ø${Math.round(v*100)}</button>`).join('')}</div>`;
+const dChips=cur=>`<div class="dchips" role="group" aria-label="${t('diameter')}">${DIAMETERS.map(v=>`<button type="button" data-d="${v}" class="${Math.abs(v-cur)<1e-4?'on':''}">Ø${Math.round(v*100)}</button>`).join('')}</div>`;
 /* the jeu being edited: an existing one, or a draft not yet created */
 let ficDraft={sides:[],n:12};
 function activeJeu(){
@@ -1471,7 +1639,7 @@ function toggleSide(beam){
   const act=activeJeu();if(!act)return;
   const on=act.sides.includes(beam);
   if(act.id==='new'){ficDraft.sides=on?ficDraft.sides.filter(x=>x!==beam):[...ficDraft.sides,beam];rebuild(false);return}
-  if(on&&act.sides.length<=2){const m=$('#jeuMsg');if(m)m.textContent='A jeu needs at least 2 borders. Delete it instead.';return}
+  if(on&&act.sides.length<=2){const m=$('#jeuMsg');if(m)m.textContent=t('jeuMin2');return}
   pushHistory();act.sides=on?act.sides.filter(x=>x!==beam):[...act.sides,beam];rebuild();
 }
 /* ---------- picking a jeu in 3D: panels fold away, face turns blue, borders are tapped on the logs ---------- */
@@ -1504,10 +1672,10 @@ function updateJeuBar(){
   bar.hidden=!act;$('#hint').classList.toggle('under',!!act);
   if(!act){if(panelMemo)restorePanels();return}
   const k=act.sides.length,S=jeuStrings(act);
-  $('#jeuBarTxt').innerHTML=k<2?`Tap the borders to link · <b>${k}</b> chosen`:`<b>${k}</b> borders · ${S?S.strings.length+' strings · '+S.cord.toFixed(1)+' m':''}`;
+  $('#jeuBarTxt').innerHTML=k<2?t('jeuPick',{k}):t('jeuBorders',{k})+(S?' · '+t('nStrings',{n:S.strings.length})+' · '+S.cord.toFixed(1)+' m':'');
   $('#jbN').textContent=act.n;
   const isNew=act.id==='new';
-  $('#jbOk').textContent=isNew?'Create':'Done';$('#jbOk').disabled=isNew&&k<2;
+  $('#jbOk').textContent=t(isNew?'create':'done');$('#jbOk').disabled=isNew&&k<2;
   $('#jbDel').hidden=isNew;
 }
 $('#jbMinus').onclick=()=>{const a=activeJeu();if(a)setJeuN(a.n-1)};
@@ -1526,54 +1694,54 @@ function renderCard(){
   const card=$('#selCard');
   if(sel&&sel.type==='beam'){
     const b=model.beams.find(x=>x.l.id===sel.id);if(!b){sel=null;return renderCard()}
-    card.innerHTML=`<h2>Selected log</h2><h3>${b.pick.inv?b.pick.label:'Log '+b.l.id}</h3>
+    card.innerHTML=`<h2>${t('selectedLog')}</h2><h3>${b.pick.inv?b.pick.label:t('logN',{id:b.l.id})}</h3>
       <dl class="kv" id="facts">${beamFacts(b)}</dl>
-      ${b.pick.inv?'':`<span class="note">Diameter</span>${dChips(b.l.d||R.defaultD)}`}`;
+      ${b.pick.inv?'':`<span class="note">${t('diameter')}</span>${dChips(b.l.d||R.defaultD)}`}`;
     card.querySelectorAll('.dchips button').forEach(x=>x.onclick=()=>{const v=+x.dataset.d,l=lineById(sel.id);drawD=v;if(Math.abs((l.d||R.defaultD)-v)<1e-4)return;pushHistory();l.d=v;rebuild()});
   }else if(sel&&sel.type==='node'){
     const n=model.nodes.find(n=>n.js.some(J=>J.key===sel.key));
     if(!n){sel=null;return renderCard()}
     const ids=[...n.beams].map(i=>model.beams[i].l.id).sort((a,b)=>a-b);
-    card.innerHTML=`<h2>Brelage</h2><h3>Beams ${ids.join(' × ')}</h3>
-      <table><thead><tr><th>Tie</th><th>Knot</th><th>Gap</th><th></th></tr></thead><tbody>
-      ${n.js.map(J=>{const T=brelageType(J);return `<tr><td>${model.beams[J.i].l.id} × ${model.beams[J.j].l.id}</td><td>${TYPE_NAME[T.type].replace('Brelage ','')} · ${Math.round(T.deg)}°</td><td>${J.broken?'<span class="pill warn">'+cm(J.gap)+' apart</span>':J.loose>0.02?cm(J.loose):'touching'}</td><td><button class="btn danger" type="button" data-rm="${J.key}">Remove</button></td></tr>`}).join('')}</tbody></table>
-      <p class="note">The knot follows the angle: parallel (under 15°) is a brelage long, 90° ± 15° a brelage carré, anything else a brelage en X. Tied beams move together; remove the brelage to move a beam on its own.</p>`;
+    card.innerHTML=`<h2>Brelage</h2><h3>${t('logsWord')} ${ids.join(' × ')}</h3>
+      <table><thead><tr><th>${t('tie')}</th><th>${t('knot')}</th><th>${t('gap')}</th><th></th></tr></thead><tbody>
+      ${n.js.map(J=>{const T=brelageType(J);return `<tr><td>${model.beams[J.i].l.id} × ${model.beams[J.j].l.id}</td><td>${TYPE_NAME[T.type].replace('Brelage ','')} · ${Math.round(T.deg)}°</td><td>${J.broken?'<span class="pill warn">'+t('apart',{cm:cm(J.gap)})+'</span>':J.loose>0.02?cm(J.loose):t('touching')}</td><td><button class="btn danger" type="button" data-rm="${J.key}">${t('remove')}</button></td></tr>`}).join('')}</tbody></table>
+      <p class="note">${t('knotRule')}</p>`;
     card.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>removeBrelage(b.dataset.rm));
   }else if(sel&&sel.type==='potential'){
     const q=model.potentials.find(q=>q.key===sel.key);
     if(!q){sel=null;return renderCard()}
     const [a,b]=q.key.split('-');
-    card.innerHTML=`<h2>Possible brelage</h2><h3>Beam ${a} × Beam ${b}</h3>
-      <dl class="kv"><dt>Distance between axes</dt><dd>${cm(q.gap)}</dd></dl>
-      <p class="note">These beams are close but not tied, so they ignore each other. Add a brelage to lash them: they will then rest on each other and move together.</p>
-      <div class="row"><button class="btn primary" id="bAddBr" type="button">Add brelage</button></div>`;
+    card.innerHTML=`<h2>${t('possibleBrelage')}</h2><h3>${t('logN',{id:a})} × ${t('logN',{id:b})}</h3>
+      <dl class="kv"><dt>${t('axesDist')}</dt><dd>${cm(q.gap)}</dd></dl>
+      <p class="note">${t('possibleNote')}</p>
+      <div class="row"><button class="btn primary" id="bAddBr" type="button">${t('addBrelage')}</button></div>`;
     $('#bAddBr').onclick=()=>addBrelage(q.key);
   }else if(sel&&sel.type==='face'){
     const f=model.faces.find(x=>x.key===sel.key);
     if(!f){sel=null;return renderCard()}
     const jeux=state.ficelles.filter(j=>j.face===f.key),act=activeJeu();
-    const summary=j=>{const S=jeuStrings(j);return S?`${S.strings.length} strings · ${S.cord.toFixed(1)} m of cord`:'needs 2 borders'};
-    const bname=id=>{const l=lineById(id);return l&&l.inv?l.inv:'Log '+id};
-    card.innerHTML=`<h2>Selected face</h2><h3>Face ${f.letter} · ${f.sides.length} borders</h3>
-      <dl class="kv"><dt>Area</dt><dd>${f.area.toFixed(2)} m²</dd><dt>Out of flat</dt><dd>${cm(f.warp)}</dd></dl>
-      <span class="note">Jeux de ficelles on this face</span>
+    const summary=j=>{const S=jeuStrings(j);return S?t('nStrings',{n:S.strings.length})+' · '+t('mCord',{m:S.cord.toFixed(1)}):t('needs2')};
+    const bname=id=>{const l=lineById(id);return l&&l.inv?l.inv:t('logN',{id})};
+    card.innerHTML=`<h2>${t('selectedFace')}</h2><h3>${t('faceN',{l:f.letter})} · ${t('jeuBorders',{k:f.sides.length}).replace(/<\/?b>/g,'')}</h3>
+      <dl class="kv"><dt>${t('area')}</dt><dd>${f.area.toFixed(2)} m²</dd><dt>${t('outOfFlat')}</dt><dd>${cm(f.warp)}</dd></dl>
+      <span class="note">${t('jeuxOnFace')}</span>
       <ul class="list" id="jeuList">${jeux.map((j,k)=>`<li><button type="button" data-jeu="${j.id}" class="${act&&act.id===j.id?'on':''}"><span class="letter">${k+1}</span>${j.sides.map(bname).join(' + ')}<span class="meta">${summary(j)}</span></button></li>`).join('')}</ul>
       ${act?`<div class="depth active">
-        <div class="lbl"><b>${act.id==='new'?'New jeu':'Jeu '+(jeux.findIndex(j=>j.id===act.id)+1)}</b><span class="note">${summary(act)}</span></div>
-        <span class="note">Borders, in order around the face. Pick at least 2, here or on the logs in the view.</span>
+        <div class="lbl"><b>${act.id==='new'?t('newJeu'):t('jeuN',{n:jeux.findIndex(j=>j.id===act.id)+1})}</b><span class="note">${summary(act)}</span></div>
+        <span class="note">${t('bordersHelp')}</span>
         <div class="dchips" id="sideChips">${f.sides.map((sd,i)=>`<button type="button" data-side="${sd.beam}" class="${act.sides.includes(sd.beam)?'on':''}">${i+1} · ${bname(sd.beam)} · ${sd.len.toFixed(2)} m</button>`).join('')}</div>
-        <div class="lbl"><label for="jeuN">Density</label><span id="jeuNv">${act.n} points per border</span></div>
+        <div class="lbl"><label for="jeuN">${t('density')}</label><span id="jeuNv">${t('ptsPerBorder',{n:act.n})}</span></div>
         <input type="range" id="jeuN" min="3" max="40" step="1" value="${act.n}">
-        <div class="row">${act.id==='new'?`<button class="btn primary" id="jeuCreate" type="button" ${act.sides.length<2?'disabled':''}>Create jeu</button><button class="btn" id="jeuCancel" type="button">Cancel</button>`:`<button class="btn" id="jeuDone" type="button">Done</button><button class="btn danger" id="jeuDel" type="button">Delete jeu</button>`}</div>
+        <div class="row">${act.id==='new'?`<button class="btn primary" id="jeuCreate" type="button" ${act.sides.length<2?'disabled':''}>${t('createJeu')}</button><button class="btn" id="jeuCancel" type="button">${t('cancel')}</button>`:`<button class="btn" id="jeuDone" type="button">${t('done')}</button><button class="btn danger" id="jeuDel" type="button">${t('deleteJeu')}</button>`}</div>
         <span class="note" id="jeuMsg"></span>
-      </div>`:`<div class="row"><button class="btn primary" id="jeuAdd" type="button">Add a jeu de ficelles</button></div>`}`;
+      </div>`:`<div class="row"><button class="btn primary" id="jeuAdd" type="button">${t('addJeu')}</button></div>`}`;
     card.querySelectorAll('[data-jeu]').forEach(x=>x.onclick=()=>startJeuEdit(f.key,+x.dataset.jeu));
     const q=id=>card.querySelector('#'+id);
     if(q('jeuAdd'))q('jeuAdd').onclick=()=>startJeuEdit(f.key,'new');
     if(act){
       card.querySelectorAll('#sideChips [data-side]').forEach(x=>x.onclick=()=>toggleSide(+x.dataset.side));
       const rng=q('jeuN');let pushed=false;
-      rng.oninput=()=>{const n=+rng.value;q('jeuNv').textContent=n+' points per border';
+      rng.oninput=()=>{const n=+rng.value;q('jeuNv').textContent=t('ptsPerBorder',{n});
         if(act.id==='new'){ficDraft.n=n}else{if(!pushed){pushHistory();pushed=true}act.n=n}
         model=computeModel();buildScene()};
       rng.onchange=()=>{if(act.id!=='new')rebuild();else renderCard()};
@@ -1583,13 +1751,13 @@ function renderCard(){
       if(q('jeuDel'))q('jeuDel').onclick=()=>deleteJeu();
     }
   }else{
-    card.innerHTML=`<h2>Selection</h2>${state.workflow==='draw'?`<span class="note">Diameter of new logs</span>${dChips(drawD)}`:''}<p class="note">${mode==='draw'?'Draw a log with two clicks. Start on an existing log end to join logs at different depths.':'Click a log to see its tools. Hover where two logs meet: green adds a brelage, red removes one.'}</p>`;
+    card.innerHTML=`<h2>${t('selection')}</h2>${state.workflow==='draw'?`<span class="note">${t('newLogsDiam')}</span>${dChips(drawD)}`:''}<p class="note">${t(mode==='draw'?'selDrawNote':'selNote')}</p>`;
     card.querySelectorAll('.dchips button').forEach(x=>x.onclick=()=>{drawD=+x.dataset.d;renderCard()});
   }
 }
 function renderPanel(){renderStats();renderCard();updateBeamTools();updateFixChips();updateJeuBar()}
 /* ---------- fix to the ground ---------- */
-const FIX_NAME={dig:'Dug in',plate:'Metal L'};
+const FIX_NAME={get dig(){return t('dugIn')},get plate(){return t('metalL')}};
 let fixPopFor=null;
 const nearGround=(b,end)=>(end==='a'?b.G1:b.G2)[1]<0.35;
 function updateFixChips(){
@@ -1597,8 +1765,8 @@ function updateFixChips(){
   for(const end of ['a','b']){
     const c=$('#fixChip'+end.toUpperCase()),f=b?b.l['fix'+end.toUpperCase()]:null;
     c.hidden=!b||!(f||nearGround(b,end));if(c.hidden)continue;
-    c.textContent=f?FIX_NAME[f]:'Fix to the ground';c.classList.toggle('set',!!f);
-    c.title=f?'Fixed to the ground. Click to change.':'This end is near the ground. Click to fix it.';
+    c.textContent=f?FIX_NAME[f]:t('fixGround');c.classList.toggle('set',!!f);
+    c.title=t(f?'fixSetTitle':'fixNearTitle');
   }
   if(!b||(fixPopFor&&fixPopFor.id!==b.l.id))closeFixPop();
 }
@@ -1663,10 +1831,10 @@ function updateBeamTools(){
     box.querySelector('[data-act=move]').classList.toggle('on',sel.end===end&&sel.tool!=='rotate');
     const rb=box.querySelector('[data-act=rotate]'),oppFixed=b.l['fix'+(end==='a'?'B':'A')];
     rb.classList.toggle('on',sel.end===end&&sel.tool==='rotate');rb.disabled=!!oppFixed;
-    rb.title=oppFixed?'The other end is fixed to the ground: rotate around that end instead':'Rotate the beam around this end';
+    rb.title=t(oppFixed?'rotOppFixed':'rotTitle');
     const fb=box.querySelector('[data-act=flip]');fb.disabled=!info.ctl.length;
-    fb.querySelector('span').textContent=info.ctl.length?(side?'Front':'Back'):'–';
-    fb.title=info.ctl.length?`This end sits ${side?'in front of':'behind'} beam ${[...new Set(info.ctl.map(J=>model.beams[J.i===b.i?J.j:J.i].l.id))].join(', ')}. Click to flip.`:'Nothing to flip: this end is not tied to an earlier beam';
+    fb.querySelector('span').textContent=info.ctl.length?t(side?'front':'back'):'–';
+    fb.title=info.ctl.length?t(side?'flipFront':'flipBack',{ids:[...new Set(info.ctl.map(J=>model.beams[J.i===b.i?J.j:J.i].l.id))].join(', ')}):t('flipNone');
   }
   $('#midTools').hidden=!b;if(b){$('#etMid').disabled=!b.earlier;$('#etMidMove').classList.toggle('on',sel.tool==='moveAll')}
 }
@@ -1715,18 +1883,18 @@ function parseList(txt){
 const usedBy=()=>{const m=new Map();for(const l of state.lines)if(l.inv)m.set(l.inv,l.id);return m};
 function removeBtn(){
   const b=sel&&sel.type==='beam'?model.beams.find(x=>x.l.id===sel.id):null;if(!b)return '';
-  return `<div class="row"><button class="btn danger" id="bDel" type="button">${b.pick.inv?`Take ${b.pick.label} out of scene`:`Delete log ${b.l.id}`}</button></div>`;
+  return `<div class="row"><button class="btn danger" id="bDel" type="button">${b.pick.inv?t('takeOut',{x:b.pick.label}):t('deleteLog',{id:b.l.id})}</button></div>`;
 }
 function renderStock(){
   const sec=$('#stockSec');
   if(state.workflow==='inventory'){
     const used=usedBy(),nUsed=used.size;
-    sec.innerHTML=`<div class="row" style="justify-content:space-between"><h2>My beams · ${nUsed}/${state.inventory.length} in scene</h2><button class="btn" id="bEditList" type="button">Edit list</button></div>
-      <div class="row"><span class="note">Drop as</span><div class="seg" role="group" aria-label="Drop orientation"><button type="button" data-o="up" class="${dropOrient==='up'?'on':''}">Standing</button><button type="button" data-o="lying" class="${dropOrient==='lying'?'on':''}">Lying</button></div></div>
-      <ul class="stock" id="stockList">${state.inventory.map(q=>{const u=used.get(q.id);return `<li data-id="${q.id}" class="${u?'used':''} ${u&&sel&&sel.type==='beam'&&sel.id===u?'on':''}" title="${u?'In the scene: click to select it':'Drag into the scene'}"><span class="grip"></span><span class="nm">${q.id}</span><span class="dim">${q.len.toFixed(2)} m · Ø${cm(q.d)}</span><span class="st">${u?'In scene':'Drag'}</span></li>`}).join('')}</ul>
-      ${state.inventory.length?'<p class="note">Drag a log into the view to place it. Logs turn green once they are in the scene.</p>':'<p class="note">Your list is empty. Use Edit list to add your logs.</p>'}
-      ${(()=>{const ex=model.beams.filter(b=>!b.pick.inv);return ex.length?`<span class="note"><b>Extra beams</b> (drawn, to find or cut) · ${ex.length}</span><ul class="stock">${ex.map(b=>`<li class="extra ${sel&&sel.type==='beam'&&sel.id===b.l.id?'on':''}" data-extra="${b.l.id}"><span class="grip" style="visibility:hidden"></span><span class="nm">+${b.l.id}</span><span class="dim">${b.pick.len.toFixed(2)} m · Ø${cm(b.r*2)}</span><span class="st">Drawn</span></li>`).join('')}</ul>`:''})()}
-      <div class="row"><button class="btn ${mode==='draw'?'primary':''}" id="bDrawExtra" type="button">${mode==='draw'?'Drawing… click two points':'Draw an extra beam'}</button></div>
+    sec.innerHTML=`<div class="row" style="justify-content:space-between"><h2>${t('myBeams',{u:nUsed,n:state.inventory.length})}</h2><button class="btn" id="bEditList" type="button">${t('editList')}</button></div>
+      <div class="row"><span class="note">${t('dropAs')}</span><div class="seg" role="group" aria-label="${t('dropOrient')}"><button type="button" data-o="up" class="${dropOrient==='up'?'on':''}">${t('standing')}</button><button type="button" data-o="lying" class="${dropOrient==='lying'?'on':''}">${t('lying')}</button></div></div>
+      <ul class="stock" id="stockList">${state.inventory.map(q=>{const u=used.get(q.id);return `<li data-id="${q.id}" class="${u?'used':''} ${u&&sel&&sel.type==='beam'&&sel.id===u?'on':''}" title="${t(u?'inSceneTitle':'dragTitle')}"><span class="grip"></span><span class="nm">${q.id}</span><span class="dim">${q.len.toFixed(2)} m · Ø${cm(q.d)}</span><span class="st">${t(u?'inScene':'drag')}</span></li>`}).join('')}</ul>
+      <p class="note">${t(state.inventory.length?'dragNote':'emptyList')}</p>
+      ${(()=>{const ex=model.beams.filter(b=>!b.pick.inv);return ex.length?`<span class="note">${t('extraBeams',{n:ex.length})}</span><ul class="stock">${ex.map(b=>`<li class="extra ${sel&&sel.type==='beam'&&sel.id===b.l.id?'on':''}" data-extra="${b.l.id}"><span class="grip" style="visibility:hidden"></span><span class="nm">+${b.l.id}</span><span class="dim">${b.pick.len.toFixed(2)} m · Ø${cm(b.r*2)}</span><span class="st">${t('drawn')}</span></li>`).join('')}</ul>`:''})()}
+      <div class="row"><button class="btn ${mode==='draw'?'primary':''}" id="bDrawExtra" type="button">${t(mode==='draw'?'drawing':'drawExtra')}</button></div>
       ${removeBtn()}`;
     $('#bEditList').onclick=()=>openStart('list',true);
     $('#bDrawExtra').onclick=()=>setMode(mode==='draw'?'select':'draw');
@@ -1740,8 +1908,8 @@ function renderStock(){
   }else{
     const logs=model.beams.map(b=>({id:b.l.id,len:b.pick.len,d:b.r*2})).sort((a,b)=>b.len-a.len);
     const tot=logs.reduce((s,q)=>s+q.len,0);
-    sec.innerHTML=`<h2>Logs to cut · ${logs.length}</h2>
-      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>Log</th><th>Length</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div><p class="note">Total ${tot.toFixed(1)} m of wood.</p>`:'<p class="note">Draw a log with two clicks. Each drawn log is listed here with its exact length.</p>'}${removeBtn()}`;
+    sec.innerHTML=`<h2>${t('logsToCut',{n:logs.length})}</h2>
+      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div><p class="note">${t('totalWood',{m:tot.toFixed(1)})}</p>`:`<p class="note">${t('drawNoteCut')}</p>`}${removeBtn()}`;
   }
   const rb=$('#bDel');if(rb)rb.onclick=()=>del(sel.id);
 }
@@ -1789,22 +1957,22 @@ function openStart(step,edit=false){
   $('#stepChoose').hidden=step!=='choose';$('#stepList').hidden=step!=='list';
   if(step==='choose'){
     const c=$('#chContinue'),n=state.lines.length;
-    c.hidden=!n;c.textContent=`Continue where I left off: ${cur().name}`;
+    c.hidden=!n;c.textContent=t('continueFrom',{name:cur().name});
   }else{
     const withList=listEdit?cur():scenes.find(x=>x.state.inventory&&x.state.inventory.length);
-    const inv0=withList?withList.state.inventory:[],t=$('#invText');t.value=inv0.length?inv0.map(q=>`${/^P\d+$/.test(q.id)?'':q.id+': '}${q.len} m ${Math.round(q.d*100)} cm`).join('\n'):SAMPLE_LIST;
-    previewList();t.focus();
+    const inv0=withList?withList.state.inventory:[],ta=$('#invText');ta.value=inv0.length?inv0.map(q=>`${/^P\d+$/.test(q.id)?'':q.id+': '}${q.len} m ${Math.round(q.d*100)} cm`).join('\n'):SAMPLE_LIST;
+    previewList();ta.focus();
   }
 }
 function previewList(){
   const {items,bad}=parseList($('#invText').value);
-  $('#invCount').textContent=`${items.length} log${items.length===1?'':'s'}${bad.length?` · ${bad.length} line${bad.length>1?'s':''} not understood`:''}`;
+  $('#invCount').textContent=t('listCount',{n:items.length})+(bad.length?t('badLines',{n:bad.length}):'');
   $('#invPrev').innerHTML=items.map(q=>`<li><span>${q.id}</span><span>${q.len.toFixed(2)} m · Ø${cm(q.d)}</span></li>`).join('')+bad.map(b=>`<li class="bad"><span>${b.replace(/</g,'&lt;')}</span><span>?</span></li>`).join('');
   $('#listGo').disabled=!items.length;
 }
 function applyWorkflow(){
   const inv=state.workflow==='inventory';
-  $('#wfChip').textContent=inv?'My beams':'Free drawing';
+  $('#wfChip').textContent=t(inv?'wfInv':'wfDraw');
   /* the list is the main tool when building with your beams; the cut list sits lower when drawing */
   const st=$('#stockSec'),side=st.parentNode;
   side.insertBefore(st,$('#selCard').nextSibling); /* selected log first, then the list of logs */
@@ -1826,8 +1994,8 @@ $('#listGo').onclick=()=>{
 };
 $('#chDraw').onclick=()=>{if(state.lines.length)newScene();pushHistory();state={version:5,nextId:1,lines:[],brelages:[],ficelles:[],inventory:[],workflow:'draw'};sel=null;$('#start').hidden=true;applyWorkflow();setMode('draw');setView('front');rebuild()};
 $('#chContinue').onclick=()=>{$('#start').hidden=true;applyWorkflow();rebuild(false)};
-const openDemo=()=>{$('#start').hidden=true;let d=scenes.find(x=>x.name==='Brelage types');
-  if(!d){storeCurrent();d=wrapScene({id:newId(),name:'Brelage types',view:'demo',state:exState(EX_TYPES)});scenes.push(d);openScene(d);return}
+const openDemo=()=>{$('#start').hidden=true;let d=scenes.find(x=>x.name===t('exTypes'));
+  if(!d){storeCurrent();d=wrapScene({id:newId(),name:t('exTypes'),view:'demo',state:exState(EX_TYPES)});scenes.push(d);openScene(d);return}
   switchScene(d.id)};
 $('#wfChip').onclick=()=>openStart('choose');
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#start').hidden&&state.lines.length){$('#start').hidden=true}},true);
@@ -1861,10 +2029,10 @@ const ICON_DEL='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
 function renderScenes(){
   const card=sc=>{const n=sc.state.lines.length,nb=(sc.state.brelages||[]).length;
-    return `<div class="scard ${sc.id===active?'on':''}" data-id="${sc.id}" role="button" tabindex="0" aria-pressed="${sc.id===active}" title="Click to open · drag the picture to reorder · double-click the name to rename">
-      <div class="thumb">${sc.thumb?`<img src="${sc.thumb}" alt="" draggable="false">`:'<span class="noimg">Empty</span>'}
-        <div class="sacts"><button type="button" data-act="ren" title="Rename this scene">${ICON_REN}</button><button type="button" data-act="dup" title="Duplicate this scene">${ICON_DUP}</button><button type="button" data-act="del" title="Delete this scene">${ICON_DEL}</button></div></div>
-      <b class="sname">${esc(sc.name)}</b><span>${n} log${n===1?'':'s'} · ${nb} brelage${nb===1?'':'s'}</span></div>`};
+    return `<div class="scard ${sc.id===active?'on':''}" data-id="${sc.id}" role="button" tabindex="0" aria-pressed="${sc.id===active}" title="${t('sceneCardTitle')}">
+      <div class="thumb">${sc.thumb?`<img src="${sc.thumb}" alt="" draggable="false">`:`<span class="noimg">${t('emptyThumb')}</span>`}
+        <div class="sacts"><button type="button" data-act="ren" title="${t('renameScene')}">${ICON_REN}</button><button type="button" data-act="dup" title="${t('dupScene')}">${ICON_DUP}</button><button type="button" data-act="del" title="${t('delScene')}">${ICON_DEL}</button></div></div>
+      <b class="sname">${esc(sc.name)}</b><span>${t('nLogs',{n})} · ${t('nBrelages',{n:nb})}</span></div>`};
   const list=$('#sceneList');list.innerHTML=scenes.map(card).join('');
   list.querySelectorAll('.scard').forEach(c=>{
     const id=c.dataset.id;
@@ -1873,17 +2041,17 @@ function renderScenes(){
     c.querySelector('[data-act=dup]').onclick=e=>{e.stopPropagation();duplicateScene(id)};
     const del=c.querySelector('[data-act=del]');
     del.onclick=e=>{e.stopPropagation();
-      if(!del.classList.contains('armed')){del.classList.add('armed');del.textContent='Delete?';setTimeout(()=>{if(del.isConnected){del.classList.remove('armed');del.innerHTML=ICON_DEL}},3000);return}
+      if(!del.classList.contains('armed')){del.classList.add('armed');del.textContent=t('deleteQ');setTimeout(()=>{if(del.isConnected){del.classList.remove('armed');del.innerHTML=ICON_DEL}},3000);return}
       deleteScene(id)};
     const nm=c.querySelector('.sname');
     const ren=c.querySelector('[data-act=ren]');
     const startRename=e=>{e.stopPropagation();nm.contentEditable='true';nm.focus();try{getSelection().selectAllChildren(nm)}catch(_){}
-      ren.classList.add('done');ren.innerHTML=ICON_OK;ren.title='Done';c.classList.add('renaming')};
+      ren.classList.add('done');ren.innerHTML=ICON_OK;ren.title=t('done');c.classList.add('renaming')};
     nm.addEventListener('dblclick',startRename);
     ren.addEventListener('pointerdown',e=>{if(nm.contentEditable==='true')e.preventDefault()}); /* keep the text focused until the click */
     ren.onclick=e=>{e.stopPropagation();if(nm.contentEditable==='true')nm.blur();else startRename(e)};
     nm.addEventListener('keydown',e=>{if(nm.contentEditable!=='true')return;e.stopPropagation();if(e.key==='Enter'){e.preventDefault();nm.blur()}if(e.key==='Escape'){nm.textContent=sceneById(id).name;nm.blur()}});
-    nm.addEventListener('blur',()=>{if(nm.contentEditable!=='true')return;nm.contentEditable='false';ren.classList.remove('done');ren.innerHTML=ICON_REN;ren.title='Rename this scene';c.classList.remove('renaming');const t=nm.textContent.trim().slice(0,40);const sc=sceneById(id);if(t&&t!==sc.name){sc.name=t;sc.updated=Date.now();save()}nm.textContent=sc.name});
+    nm.addEventListener('blur',()=>{if(nm.contentEditable!=='true')return;nm.contentEditable='false';ren.classList.remove('done');ren.innerHTML=ICON_REN;ren.title=t('renameScene');c.classList.remove('renaming');const nn=nm.textContent.trim().slice(0,40);const sc=sceneById(id);if(nn&&nn!==sc.name){sc.name=nn;sc.updated=Date.now();save()}nm.textContent=sc.name});
     c.querySelector('.thumb').addEventListener('pointerdown',e=>startSceneDrag(e,c));
   });
 }
@@ -1940,7 +2108,7 @@ function startSceneDrag(e,card){
   /* on the window: moving the card in the page would drop a captured pointer */
   window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);
 }
-function nextSceneName(base='Scene'){let n=1;for(const x of scenes){const m=x.name.match(new RegExp('^'+base+' (\\d+)$'));if(m)n=Math.max(n,+m[1]+1)}return base+' '+n}
+function nextSceneName(base=t('sceneWord')){let n=1;for(const x of scenes){const m=x.name.match(new RegExp('^'+base+' (\\d+)$'));if(m)n=Math.max(n,+m[1]+1)}return base+' '+n}
 function storeCurrent(){const c=cur();if(!c)return;c.history=history;c.future=future;c.cam={p:camera.position.toArray(),t:controls.target.toArray()};c.thumb=makeThumb()||c.thumb}
 function openScene(n){
   active=n.id;state=n.state;history=n.history;future=n.future;sel=null;pending=null;
@@ -1962,7 +2130,7 @@ function newScene(atTop=true){
 }
 function duplicateScene(id){
   const src=sceneById(id);if(!src)return;if(id===active)storeCurrent();
-  const n=wrapScene({id:newId(),name:(src.name+' copy').slice(0,40),view:src.view,state:clone(src.state),thumb:src.thumb,cam:src.cam,updated:Date.now()});libOrderAt=Date.now();
+  const n=wrapScene({id:newId(),name:(src.name+t('copySuffix')).slice(0,40),view:src.view,state:clone(src.state),thumb:src.thumb,cam:src.cam,updated:Date.now()});libOrderAt=Date.now();
   scenes.splice(scenes.indexOf(src)+1,0,n);renderScenes();save();
 }
 function deleteScene(id){
@@ -1970,7 +2138,7 @@ function deleteScene(id){
   libDeleted[id]=Date.now();
   if(id!==active){scenes.splice(i,1);renderScenes();save();return}
   closeFixPop();scenes.splice(i,1);
-  if(!scenes.length)scenes.push(wrapScene({id:newId(),name:'Scene 1',state:emptyState(),updated:Date.now()}));
+  if(!scenes.length)scenes.push(wrapScene({id:newId(),name:t('sceneWord')+' 1',state:emptyState(),updated:Date.now()}));
   openScene(scenes[Math.min(i,scenes.length-1)]);
 }
 $('#sceneNew').onclick=()=>{newScene();$('#start').hidden=true};
@@ -1981,12 +2149,12 @@ function setScenesOpen(open){
 $('#sceneTab').onclick=()=>{const o=$('#scenes').classList.contains('closed');if(o&&innerWidth<760)setSideOpen(false);setScenesOpen(o)};
 function setSideOpen(open){
   $('#side').classList.toggle('closed',!open);$('#sideTab').setAttribute('aria-expanded',open);
-  $('#sideTab .arr').textContent=open?'›':'‹';$('#sideTab').title=open?'Hide the details panel':'Show the details panel';
+  $('#sideTab .arr').textContent=open?'›':'‹';$('#sideTab').title=t(open?'sideHide':'sideShow');
   try{localStorage.setItem('atelier-side-open',open?'1':'0')}catch(_){}
 }
 function setBarOpen(open){
   $('#bar').classList.toggle('closed',!open);$('#barTab').setAttribute('aria-expanded',open);
-  $('#barTab .arr').textContent=open?'▴':'▾';$('#barTab').title=open?'Hide the toolbar':'Show the toolbar';
+  $('#barTab .arr').textContent=open?'▴':'▾';$('#barTab').title=t(open?'barHide':'barShow');
   try{localStorage.setItem('atelier-bar-open',open?'1':'0')}catch(_){}
 }
 /* on a phone only one side panel fits: opening one tucks the other away */
@@ -2046,34 +2214,34 @@ function applyLib(lib){
 let syncTimer=null,syncing=false,syncAgain=false,syncState='idle';
 function setSyncState(st,msg){
   syncState=st;const d=$('#acctDot');d.className='dot '+({ok:'ok',busy:'busy',err:'err'}[st]||'');
-  $('#acctLbl').textContent=acct?acct.username:'Sign in';
-  $('#acctBtn').title=acct?(msg||'Synced'):'Save online with a nickname and PIN';
+  $('#acctLbl').textContent=acct?acct.username:t('signIn');
+  $('#acctBtn').title=acct?(msg||t('synced')):t('saveOnlineTitle');
   const el=$('#aSync');if(el)el.textContent=msg||'';
 }
-function scheduleSync(ms=2500){if(!acct||!cloudReady())return;clearTimeout(syncTimer);setSyncState('busy','Changes waiting to sync…');syncTimer=setTimeout(syncNow,ms)}
+function scheduleSync(ms=2500){if(!acct||!cloudReady())return;clearTimeout(syncTimer);setSyncState('busy',t('syncWaiting'));syncTimer=setTimeout(syncNow,ms)}
 async function syncNow(){
   if(!acct||!cloudReady())return;
   if(syncing){syncAgain=true;return}
   if(gizmoDrag||stockDrag||sDrag){syncTimer=setTimeout(syncNow,1500);return}
-  syncing=true;setSyncState('busy','Syncing…');
+  syncing=true;setSyncState('busy',t('syncing'));
   try{
     for(let attempt=0;attempt<4;attempt++){
       const r=await rpc('am_load',{p_token:acct.token});
-      if(r.error==='signed_out'){signOutLocal('Your session ended. Sign in again to keep syncing.');return}
+      if(r.error==='signed_out'){signOutLocal(t('sessionEnded'));return}
       const merged=mergeLibs(libPayload(),r.data||{});
       applyLib(merged);
       const mine=libPayload();
-      if(stable(mine)===stable(r.data||{})){acct.rev=r.rev;acct.lastSync=Date.now();lsSet(ACCT,acct);setSyncState('ok','Synced at '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));return} /* nothing new to send */
+      if(stable(mine)===stable(r.data||{})){acct.rev=r.rev;acct.lastSync=Date.now();lsSet(ACCT,acct);setSyncState('ok',t('syncedAt',{t:hm(new Date())}));return} /* nothing new to send */
       const w=await rpc('am_save',{p_token:acct.token,p_data:mine,p_base_rev:r.rev});
       if(w.conflict)continue;           /* someone saved in between: merge again */
-      if(w.error==='too_big'){setSyncState('err','Too much to sync at once. Delete a few unused scenes.');return}
-      if(w.error){setSyncState('err','Sync failed: '+w.error);return}
+      if(w.error==='too_big'){setSyncState('err',t('tooBig'));return}
+      if(w.error){setSyncState('err',t('syncFailed',{e:w.error}));return}
       acct.rev=w.rev;acct.lastSync=Date.now();lsSet(ACCT,acct);
-      setSyncState('ok','Synced at '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));
+      setSyncState('ok',t('syncedAt',{t:hm(new Date())}));
       return;
     }
-    setSyncState('err','Another device keeps saving. Try again in a moment.');
-  }catch(e){setSyncState('err',e.message==='offline'?'Offline. Your work is saved on this device and will sync later.':'Sync failed ('+e.message+').')}
+    setSyncState('err',t('anotherDevice'));
+  }catch(e){setSyncState('err',e.message==='offline'?t('offlineSaved'):t('syncFailedP',{e:e.message}))}
   finally{syncing=false;if(syncAgain){syncAgain=false;scheduleSync(800)}}
 }
 function signOutLocal(msg){acct=null;lsSet(ACCT,null);setSyncState('idle');renderAcct();if(msg){openAcct();$('#aErr').textContent=msg}}
@@ -2083,9 +2251,9 @@ function renderAcct(){
   const signed=!!acct;$('#acctOut').hidden=signed;$('#acctIn').hidden=!signed;
   $('#acct').classList.toggle('newmode',acctMode==='new');
   $('#tabIn').classList.toggle('on',acctMode==='in');$('#tabNew').classList.toggle('on',acctMode==='new');
-  $('#aGo').textContent=acctMode==='new'?'Create my ID':'Sign in';
-  if(signed){$('#aName').textContent=acct.username;$('#aSync').textContent=acct.lastSync?'Last synced '+new Date(acct.lastSync).toLocaleString([], {dateStyle:'short',timeStyle:'short'}):'Not synced yet'}
-  if(!cloudReady())$('#aErr').textContent=signed?'':'Online saving is not available right now. Your work is saved on this device.';
+  $('#aGo').textContent=t(acctMode==='new'?'createId':'signIn');
+  if(signed){$('#aName').textContent=acct.username;$('#aSync').textContent=acct.lastSync?t('lastSynced',{d:new Date(acct.lastSync).toLocaleString(lang, {dateStyle:'short',timeStyle:'short'})}):t('notSynced')}
+  if(!cloudReady())$('#aErr').textContent=signed?'':t('noServer');
 }
 function openAcct(){$('#aErr').textContent='';renderAcct();$('#acct').hidden=false;setTimeout(()=>{const f=acct?$('#aSyncNow'):$('#aUser');try{f.focus({preventScroll:true})}catch(_){}},30)}
 function closeAcct(){$('#acct').hidden=true}
@@ -2094,26 +2262,26 @@ $('#acct').addEventListener('pointerdown',e=>{if(e.target===$('#acct'))closeAcct
 $('#acct').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();closeAcct()}});
 $('#tabIn').onclick=()=>{acctMode='in';$('#aErr').textContent='';renderAcct()};
 $('#tabNew').onclick=()=>{acctMode='new';$('#aErr').textContent='';renderAcct()};
-const ERR={bad_username:'Nickname: 3 to 20 letters, numbers, dots, dashes or underscores.',bad_pin:'PIN: 4 to 8 digits.',taken:'That nickname is taken. Try another one.',no_server:'Online saving is not available right now. Your work is saved on this device.',offline:'Cannot reach the server. Check your connection; your work is saved on this device.'};
+const ERR={get bad_username(){return t('err.bad_username')},get bad_pin(){return t('err.bad_pin')},get taken(){return t('err.taken')},get no_server(){return t('noServer')},get offline(){return t('err.offline')}};
 $('#acctForm').addEventListener('submit',async e=>{
   e.preventDefault();const err=$('#aErr');err.textContent='';
   const u=$('#aUser').value.trim().toLowerCase(),pin=$('#aPin').value.trim();
   if(!/^[a-z0-9_.-]{3,20}$/.test(u)){err.textContent=ERR.bad_username;return}
   if(!/^[0-9]{4,8}$/.test(pin)){err.textContent=ERR.bad_pin;return}
-  if(acctMode==='new'&&pin!==$('#aPin2').value.trim()){err.textContent='The two PINs are different.';return}
-  const go=$('#aGo');go.disabled=true;go.textContent=acctMode==='new'?'Creating…':'Signing in…';
+  if(acctMode==='new'&&pin!==$('#aPin2').value.trim()){err.textContent=t('pinsDiffer');return}
+  const go=$('#aGo');go.disabled=true;go.textContent=t(acctMode==='new'?'creating':'signingIn');
   try{
     const r=await rpc(acctMode==='new'?'am_register':'am_login',{p_username:u,p_pin:pin});
     if(r.error){
-      if(r.error==='wrong')err.textContent='Wrong nickname or PIN.'+(r.left!=null?` ${r.left} tr${r.left===1?'y':'ies'} left before a 15-minute pause.`:'');
-      else if(r.error==='locked')err.textContent='Too many wrong PINs. Try again after '+new Date(r.until).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})+'.';
-      else err.textContent=ERR[r.error]||('Something went wrong ('+r.error+').');
+      if(r.error==='wrong')err.textContent=t('wrongPin')+(r.left!=null?t('triesLeft',{n:r.left}):'');
+      else if(r.error==='locked')err.textContent=t('locked',{t:hm(new Date(r.until))});
+      else err.textContent=ERR[r.error]||t('somethingWrong',{e:r.error});
       return;
     }
     acct={username:r.username,token:r.token,rev:null,lastSync:0};lsSet(ACCT,acct);
     $('#aPin').value='';$('#aPin2').value='';
-    renderAcct();setSyncState('busy','Syncing…');await syncNow();renderAcct();
-  }catch(ex){err.textContent=ERR[ex.message]||('Something went wrong ('+ex.message+').')}
+    renderAcct();setSyncState('busy',t('syncing'));await syncNow();renderAcct();
+  }catch(ex){err.textContent=ERR[ex.message]||t('somethingWrong',{e:ex.message})}
   finally{go.disabled=false;renderAcct()}
 });
 $('#aSyncNow').onclick=async()=>{await syncNow();renderAcct()};
@@ -2157,8 +2325,13 @@ applyWorkflow();setMode(state.workflow==='inventory'||state.lines.length?'select
   const phone=innerWidth<760,get=(k,d)=>{try{return localStorage.getItem(k)??d}catch(_){return d}};
   setScenesOpen(get('atelier-scenes-open',phone?'0':'1')==='1');setSideOpen(get('atelier-side-open',phone?'0':'1')==='1');
   if(phone&&!$('#scenes').classList.contains('closed')&&!$('#side').classList.contains('closed'))setSideOpen(false);setBarOpen(get('atelier-bar-open','1')==='1')}
+const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}
+  applyStatic();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
+  setSideOpen(!$('#side').classList.contains('closed'));setBarOpen(!$('#bar').classList.contains('closed'));
+  if(!$('#start').hidden&&!$('#stepChoose').hidden)openStart('choose');else if(!$('#start').hidden)previewList()};
+document.querySelectorAll('.langbtn').forEach(b=>b.onclick=switchLang);
 renderScenes();openStart('choose');loop();
-setSyncState(acct?'busy':'idle',acct?'Syncing…':'');if(acct)syncNow();
+setSyncState(acct?'busy':'idle',acct?t('syncing'):'');if(acct)syncNow();
 })();
 </script>
 
