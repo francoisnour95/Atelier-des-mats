@@ -80,7 +80,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-vi
 .scenelist h3{font:600 11px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 2px 0}
 .snew{margin:10px 10px 0;border:1.5px dashed var(--line);background:transparent;color:var(--muted);border-radius:8px;padding:9px;cursor:pointer;font:600 13px var(--f-display);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px}
 .snew span[aria-hidden]{font:600 18px/1 var(--f-body)}
-.snew .snl{white-space:nowrap}
+.snew .snl{white-space:normal;text-align:center}
+.env-camp .hint{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 8px rgba(0,0,0,.5)}
 .snew:hover{border-color:var(--accent);color:var(--accent)}
 .scenes.closed .snew{display:none}
 .scard .thumb{position:relative;touch-action:none;cursor:grab}
@@ -275,6 +276,23 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
   .snew{font-size:12px;letter-spacing:.03em;padding:9px 6px}.snew .snl{white-space:normal}}
 /* closed side panels shrink to their label */
 .scenes.closed,.side.closed{align-self:start}
+.leftcol>.scenes.closed{align-self:flex-start}
+.decor{display:flex;flex-direction:column;width:196px;overflow:hidden;flex:none}
+.decor .scenetab{border-bottom:1px solid var(--glass-sep)}
+.decor.closed{width:40px}
+.decor.closed .scenetab{flex-direction:column;border-bottom:0;padding:12px 0 14px}
+.decor.closed .scenetab .stl{writing-mode:vertical-rl}
+.decor.closed .decorbody{display:none}
+.decorbody{display:flex;flex-direction:column;gap:8px;padding:10px}
+.dopts{display:flex;gap:8px}
+.dopt{flex:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:6px;border:1.5px solid var(--glass-sep);background:var(--glass-2);border-radius:10px;padding:6px;cursor:pointer;color:var(--fg);font:600 12px var(--f-body);text-align:center}
+.dopt:hover{border-color:var(--muted)}
+.dopt.on{border-color:var(--accent);background:var(--accent-soft)}
+.dopt.busy .dname::after{content:' …'}
+.dsw{display:block;width:100%;aspect-ratio:16/10;border-radius:6px}
+.dsw.studio{background:linear-gradient(#1c211e 0 52%,#2a312c 52% 100%)}
+.dsw.camp{background:url(env/camp-thumb.jpg) center/cover,linear-gradient(#9cc0dc 0,#d9e6ee 46%,#3d5a31 47%,#7a9a52 100%)}
+@media (max-width:760px){.decor:not(.closed){width:168px}}
 .scenes.closed .scenetab,.side.closed .sidetab{height:auto;padding:12px 0 14px}
 /* the main controls, always at the bottom middle */
 .dock{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:8px;padding:6px;border-radius:99px;
@@ -339,7 +357,11 @@ details[open] summary{margin-bottom:8px}
   .view{position:absolute;inset:0;border-radius:0;z-index:0;pointer-events:auto}
   .bar{position:relative;z-index:1}
   .work{pointer-events:none} /* the empty middle lets clicks reach the 3D view underneath */
-  .work>.scenes{grid-column:1;grid-row:1;pointer-events:auto;position:relative;z-index:1}
+  .leftcol{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:0;pointer-events:none}
+  .leftcol>.scenes,.leftcol>.decor{pointer-events:auto;position:relative;z-index:1}
+  .leftcol>.scenes:not(.closed){flex:1 1 auto}
+  .decor{background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
+    border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),var(--glass-shadow);border-radius:18px}
   .work>.side{grid-column:3;grid-row:1;pointer-events:auto;position:relative;z-index:1}
   .bar,.scenes,.side{background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
     border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-line),inset 0 -1px 0 rgba(255,255,255,.04),var(--glass-shadow);border-radius:18px}
@@ -461,7 +483,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 21 · dock</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 22 · decor</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -475,11 +497,23 @@ details[open] summary{margin-bottom:8px}
   </header>
 
   <main class="work" id="work">
+    <div class="leftcol">
     <aside class="scenes" id="scenes">
-      <button class="scenetab" id="sceneTab" type="button" aria-expanded="true" aria-controls="sceneList"><span class="arr" aria-hidden="true">‹</span><span class="stl">Scenes</span></button>
-      <button class="snew" id="sceneNew" type="button"><span aria-hidden="true">+</span> <span class="snl">New scene</span></button>
+      <button class="scenetab" id="sceneTab" type="button" aria-expanded="true" aria-controls="sceneList"><span class="arr" aria-hidden="true">‹</span><span class="stl">Installations</span></button>
+      <button class="snew" id="sceneNew" type="button"><span aria-hidden="true">+</span> <span class="snl">New installation</span></button>
       <div class="scenelist" id="sceneList"></div>
     </aside>
+    <aside class="decor closed" id="decor">
+      <button class="scenetab" id="decorTab" type="button" aria-expanded="false" aria-controls="decorBody"><span class="arr" aria-hidden="true">›</span><span class="stl">Environment</span></button>
+      <div class="decorbody" id="decorBody">
+        <div class="dopts">
+          <button type="button" class="dopt" data-env="studio"><span class="dsw studio" aria-hidden="true"></span><span class="dname">Studio</span></button>
+          <button type="button" class="dopt" data-env="camp"><span class="dsw camp" aria-hidden="true"></span><span class="dname">Campsite</span></button>
+        </div>
+        <p class="note" id="decorMsg" hidden></p>
+      </div>
+    </aside>
+    </div>
     <div class="view draw" id="view">
       <div id="labels"></div>
       <div class="snap" id="snapdot" hidden></div>
@@ -516,7 +550,7 @@ details[open] summary{margin-bottom:8px}
         <div class="stepper"><button type="button" id="jbMinus" aria-label="Fewer points">−</button><b id="jbN">12</b><button type="button" id="jbPlus" aria-label="More points">+</button><span>points</span></div>
         <div class="jbbtns"><button type="button" class="btn danger" id="jbDel" hidden>Delete</button><button type="button" class="btn" id="jbCancel">Cancel</button><button type="button" class="btn primary" id="jbOk">Create</button></div>
       </div>
-      <div class="sharebar" id="shareBar" role="region" aria-label="Shared scene" hidden>
+      <div class="sharebar" id="shareBar" role="region" aria-label="Shared installation" hidden>
         <div class="sbt"><b id="sbName"></b><span id="sbFrom"></span></div>
         <div class="sbb"><button type="button" class="btn primary" id="sbSave">Save a copy</button><button type="button" class="btn" id="sbClose">Close</button></div>
       </div>
@@ -604,26 +638,26 @@ selection:'Selection',newLogsDiam:'Diameter of new logs',selDrawNote:'Draw a log
 dugIn:'Dug in',metalL:'Metal L',fixGround:'Fix to the ground',fixSetTitle:'Fixed to the ground. Click to change.',fixNearTitle:'This end is near the ground. Click to fix it.',
 rotOppFixed:'The other end is fixed to the ground: rotate around that end instead',rotTitle:'Rotate the beam around this end',front:'Front',back:'Back',
 flipFront:'This end sits in front of beam {ids}. Click to flip.',flipBack:'This end sits behind beam {ids}. Click to flip.',flipNone:'Nothing to flip: this end is not tied to an earlier beam',
-takeOut:'Take {x} out of scene',deleteLog:'Delete log {id}',
-myBeams:'My beams · {u}/{n} in scene',editList:'Edit list',dropAs:'Drop as',dropOrient:'Drop orientation',standing:'Standing',lying:'Lying',
-inSceneTitle:'In the scene: click to select it',dragTitle:'Drag into the scene',inScene:'In scene',drag:'Drag',
-dragNote:'Drag a log into the view to place it. Logs turn green once they are in the scene.',emptyList:'Your list is empty. Use Edit list to add your logs.',
+takeOut:'Take {x} out of the installation',deleteLog:'Delete log {id}',
+myBeams:'My beams · {u}/{n} in the installation',editList:'Edit list',dropAs:'Drop as',dropOrient:'Drop orientation',standing:'Standing',lying:'Lying',
+inSceneTitle:'In the installation: click to select it',dragTitle:'Drag into the installation',inScene:'Placed',drag:'Drag',
+dragNote:'Drag a log into the view to place it. Logs turn green once they are in the installation.',emptyList:'Your list is empty. Use Edit list to add your logs.',
 extraBeams:'<b>Extra beams</b> (drawn, to find or cut) · {n}',drawn:'Drawn',drawing:'Drawing… click two points',drawExtra:'Draw an extra beam',
 logsToCut:'Logs to cut · {n}',colLog:'Log',totalWood:'Total {m} m of wood.',drawNoteCut:'Draw a log with two clicks. Each drawn log is listed here with its exact length.',
 listCount:v=>`${v.n} log${v.n===1?'':'s'}`,badLines:v=>` · ${v.n} line${v.n>1?'s':''} not understood`,continueFrom:'Continue where I left off: {name}',
 wfInv:'My beams',wfDraw:'Free drawing',
-sceneCardTitle:'Click to open · drag the picture to reorder · double-click the name to rename',emptyThumb:'Empty',renameScene:'Rename this scene',dupScene:'Duplicate this scene',delScene:'Delete this scene',deleteQ:'Delete?',
-nLogs:v=>`${v.n} log${v.n===1?'':'s'}`,nBrelages:v=>`${v.n} brelage${v.n===1?'':'s'}`,sceneWord:'Scene',copySuffix:' copy',
+sceneCardTitle:'Click to open · drag the picture to reorder · double-click the name to rename',emptyThumb:'Empty',renameScene:'Rename this installation',dupScene:'Duplicate this installation',delScene:'Delete this installation',deleteQ:'Delete?',
+nLogs:v=>`${v.n} log${v.n===1?'':'s'}`,nBrelages:v=>`${v.n} brelage${v.n===1?'':'s'}`,sceneWord:'Installation',copySuffix:' copy',
 sideHide:'Hide the details panel',sideShow:'Show the details panel',barHide:'Hide the toolbar',barShow:'Show the toolbar',
 signIn:'Sign in',synced:'Synced',saveOnlineTitle:'Save online with a nickname and PIN',syncWaiting:'Changes waiting to sync…',syncing:'Syncing…',
-sessionEnded:'Your session ended. Sign in again to keep syncing.',syncedAt:'Synced at {t}',tooBig:'Too much to sync at once. Delete a few unused scenes.',syncFailed:'Sync failed: {e}',
+sessionEnded:'Your session ended. Sign in again to keep syncing.',syncedAt:'Synced at {t}',tooBig:'Too much to sync at once. Delete a few unused installations.',syncFailed:'Sync failed: {e}',
 anotherDevice:'Another device keeps saving. Try again in a moment.',offlineSaved:'Offline. Your work is saved on this device and will sync later.',syncFailedP:'Sync failed ({e}).',
 createId:'Create my ID',lastSynced:'Last synced {d}',notSynced:'Not synced yet',noServer:'Online saving is not available right now. Your work is saved on this device.',
 'err.bad_username':'Nickname: 3 to 20 letters, numbers, dots, dashes or underscores.','err.bad_pin':'PIN: 4 to 8 digits.','err.taken':'That nickname is taken. Try another one.',
 'err.offline':'Cannot reach the server. Check your connection; your work is saved on this device.',
 pinsDiffer:'The two PINs are different.',creating:'Creating…',signingIn:'Signing in…',wrongPin:'Wrong nickname or PIN.',triesLeft:v=>` ${v.n} tr${v.n===1?'y':'ies'} left before a 15-minute pause.`,
 locked:'Too many wrong PINs. Try again after {t}.',somethingWrong:'Something went wrong ({e}).',
-savedAt:'All scenes saved in this browser · {t}',saveBlocked:'This browser blocks saving. Use Copy design JSON.',
+savedAt:'All installations saved in this browser · {t}',saveBlocked:'This browser blocks saving. Use Copy design JSON.',
 tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',depth:'depth {d}',
 myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',
 /* fixed page text */
@@ -631,28 +665,28 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.listLead':'One line per log: length, then diameter. Put <b>4x</b> in front for several identical logs, and a name before a colon if you like.',
 's.yourList':'Your list','s.examples':'Examples: <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diameter defaults to 10 cm.',
 's.preview':'Preview','s.back':'Back','s.startBuilding':'Start building',
-'s.myId':'My ID','s.close':'Close','s.acctLead':'Save your scenes online and find them on your phone, tablet or computer. No email: just a nickname and a PIN.',
+'s.myId':'My ID','s.close':'Close','s.acctLead':'Save your installations online and find them on your phone, tablet or computer. No email: just a nickname and a PIN.',
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
-'s.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your scenes are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 21 · dock','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Knots','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
-'s.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Scenes','s.newScene':'New scene',
+'s.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
+'s.brandTag':'proto 22 · decor','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Knots','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
 's.moveAllT':'Move the whole log from its centre','s.moveAll':'Move the whole log','s.flipBoth':'Flip both ends front / back',
 's.fewer':'Fewer points','s.more':'More points','s.points':'points','s.delete':'Delete','s.details':'Details','s.logs':'logs','s.connectAll':'Connect all',
 's.facesH':'Faces for jeux de ficelles','s.session':'Session','s.autosaves':'Autosaves in this browser','s.importH':'Import a design','s.pastePh':'Paste design JSON here',
 's.loadPasted':'Load pasted design','s.openJson':'Open .json file','s.langT':'Langue : français',
-installApp:'Install the app on this device',installShort:'Install the app','s.ios1':'Open this page in Safari.','s.ios2a':'Tap the Share button','s.ios2b':'at the bottom of the screen.','s.ios3':'Scroll down and tap “Add to Home Screen”, then “Add”.','s.ios4':'The app gets its own icon and works without internet. It keeps its own copy of your scenes, so sign in with your ID to find them there.',
-share:'Share',shareScene:'Share this scene',shareH:'Share a scene',shareMaking:'Making the link…',shareCopy:'Copy link',shareCopied:'Copied',shareSend:'Send…',
-shareNote:'Anyone with this link can open this scene until {d}. It is a copy of the scene as it is now: later changes are not included.',
-shareText:'My scene “{name}” on Atelier des Mâts',shareNeedsId:'Sign in or create your ID to share a scene.',keepNeedsId:'Sign in or create your ID to keep this scene with your scenes.',
-shareTooMany:'Too many links made in the last hour. Try again later.',shareFailed:'Could not make the link ({e}).',shareTempFirst:'Save a copy of this scene before sharing it.',
+installApp:'Install the app on this device',installShort:'Install the app','s.ios1':'Open this page in Safari.','s.ios2a':'Tap the Share button','s.ios2b':'at the bottom of the screen.','s.ios3':'Scroll down and tap “Add to Home Screen”, then “Add”.','s.ios4':'The app gets its own icon and works without internet. It keeps its own copy of your installations, so sign in with your ID to find them there.',
+share:'Share',shareScene:'Share this installation',shareH:'Share an installation',shareMaking:'Making the link…',shareCopy:'Copy link',shareCopied:'Copied',shareSend:'Send…',
+shareNote:'Anyone with this link can open this installation until {d}. It is a copy of the installation as it is now: later changes are not included.',
+shareText:'My installation “{name}” on Atelier des Mâts',shareNeedsId:'Sign in or create your ID to share an installation.',keepNeedsId:'Sign in or create your ID to keep this installation with your installations.',
+shareTooMany:'Too many links made in the last hour. Try again later.',shareFailed:'Could not make the link ({e}).',shareTempFirst:'Save a copy of this installation before sharing it.',
 sharedBy:'Shared by {from} · not saved',sharedTag:'Shared · not saved',saveCopy:'Save a copy',closeShared:'Close',closeSharedT:'Close without saving',
-openingShared:'Opening the shared scene…',sharedH:'Shared scene',shareNotFound:'This link does not work. Check that it was copied whole.',
+openingShared:'Opening the shared installation…',sharedH:'Shared installation',shareNotFound:'This link does not work. Check that it was copied whole.',
 shareExpired:'This link has expired. Links last 14 days: ask for a new one.',shareOffline:'Cannot reach the server to open this link. Check your connection.',
-ok:'OK',retry:'Try again',keptCopy:'Saved in your scenes.',
-delLogT:'Delete this log',takeOutT:'Take this log out of the scene',confirmDel:'Tap again to delete'
+ok:'OK',retry:'Try again',keptCopy:'Saved in your installations.',
+delLogT:'Delete this log','s.decor':'Environment','s.studio':'Studio','s.camp':'Campsite',decorFail:'Could not load the campsite picture. Check your connection.',takeOutT:'Take this log out of the installation',confirmDel:'Tap again to delete'
 },
 fr:{
 'hint.drawTouch':'Touchez deux points sur la grille · partez d’un bout pour relier les profondeurs · deux doigts pour tourner',
@@ -676,54 +710,54 @@ selection:'Sélection',newLogsDiam:'Diamètre des nouvelles perches',selDrawNote
 dugIn:'Enterré',metalL:'Équerres',fixGround:'Fixer au sol',fixSetTitle:'Fixé au sol. Cliquez pour changer.',fixNearTitle:'Ce bout est près du sol. Cliquez pour le fixer.',
 rotOppFixed:'L’autre bout est fixé au sol : tournez plutôt autour de ce bout-là',rotTitle:'Faire tourner la perche autour de ce bout',front:'Devant',back:'Derrière',
 flipFront:'Ce bout passe devant la perche {ids}. Cliquez pour inverser.',flipBack:'Ce bout passe derrière la perche {ids}. Cliquez pour inverser.',flipNone:'Rien à inverser : ce bout n’est pas lié à une perche plus ancienne',
-takeOut:'Retirer {x} de la scène',deleteLog:'Supprimer la perche {id}',
-myBeams:'Mes perches · {u}/{n} dans la scène',editList:'Modifier la liste',dropAs:'Poser',dropOrient:'Sens de pose',standing:'Debout',lying:'Couchée',
-inSceneTitle:'Dans la scène : cliquez pour la choisir',dragTitle:'Glissez dans la scène',inScene:'Placée',drag:'Glisser',
-dragNote:'Glissez une perche dans la vue pour la placer. Les perches deviennent vertes une fois dans la scène.',emptyList:'Votre liste est vide. Utilisez Modifier la liste pour ajouter vos perches.',
+takeOut:'Retirer {x} de l’installation',deleteLog:'Supprimer la perche {id}',
+myBeams:'Mes perches · {u}/{n} dans l’installation',editList:'Modifier la liste',dropAs:'Poser',dropOrient:'Sens de pose',standing:'Debout',lying:'Couchée',
+inSceneTitle:'Dans l’installation : cliquez pour la choisir',dragTitle:'Glissez dans l’installation',inScene:'Placée',drag:'Glisser',
+dragNote:'Glissez une perche dans la vue pour la placer. Les perches deviennent vertes une fois dans l’installation.',emptyList:'Votre liste est vide. Utilisez Modifier la liste pour ajouter vos perches.',
 extraBeams:'<b>Perches en plus</b> (dessinées, à trouver ou couper) · {n}',drawn:'Dessinée',drawing:'Dessin… cliquez deux points',drawExtra:'Dessiner une perche en plus',
 logsToCut:'Perches à couper · {n}',colLog:'Perche',totalWood:'Total : {m} m de bois.',drawNoteCut:'Dessinez une perche en deux clics. Chaque perche dessinée apparaît ici avec sa longueur exacte.',
 listCount:v=>`${v.n} perche${v.n>1?'s':''}`,badLines:v=>` · ${v.n} ligne${v.n>1?'s':''} pas comprise${v.n>1?'s':''}`,continueFrom:'Reprendre où j’en étais : {name}',
 wfInv:'Mes perches',wfDraw:'Dessin libre',
-sceneCardTitle:'Cliquez pour ouvrir · glissez l’image pour réordonner · double-cliquez le nom pour le changer',emptyThumb:'Vide',renameScene:'Renommer cette scène',dupScene:'Dupliquer cette scène',delScene:'Supprimer cette scène',deleteQ:'Supprimer ?',
-nLogs:v=>`${v.n} perche${v.n>1?'s':''}`,nBrelages:v=>`${v.n} brelage${v.n>1?'s':''}`,sceneWord:'Scène',copySuffix:' copie',
+sceneCardTitle:'Cliquez pour ouvrir · glissez l’image pour réordonner · double-cliquez le nom pour le changer',emptyThumb:'Vide',renameScene:'Renommer cette installation',dupScene:'Dupliquer cette installation',delScene:'Supprimer cette installation',deleteQ:'Supprimer ?',
+nLogs:v=>`${v.n} perche${v.n>1?'s':''}`,nBrelages:v=>`${v.n} brelage${v.n>1?'s':''}`,sceneWord:'Installation',copySuffix:' copie',
 sideHide:'Cacher le panneau de détails',sideShow:'Montrer le panneau de détails',barHide:'Cacher la barre d’outils',barShow:'Montrer la barre d’outils',
 signIn:'Se connecter',synced:'Synchronisé',saveOnlineTitle:'Sauvegarder en ligne avec un pseudo et un code',syncWaiting:'Changements en attente de synchro…',syncing:'Synchro…',
-sessionEnded:'Votre session est terminée. Reconnectez-vous pour continuer la synchro.',syncedAt:'Synchronisé à {t}',tooBig:'Trop de choses à synchroniser d’un coup. Supprimez quelques scènes inutiles.',syncFailed:'Échec de la synchro : {e}',
+sessionEnded:'Votre session est terminée. Reconnectez-vous pour continuer la synchro.',syncedAt:'Synchronisé à {t}',tooBig:'Trop de choses à synchroniser d’un coup. Supprimez quelques installations inutiles.',syncFailed:'Échec de la synchro : {e}',
 anotherDevice:'Un autre appareil sauvegarde en boucle. Réessayez dans un instant.',offlineSaved:'Hors ligne. Votre travail est gardé sur cet appareil et sera synchronisé plus tard.',syncFailedP:'Échec de la synchro ({e}).',
 createId:'Créer mon identifiant',lastSynced:'Dernière synchro {d}',notSynced:'Pas encore synchronisé',noServer:'La sauvegarde en ligne n’est pas disponible pour l’instant. Votre travail est gardé sur cet appareil.',
 'err.bad_username':'Pseudo : 3 à 20 lettres, chiffres, points, tirets ou tirets bas.','err.bad_pin':'Code : 4 à 8 chiffres.','err.taken':'Ce pseudo est déjà pris. Essayez-en un autre.',
 'err.offline':'Impossible de joindre le serveur. Vérifiez votre connexion ; votre travail est gardé sur cet appareil.',
 pinsDiffer:'Les deux codes sont différents.',creating:'Création…',signingIn:'Connexion…',wrongPin:'Pseudo ou code incorrect.',triesLeft:v=>` Encore ${v.n} essai${v.n>1?'s':''} avant une pause de 15 minutes.`,
 locked:'Trop de codes faux. Réessayez après {t}.',somethingWrong:'Un problème est survenu ({e}).',
-savedAt:'Toutes les scènes sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde. Utilisez Copier le JSON du projet.',
+savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde. Utilisez Copier le JSON du projet.',
 tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
 myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',
 's.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
 's.listLead':'Une ligne par perche : la longueur, puis le diamètre. Mettez <b>4x</b> devant pour plusieurs perches identiques, et un nom suivi de deux-points si vous voulez.',
 's.yourList':'Votre liste','s.examples':'Exemples : <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diamètre par défaut : 10 cm.',
 's.preview':'Aperçu','s.back':'Retour','s.startBuilding':'Commencer',
-'s.myId':'Mon identifiant','s.close':'Fermer','s.acctLead':'Sauvegardez vos scènes en ligne et retrouvez-les sur téléphone, tablette ou ordinateur. Pas d’e-mail : juste un pseudo et un code.',
+'s.myId':'Mon identifiant','s.close':'Fermer','s.acctLead':'Sauvegardez vos installations en ligne et retrouvez-les sur téléphone, tablette ou ordinateur. Pas d’e-mail : juste un pseudo et un code.',
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
-'s.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos scènes sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 21 · dock','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Nouer','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
-'s.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Scènes','s.newScene':'Nouvelle scène',
+'s.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
+'s.brandTag':'proto 22 · decor','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Nouer','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
 's.moveAllT':'Déplacer toute la perche depuis son centre','s.moveAll':'Déplacer toute la perche','s.flipBoth':'Passer les deux bouts devant / derrière',
 's.fewer':'Moins de points','s.more':'Plus de points','s.points':'points','s.delete':'Supprimer','s.details':'Détails','s.logs':'perches','s.connectAll':'Tout relier',
 's.facesH':'Faces pour jeux de ficelles','s.session':'Session','s.autosaves':'Sauvegarde automatique dans ce navigateur','s.importH':'Importer un projet','s.pastePh':'Collez le JSON du projet ici',
 's.loadPasted':'Charger le projet collé','s.openJson':'Ouvrir un fichier .json','s.langT':'Language: English',
-installApp:'Installer l’appli sur cet appareil',installShort:'Installer l’appli','s.ios1':'Ouvrez cette page dans Safari.','s.ios2a':'Touchez le bouton Partager','s.ios2b':'en bas de l’écran.','s.ios3':'Descendez et touchez « Sur l’écran d’accueil », puis « Ajouter ».','s.ios4':'L’appli a sa propre icône et marche sans internet. Elle garde sa propre copie de vos scènes : connectez-vous avec votre identifiant pour les y retrouver.',
-share:'Partager',shareScene:'Partager cette scène',shareH:'Partager une scène',shareMaking:'Création du lien…',shareCopy:'Copier le lien',shareCopied:'Copié',shareSend:'Envoyer…',
-shareNote:'Toute personne qui a ce lien peut ouvrir cette scène jusqu’au {d}. C’est une copie de la scène telle qu’elle est maintenant : les changements suivants n’y sont pas.',
-shareText:'Ma scène « {name} » sur Atelier des Mâts',shareNeedsId:'Connectez-vous ou créez votre identifiant pour partager une scène.',keepNeedsId:'Connectez-vous ou créez votre identifiant pour garder cette scène avec les vôtres.',
-shareTooMany:'Trop de liens créés dans la dernière heure. Réessayez plus tard.',shareFailed:'Impossible de créer le lien ({e}).',shareTempFirst:'Enregistrez une copie de cette scène avant de la partager.',
+installApp:'Installer l’appli sur cet appareil',installShort:'Installer l’appli','s.ios1':'Ouvrez cette page dans Safari.','s.ios2a':'Touchez le bouton Partager','s.ios2b':'en bas de l’écran.','s.ios3':'Descendez et touchez « Sur l’écran d’accueil », puis « Ajouter ».','s.ios4':'L’appli a sa propre icône et marche sans internet. Elle garde sa propre copie de vos installations : connectez-vous avec votre identifiant pour les y retrouver.',
+share:'Partager',shareScene:'Partager cette installation',shareH:'Partager une installation',shareMaking:'Création du lien…',shareCopy:'Copier le lien',shareCopied:'Copié',shareSend:'Envoyer…',
+shareNote:'Toute personne qui a ce lien peut ouvrir cette installation jusqu’au {d}. C’est une copie de l’installation telle qu’elle est maintenant : les changements suivants n’y sont pas.',
+shareText:'Mon installation « {name} » sur Atelier des Mâts',shareNeedsId:'Connectez-vous ou créez votre identifiant pour partager une installation.',keepNeedsId:'Connectez-vous ou créez votre identifiant pour garder cette installation avec les vôtres.',
+shareTooMany:'Trop de liens créés dans la dernière heure. Réessayez plus tard.',shareFailed:'Impossible de créer le lien ({e}).',shareTempFirst:'Enregistrez une copie de cette installation avant de la partager.',
 sharedBy:'Partagée par {from} · pas enregistrée',sharedTag:'Partagée · pas enregistrée',saveCopy:'Enregistrer une copie',closeShared:'Fermer',closeSharedT:'Fermer sans enregistrer',
-openingShared:'Ouverture de la scène partagée…',sharedH:'Scène partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
+openingShared:'Ouverture de l’installation partagée…',sharedH:'Installation partagée',shareNotFound:'Ce lien ne marche pas. Vérifiez qu’il a été copié en entier.',
 shareExpired:'Ce lien a expiré. Les liens durent 14 jours : demandez-en un nouveau.',shareOffline:'Impossible de joindre le serveur pour ouvrir ce lien. Vérifiez votre connexion.',
-ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos scènes.',
-delLogT:'Supprimer cette perche',takeOutT:'Retirer cette perche de la scène',confirmDel:'Touchez encore pour supprimer'
+ok:'OK',retry:'Réessayer',keptCopy:'Enregistrée dans vos installations.',
+delLogT:'Supprimer cette perche','s.decor':'Environnement','s.studio':'Studio','s.camp':'Au camp',decorFail:'Impossible de charger l’image du camp. Vérifiez votre connexion.',takeOutT:'Retirer cette perche de l’installation',confirmDel:'Touchez encore pour supprimer'
 }};
 let lang=(()=>{try{const v=localStorage.getItem('atelier-lang');if(v==='fr'||v==='en')return v}catch(_){}
   return /^fr\b/i.test((navigator.languages&&navigator.languages[0])||navigator.language||'')?'fr':'en'})();
@@ -739,7 +773,7 @@ const STATIC=[
  ['.brand span','text','s.brandTag'],['#dock .seg','aria','s.mode'],['#mDraw','text','s.draw'],['#mSelect','text','s.select'],
  ['#bUndo','aria','s.undo'],['#bUndo','title','s.undoT'],['#bRedo','aria','s.redo'],['#bRedo','title','s.redoT'],
  ['#cSnap','tail','s.gridSnap'],['#cGrid','tail','s.showGrid'],['#cBase','tail','s.baseDrawing'],['#cLabels','tail','s.labels'],
- ['#sceneTab .stl','text','s.scenes'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
+ ['#sceneTab .stl','text','s.scenes'],['#decorTab .stl','text','s.decor'],['[data-env=studio] .dname','text','s.studio'],['[data-env=camp] .dname','text','s.camp'],['#sceneNew .snl','text','s.newScene'],['#potChip','text','addBrelage'],['#remChip','text','removeBrelage'],
  ['#fixPop','aria','fixGround'],['#fixPop > b','text','s.fixThis'],['[data-fix=dig] .ft','text','s.digIn'],['[data-fix=dig] .fd','text','s.digInD'],
  ['[data-fix=plate] .ft','text','s.metalLB'],['[data-fix=plate] .fd','text','s.metalD'],['[data-fix=none] .ft','text','s.notFixed'],['[data-fix=none] .fd','text','s.notFixedD'],
  ['#etA [data-act=move]','title','s.moveEnd'],['#etB [data-act=move]','title','s.moveEnd'],['#etA [data-act=flip]','title','s.flipEnd'],['#etB [data-act=flip]','title','s.flipEnd'],
@@ -1080,6 +1114,55 @@ const sun=new THREE.DirectionalLight(0xfff0da,1.15);sun.position.set(5,9,7);sun.
 sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-9,right:9,top:9,bottom:-9,near:1,far:40});
 scene.add(sun);
 const ground=new THREE.Mesh(new THREE.PlaneGeometry(80,80),new THREE.MeshStandardMaterial({color:0x2a312c,roughness:1}));
+/* ---------- scenery: studio, or a 360° campsite photo projected on a dome with a flat floor ----------
+   The photo's lower half is laid on the ground (y = 0) as seen from a camera ENV_H above it, out to ENV_R;
+   beyond that it wraps onto the dome. It is only a backdrop: the logs keep the studio lights. */
+const ENV_H=1.7,ENV_R=60,STUDIO_FOG=scene.fog;
+const sky=new THREE.Mesh(new THREE.SphereGeometry(150,48,24),new THREE.ShaderMaterial({
+  uniforms:{map:{value:null},h:{value:ENV_H},r:{value:ENV_R},yaw:{value:0.5}},
+  vertexShader:'varying vec3 vW;void main(){vec4 w=modelMatrix*vec4(position,1.0);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}',
+  fragmentShader:`uniform sampler2D map;uniform float h;uniform float r;uniform float yaw;varying vec3 vW;
+    void main(){
+      vec3 rd=normalize(vW-cameraPosition);
+      vec3 ro=cameraPosition-vec3(0.0,h,0.0);           /* the photo was taken h above the ground */
+      float b=dot(ro,rd),c=dot(ro,ro)-r*r,d=b*b-c;
+      vec3 dir=rd;
+      if(d>0.0){
+        float t=-b+sqrt(d);                              /* where the ray leaves the dome */
+        if(rd.y<0.0)t=min(t,(-h-ro.y)/rd.y);             /* or meets the flat floor first */
+        dir=normalize(ro+rd*t);
+      }
+      vec2 uv=vec2(atan(dir.z,dir.x)*0.15915494+0.5+yaw,asin(clamp(dir.y,-1.0,1.0))*0.31830989+0.5);
+      gl_FragColor=texture2D(map,uv);
+    }`,
+  side:THREE.BackSide,depthWrite:false,depthTest:false,fog:false}));
+sky.renderOrder=-1000;sky.frustumCulled=false;sky.visible=false;scene.add(sky);
+/* in the campsite the floor is the photo: an invisible plane still hides what is under the ground, a shadow plane keeps the shadows */
+const groundHide=new THREE.Mesh(new THREE.PlaneGeometry(400,400),new THREE.MeshBasicMaterial({colorWrite:false}));
+groundHide.rotation.x=-Math.PI/2;groundHide.position.y=-0.001;groundHide.renderOrder=-999;groundHide.visible=false;scene.add(groundHide);
+const studioGroundMat=ground.material,shadowGroundMat=new THREE.ShadowMaterial({opacity:0.38});
+let envName='studio',campTex=null,campLoading=false,envFailed=false;
+try{if(localStorage.getItem('atelier-decor')==='camp')envName='camp'}catch(_){}
+function applyEnv(){
+  const camp=envName==='camp'&&!!campTex;
+  sky.visible=camp;groundHide.visible=camp;
+  scene.background=camp?null:new THREE.Color(0x1c211e);scene.fog=camp?null:STUDIO_FOG;
+  ground.material=camp?shadowGroundMat:studioGroundMat;
+  document.body.classList.toggle('env-camp',camp);
+  if(typeof renderDecor==='function')renderDecor();
+}
+function setEnv(n){
+  envName=n;envFailed=false;try{localStorage.setItem('atelier-decor',n)}catch(_){}
+  if(n==='camp'&&!campTex&&!campLoading){
+    campLoading=true;
+    new THREE.TextureLoader().load('env/camp.jpg',tex=>{
+      tex.minFilter=THREE.LinearFilter;tex.generateMipmaps=false;tex.wrapS=THREE.RepeatWrapping; /* no mipmaps: they would draw a seam where the photo wraps */
+      tex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+      campTex=tex;sky.material.uniforms.map.value=tex;campLoading=false;applyEnv();if(typeof scheduleThumb==='function')scheduleThumb();
+    },undefined,()=>{campLoading=false;envFailed=true;envName='studio';applyEnv()});
+  }
+  applyEnv();
+}
 ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
 /* depth ruler on the ground so the side view has a reference */
 const groundLines=(function(){const a=[];for(let z=-3;z<=3.001;z+=0.5)a.push(-6,0.002,z,6,0.002,z);const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(a,3));const m=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x3e4a42,transparent:true,opacity:.5}));scene.add(m);return m})();
@@ -2290,6 +2373,16 @@ function setBarOpen(open){
 }
 /* on a phone only one side panel fits: opening one tucks the other away */
 const narrow=()=>innerWidth<760;
+function renderDecor(){
+  document.querySelectorAll('#decor .dopt').forEach(b=>{b.classList.toggle('on',b.dataset.env===envName&&(b.dataset.env==='studio'||!!campTex));b.classList.toggle('busy',b.dataset.env==='camp'&&campLoading)});
+  const m=$('#decorMsg');m.hidden=!envFailed;m.textContent=envFailed?t('decorFail'):'';
+}
+function setDecorOpen(open){
+  $('#decor').classList.toggle('closed',!open);$('#decorTab').setAttribute('aria-expanded',open);
+  $('#decorTab .arr').textContent=open?'‹':'›';try{localStorage.setItem('atelier-decor-open',open?'1':'0')}catch(_){}
+}
+$('#decorTab').onclick=()=>setDecorOpen($('#decor').classList.contains('closed'));
+document.querySelectorAll('#decor .dopt').forEach(b=>b.onclick=()=>setEnv(b.dataset.env));
 $('#sideTab').onclick=()=>{const o=$('#side').classList.contains('closed');if(o&&narrow())setScenesOpen(false);setSideOpen(o)};
 $('#barTab').onclick=()=>setBarOpen($('#bar').classList.contains('closed'));
 /* a tap on an empty part of an open panel closes it (buttons, cards, lists and fields keep working) */
@@ -2305,6 +2398,7 @@ function tapToClose(panel,isOpen,close){
   panel.addEventListener('pointercancel',()=>{d=null}); /* scrolling the panel is not a tap */
 }
 tapToClose($('#scenes'),()=>!$('#scenes').classList.contains('closed'),()=>setScenesOpen(false));
+tapToClose($('#decor'),()=>!$('#decor').classList.contains('closed'),()=>setDecorOpen(false));
 tapToClose($('#side'),()=>!$('#side').classList.contains('closed'),()=>setSideOpen(false));
 tapToClose($('#bar'),()=>!$('#bar').classList.contains('closed'),()=>setBarOpen(false));
 /* on a phone the panels cover the 3D space: a tap there closes them first */
@@ -2313,6 +2407,7 @@ function closePanelsFromView(){
   let swallow=false;
   if(!$('#scenes').classList.contains('closed')){setScenesOpen(false);swallow=true}
   if(!$('#side').classList.contains('closed')){setSideOpen(false);swallow=true}
+  if(!$('#decor').classList.contains('closed')){setDecorOpen(false);swallow=true}
   if(!$('#bar').classList.contains('closed'))setBarOpen(false); /* the toolbar folds away without eating the tap */
   return swallow;
 }
@@ -2458,14 +2553,14 @@ function resize(){
   const hint=$('#hint');
   if(getComputedStyle(view).position==='absolute'){
     /* glass layout: aim the camera at the open space between the panels, not the middle of the window */
-    const L=Math.max(0,$('#scenes').getBoundingClientRect().right-r.left),Rt=Math.max(0,r.right-$('.side').getBoundingClientRect().left),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
+    const L=Math.max(0,Math.max($('#scenes').getBoundingClientRect().right,$('#decor').getBoundingClientRect().right)-r.left),Rt=Math.max(0,r.right-$('.side').getBoundingClientRect().left),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
     camera.setViewOffset(W,H,-(L-Rt)/2,-T/2,W,H);
     hint.style.left=(L+14)+'px';hint.style.right=(Rt+14)+'px';hint.style.visibility=(W-L-Rt<240)?'hidden':'';
     const dk=$('#dock');dk.style.left=(narrow()?W/2:(L+W-Rt)/2)+'px';const sb=$('#shareBar');sb.style.top=(T+10)+'px';sb.style.left=((L+W-Rt)/2)+'px';sb.style.maxWidth=Math.max(240,W-L-Rt-24)+'px';
   }else{camera.clearViewOffset();hint.style.left='';hint.style.right='';const sb=$('#shareBar');sb.style.top=sb.style.left=sb.style.maxWidth='';$('#dock').style.left=''}
   camera.updateProjectionMatrix();
 }
-{const ro=new ResizeObserver(resize);ro.observe(view);ro.observe($('#scenes'));ro.observe($('.side'));ro.observe($('.bar'))}resize();
+{const ro=new ResizeObserver(resize);ro.observe(view);ro.observe($('#scenes'));ro.observe($('#decor'));ro.observe($('.side'));ro.observe($('.bar'))}resize();
 function loop(){
   controls.update();renderer.render(scene,camera);
   for(const it of labelItems){const s=toScreen(it.v);it.el.hidden=!s.vis;it.el.style.left=s.x+'px';it.el.style.top=s.y+'px'}
@@ -2485,7 +2580,7 @@ applyWorkflow();setMode(state.workflow==='inventory'||state.lines.length?'select
   setScenesOpen(get('atelier-scenes-open',phone?'0':'1')==='1');setSideOpen(get('atelier-side-open',phone?'0':'1')==='1');
   if(phone&&!$('#scenes').classList.contains('closed')&&!$('#side').classList.contains('closed'))setSideOpen(false);setBarOpen(get('atelier-bar-open','1')==='1')}
 const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}
-  applyStatic();updateInstall();updateShareBar();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
+  applyStatic();updateInstall();updateShareBar();renderDecor();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
   setSideOpen(!$('#side').classList.contains('closed'));setBarOpen(!$('#bar').classList.contains('closed'));
   if(!$('#start').hidden&&!$('#stepChoose').hidden)openStart('choose');else if(!$('#start').hidden)previewList()};
 document.querySelectorAll('.langbtn').forEach(b=>b.onclick=switchLang);
@@ -2582,6 +2677,7 @@ $('#iosHelp').addEventListener('pointerdown',e=>{if(e.target===$('#iosHelp'))$('
 $('#iosHelp').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();$('#iosHelp').hidden=true}});
 if(PWA&&'serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 updateInstall();
+setDecorOpen((()=>{try{return localStorage.getItem('atelier-decor-open')==='1'}catch(_){return false}})());setEnv(envName);
 renderScenes();loop();if(!shareCode())openStart('choose');else openShareLink();
 setSyncState(acct?'busy':'idle',acct?t('syncing'):'');if(acct)syncNow();
 })();
