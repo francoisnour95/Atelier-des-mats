@@ -586,23 +586,10 @@ details[open] summary{margin-bottom:8px}
         <h2>Session</h2>
         <span class="saved" id="savedMsg">Autosaves in this browser</span>
         <div class="row">
-          <button class="btn" id="bCopy" type="button">Copy design JSON</button>
           <button class="btn danger" id="bClear" type="button">Clear all</button>
           <button class="btn" id="bInstall" type="button" hidden>Install the app</button>
           <button class="btn" id="bShare" type="button">Share this scene</button>
         </div>
-        <details>
-          <summary>Import a design</summary>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <textarea id="tImport" placeholder="Paste design JSON here"></textarea>
-            <div class="row">
-              <button class="btn primary" id="bImport" type="button">Load pasted design</button>
-              <label class="btn" for="fImport">Open .json file</label>
-              <input type="file" id="fImport" accept=".json,application/json" hidden>
-            </div>
-            <span class="note" id="importMsg"></span>
-          </div>
-        </details>
       </section>
       </div>
     </aside>
@@ -657,7 +644,7 @@ createId:'Create my ID',lastSynced:'Last synced {d}',notSynced:'Not synced yet',
 'err.offline':'Cannot reach the server. Check your connection; your work is saved on this device.',
 pinsDiffer:'The two PINs are different.',creating:'Creating…',signingIn:'Signing in…',wrongPin:'Wrong nickname or PIN.',triesLeft:v=>` ${v.n} tr${v.n===1?'y':'ies'} left before a 15-minute pause.`,
 locked:'Too many wrong PINs. Try again after {t}.',somethingWrong:'Something went wrong ({e}).',
-savedAt:'All installations saved in this browser · {t}',saveBlocked:'This browser blocks saving. Use Copy design JSON.',
+savedAt:'All installations saved in this browser · {t}',saveBlocked:'This browser blocks saving here. Sign in with your ID to keep your work online.',
 tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',depth:'depth {d}',
 myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',
 /* fixed page text */
@@ -729,7 +716,7 @@ createId:'Créer mon identifiant',lastSynced:'Dernière synchro {d}',notSynced:'
 'err.offline':'Impossible de joindre le serveur. Vérifiez votre connexion ; votre travail est gardé sur cet appareil.',
 pinsDiffer:'Les deux codes sont différents.',creating:'Création…',signingIn:'Connexion…',wrongPin:'Pseudo ou code incorrect.',triesLeft:v=>` Encore ${v.n} essai${v.n>1?'s':''} avant une pause de 15 minutes.`,
 locked:'Trop de codes faux. Réessayez après {t}.',somethingWrong:'Un problème est survenu ({e}).',
-savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde. Utilisez Copier le JSON du projet.',
+savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde ici. Connectez-vous avec votre identifiant pour garder votre travail en ligne.',
 tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
 myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',
 's.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
@@ -780,8 +767,7 @@ const STATIC=[
  ['#etMidMove','title','s.moveAllT'],['#etMidMove','aria','s.moveAll'],['#etMid','title','s.flipBoth'],['#etMid','aria','s.flipBoth'],
  ['#jbMinus','aria','s.fewer'],['#jbPlus','aria','s.more'],['#jbN + button + span','text','s.points'],['#jbDel','text','s.delete'],['#jbCancel','text','cancel'],
  ['#sideTab .stl','text','s.details'],['#sBeams + span','text','s.logs'],['#bConnectAll','text','s.connectAll'],['#faceList','prevh2','s.facesH'],['#savedMsg','prevh2','s.session'],
- ['#savedMsg','text','s.autosaves'],['#bCopy','text','copyJson'],['#bClear','text','clearAll'],['details > summary','text','s.importH'],['#tImport','ph','s.pastePh'],
- ['#bImport','text','s.loadPasted'],['label[for=fImport]','text','s.openJson'],
+ ['#savedMsg','text','s.autosaves'],['#bClear','text','clearAll'],
  ['#iosTitle','text','installShort'],['#iosClose','text','s.close'],['#ios1','text','s.ios1'],['#ios2a','text','s.ios2a'],['#ios2b','text','s.ios2b'],['#ios3','text','s.ios3'],['#ios4','text','s.ios4'],
  ['#sbSave','text','saveCopy'],['#sbClose','text','closeShared'],['#sbClose','title','closeSharedT'],['#shClose','text','s.close'],['#shCopy','text','shareCopy'],['#shSend','text','shareSend'],['#bShare','text','shareScene'],['#shareBar','aria','sharedH']
 ];
@@ -1768,12 +1754,6 @@ let clearArmed=null;
 $('#bClear').onclick=e=>{const b=e.currentTarget;
   if(!clearArmed){b.classList.add('armed');b.textContent=t('clearConfirm');clearArmed=setTimeout(()=>{b.classList.remove('armed');b.textContent=t('clearAll');clearArmed=null},3000);return}
   clearTimeout(clearArmed);clearArmed=null;b.classList.remove('armed');b.textContent=t('clearAll');pushHistory();state={version:5,nextId:1,lines:[],brelages:[],ficelles:[],inventory:state.inventory,workflow:state.workflow};sel=null;rebuild()};
-$('#bCopy').onclick=()=>{const txt=JSON.stringify(state,null,1);const b=$('#bCopy');
-  const fallback=()=>{const d=document.querySelector('details');d.open=true;const ta=$('#tImport');ta.value=txt;ta.select();$('#importMsg').textContent=t('copyBlocked')};
-  try{navigator.clipboard.writeText(txt).then(()=>{b.textContent=t('copied');setTimeout(()=>b.textContent=t('copyJson'),1500)},fallback)}catch(_){fallback()}};
-function importText(txt){try{const d=JSON.parse(txt);if(!valid(d))throw 0;pushHistory();state=normalize(d);sel=null;rebuild();$('#importMsg').textContent=t('loaded',{n:state.lines.length})}catch(_){$('#importMsg').textContent=t('notDesign')}}
-$('#bImport').onclick=()=>importText($('#tImport').value);
-$('#fImport').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>importText(r.result);r.readAsText(f);e.target.value=''};
 window.addEventListener('keydown',e=>{
   if(e.target.matches('input,textarea'))return;
   if((e.ctrlKey||e.metaKey)&&(e.key.toLowerCase()==='y'||(e.key.toLowerCase()==='z'&&e.shiftKey))){e.preventDefault();redo();return}
@@ -2114,7 +2094,7 @@ function renderStock(){
     const logs=model.beams.map(b=>({id:b.l.id,len:b.pick.len,d:b.r*2})).sort((a,b)=>b.len-a.len);
     const tot=logs.reduce((s,q)=>s+q.len,0);
     sec.innerHTML=`<h2>${t('logsToCut',{n:logs.length})}</h2>
-      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div><p class="note">${t('totalWood',{m:tot.toFixed(1)})}</p>`:`<p class="note">${t('drawNoteCut')}</p>`}`;
+      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div>`:`<p class="note">${t('drawNoteCut')}</p>`}`;
   }
 }
 
