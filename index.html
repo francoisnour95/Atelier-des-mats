@@ -1136,7 +1136,7 @@ function computeModel(){
     const area=len3(N)/2;if(area<R.minFaceArea)continue;
     const c=mul(pts.reduce((acc,p)=>add(acc,p),[0,0,0]),1/pts.length);
     /* order sides to follow loopN: side k joins loopN[k] -> loopN[k+1] */
-    const onBeam=(k,bi)=>{const J=nodes[k].js.find(J=>J.i===bi||J.j===bi);return J?(J.i===bi?J.pi:J.pj):nodes[k].p};
+    const onBeam=(k,bi)=>{const J=nodes[k].js.find(J=>J.i===bi||J.j===bi);if(J)return J.i===bi?J.pi:J.pj;const b=beams[bi],p=nodes[k].p;return add(b.A,mul(b.dir,clamp(dot(sub(p,b.A),b.dir),0,d3(b.A,b.B))))};
     const sides=loopN.map((k,idx)=>{const k2=loopN[(idx+1)%loopN.length];const ei=loopE.find(x=>{const e=edges[x];return (e.u===k&&e.v===k2)||(e.v===k&&e.u===k2)});const e=edges[ei];
       return {beam:beams[e.beam].l.id,bi:e.beam,len:e.len,pu:onBeam(k,e.beam),pv:onBeam(k2,e.beam)}});
     const bs=sides.map(s=>s.beam);
@@ -1198,7 +1198,7 @@ function openFaces(beams,nodes,closed){
     let warp=0;for(const p of pts)warp=Math.max(warp,Math.abs(dot(sub(p,c),n)));if(warp>OPEN.flat)return null;
     for(let k=0;k<pts.length;k++){const a=pts[(k+pts.length-1)%pts.length],b=pts[k],d=pts[(k+1)%pts.length];if(dot(crs(sub(b,a),sub(d,b)),n)<-1e-6)return null} /* turns one way, gap included */
     if(inClosed(c))return null;
-    const sides=chain.map((x,i)=>({beam:x.pc.beam,bi:x.pc.bi,len:x.pc.len,pu:pts[i],pv:pts[i+1],piece:x.pc.id}));
+    const sides=chain.map(x=>({beam:x.pc.beam,bi:x.pc.bi,len:x.pc.len,pu:x.end==='b'?x.pc.a:x.pc.b,pv:x.end==='b'?x.pc.b:x.pc.a,piece:x.pc.id}));
     return {pts,beams:sides.map(x=>x.beam),sides,area,c,warp,open:true,perimeter:sides.reduce((acc,x)=>acc+x.len,0),
       key:'o'+chain.map(x=>x.pc.id).slice().sort().join('|'),pieceSet:new Set(chain.map(x=>x.pc.id))};
   };
