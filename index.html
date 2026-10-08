@@ -277,6 +277,8 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .pubh{font:600 13px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 0}
 .sharebar .sbrep{border:0;background:none;color:var(--muted);font:500 12px var(--f-body);text-decoration:underline;cursor:pointer;padding:4px}
 .sharebar .sbrep.armed{color:var(--warn);font-weight:700}
+.start.gated #acctClose{display:none}
+.start.gated #acctOut .lead{display:none}
 .awhy{margin:0;padding:10px 12px;border-radius:10px;background:var(--accent-soft);color:var(--fg);font:500 14px/1.4 var(--f-body)}
 .jeubar .jt b{color:#3d8bff}
 .stepper{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
@@ -582,7 +584,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v36 · safety</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v37 · sign-in</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -696,7 +698,7 @@ details[open] summary{margin-bottom:8px}
         </div>
         <span class="note" id="possTxt" hidden></span>
         <div class="row actrow"><button class="btn" id="bConnectAll" type="button">Connect all</button><button class="btn danger" id="bClear" type="button">Erase</button><button class="btn" id="bInstall" type="button" hidden>Install the app</button></div>
-        <div class="appver">v36</div>
+        <div class="appver">v37</div>
       </section>
       <section class="sec card" id="selCard"></section>
       <section class="sec" id="stockSec"></section>
@@ -776,7 +778,7 @@ pinsDiffer:'The two PINs are different.',creating:'Creating…',signingIn:'Signi
 locked:'Too many wrong PINs. Try again after {t}.',somethingWrong:'Something went wrong ({e}).',
 savedAt:'All installations saved in this browser · {t}',saveBlocked:'This browser blocks saving here. Sign in with your ID to keep your work online.',
 tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',depth:'depth {d}',
-myDesign:'My design',arBtnT:'See it in augmented reality',arTitle:'Augmented reality',arGo:'Place it around me',arPreparing:'Preparing the 3D model…',arLoading:'Loading the AR viewer…',arNote:'Real size. Drag to move it, twist with two fingers to turn it, pinch to make it smaller.',arNo:'Augmented reality is not available on this device. On Android use Chrome (with Google Play Services for AR); on iPhone or iPad use Safari. You can still turn the model here.',arEmpty:'Draw some logs first.',arFail:'Could not prepare the AR view. Check your connection and try again.',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',exTable:'Camp table',
+myDesign:'My design',mustSignIn:'Create your free ID or sign in to use Atelier des Mâts. Just a nickname and a PIN, no email.',arBtnT:'See it in augmented reality',arTitle:'Augmented reality',arGo:'Place it around me',arPreparing:'Preparing the 3D model…',arLoading:'Loading the AR viewer…',arNote:'Real size. Drag to move it, twist with two fingers to turn it, pinch to make it smaller.',arNo:'Augmented reality is not available on this device. On Android use Chrome (with Google Play Services for AR); on iPhone or iPad use Safari. You can still turn the model here.',arEmpty:'Draw some logs first.',arFail:'Could not prepare the AR view. Check your connection and try again.',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',exTable:'Camp table',
 /* fixed page text */
 's.chInv':'Enter my list of wood beams','s.chDraw':'Use the draw beams tool','s.yourBeams':'Your beams',
 's.listLead':'One line per log type: <b>(number) x length x diameter</b>',
@@ -786,7 +788,7 @@ myDesign:'My design',arBtnT:'See it in augmented reality',arTitle:'Augmented rea
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'v36 · safety','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'v37 · sign-in','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.human':'Human scale','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -848,7 +850,7 @@ pinsDiffer:'Les deux codes sont différents.',creating:'Création…',signingIn:
 locked:'Trop de codes faux. Réessayez après {t}.',somethingWrong:'Un problème est survenu ({e}).',
 savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde ici. Connectez-vous avec votre identifiant pour garder votre travail en ligne.',
 tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
-myDesign:'Mon projet',arBtnT:'Voir en réalité augmentée',arTitle:'Réalité augmentée',arGo:'La placer autour de moi',arPreparing:'Préparation du modèle 3D…',arLoading:'Chargement de la vue RA…',arNote:'Taille réelle. Glissez pour la déplacer, tournez à deux doigts pour la pivoter, pincez pour la réduire.',arNo:'La réalité augmentée n’est pas disponible sur cet appareil. Sur Android, utilisez Chrome (avec Google Play Services pour la RA) ; sur iPhone ou iPad, utilisez Safari. Vous pouvez quand même tourner le modèle ici.',arEmpty:'Dessinez d’abord quelques perches.',arFail:'Impossible de préparer la vue RA. Vérifiez votre connexion et réessayez.',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',exTable:'Table de camp',
+myDesign:'Mon projet',mustSignIn:'Créez votre identifiant gratuit ou connectez-vous pour utiliser l’Atelier des Mâts. Juste un pseudo et un code, sans e-mail.',arBtnT:'Voir en réalité augmentée',arTitle:'Réalité augmentée',arGo:'La placer autour de moi',arPreparing:'Préparation du modèle 3D…',arLoading:'Chargement de la vue RA…',arNote:'Taille réelle. Glissez pour la déplacer, tournez à deux doigts pour la pivoter, pincez pour la réduire.',arNo:'La réalité augmentée n’est pas disponible sur cet appareil. Sur Android, utilisez Chrome (avec Google Play Services pour la RA) ; sur iPhone ou iPad, utilisez Safari. Vous pouvez quand même tourner le modèle ici.',arEmpty:'Dessinez d’abord quelques perches.',arFail:'Impossible de préparer la vue RA. Vérifiez votre connexion et réessayez.',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',exTable:'Table de camp',
 's.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
 's.listLead':'Une ligne par type de perche : <b>(nombre) x longueur x diamètre</b>',
 's.yourList':'Votre liste','s.examples':()=>units.len==='ft'?'Exemples : <code>4 x 10 ft x 4 in</code> · <code>12 ft x 5 in</code>':'Exemples : <code>4 x 3 m x 10 cm</code> · <code>2,5 m x 8 cm</code>',
@@ -857,7 +859,7 @@ myDesign:'Mon projet',arBtnT:'Voir en réalité augmentée',arTitle:'Réalité a
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'v36 · safety','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'v37 · sign-in','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.human':'Taille humaine','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -2907,7 +2909,7 @@ async function syncNow(){
   }catch(e){setSyncState('err',e.message==='offline'?t('offlineSaved'):t('syncFailedP',{e:e.message}))}
   finally{syncing=false;if(syncAgain){syncAgain=false;scheduleSync(800)}}
 }
-function signOutLocal(msg){acct=null;lsSet(ACCT,null);setSyncState('idle');renderAcct();if(msg){openAcct();$('#aErr').textContent=msg}}
+function signOutLocal(msg){acct=null;lsSet(ACCT,null);setSyncState('idle');renderAcct();if(msg){gateAcct();$('#aErr').textContent=msg}}
 /* ---- the window ---- */
 let acctMode='in';
 function renderAcct(){
@@ -2920,7 +2922,10 @@ function renderAcct(){
 }
 function openAcct(why){$('#aErr').textContent='';acctWhy=typeof why==='string'?why:'';$('#aWhy').textContent=acctWhy;$('#aWhy').hidden=!acctWhy;if(acctWhy&&!acct)acctMode='new';renderAcct();$('#acct').hidden=false;setTimeout(()=>{const f=acct?$('#aSyncNow'):$('#aUser');try{f.focus({preventScroll:true})}catch(_){}},30)}
 let acctWhy='',afterSignIn=null;
-function closeAcct(){$('#acct').hidden=true;afterSignIn=null;acctWhy=''}
+/* the app needs an ID: until someone signs in, the ID window can not be closed */
+let acctGate=false;
+function gateAcct(){acctGate=true;$('#acct').classList.add('gated');afterSignIn=startApp;openAcct(t('mustSignIn'))}
+function closeAcct(){if(acctGate&&!acct)return;acctGate=false;$('#acct').classList.remove('gated');$('#acct').hidden=true;afterSignIn=null;acctWhy=''}
 $('#acctBtn').onclick=()=>openAcct();$('#acctClose').onclick=closeAcct;
 $('#acct').addEventListener('pointerdown',e=>{if(e.target===$('#acct'))closeAcct()});
 $('#acct').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();closeAcct()}});
@@ -2950,7 +2955,13 @@ $('#acctForm').addEventListener('submit',async e=>{
   finally{go.disabled=false;renderAcct()}
 });
 $('#aSyncNow').onclick=async()=>{await syncNow();renderAcct()};
-$('#aOutBtn').onclick=async()=>{const t=acct&&acct.token;signOutLocal();try{if(t)await rpc('am_logout',{p_token:t})}catch(_){}};
+$('#aOutBtn').onclick=async()=>{const tk=acct&&acct.token,b=$('#aOutBtn');b.disabled=true;
+  try{await syncNow()}catch(_){}
+  const synced=syncState==='ok';
+  signOutLocal();try{if(tk)await rpc('am_logout',{p_token:tk})}catch(_){}
+  /* everything is online: this device forgets the installations, so whoever signs in next only sees theirs */
+  if(synced){try{localStorage.removeItem(LIB);localStorage.removeItem(STORE);localStorage.removeItem('atelier-table-added')}catch(_){}location.reload();return}
+  b.disabled=false;gateAcct()};
 /* stay in step: on opening, when coming back to the app, and every minute while it is open */
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&acct)syncNow()});
 window.addEventListener('focus',()=>{if(acct)syncNow()});
@@ -3259,7 +3270,9 @@ $('#iosHelp').addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagat
 if(PWA&&'serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 updateInstall();
 setDecorOpen((()=>{try{return localStorage.getItem('atelier-decor-open')==='1'}catch(_){return false}})());setEnv(envName);
-renderScenes();loop();if(!shareCode())openStart('choose');else openShareLink();
+renderScenes();loop();
+function startApp(){if(!shareCode())openStart('choose');else openShareLink()}
+if(acct)startApp();else gateAcct();
 {const b=$('#boot');if(b){b.classList.add('out');setTimeout(()=>b.remove(),300)}}
 setSyncState(acct?'busy':'idle',acct?t('syncing'):'');if(acct)syncNow();
 })();
