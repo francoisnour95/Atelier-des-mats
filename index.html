@@ -338,6 +338,22 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .dock .dseg{border-radius:99px;border:0;background:transparent}
 .dock .dseg button{padding:10px 14px;font-size:15px;border-radius:99px}
 @media (max-width:760px){.dock{gap:4px;padding:5px}.dock .dseg button{padding:9px 10px;font-size:14px}.dbtn{width:38px;height:38px}}
+.arbtn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--accent);background:var(--glass-2);color:var(--fg);border-radius:99px;padding:4px 11px 4px 8px;font:700 12px var(--f-body);letter-spacing:.04em;cursor:pointer;flex:none}
+.arbtn svg{width:18px;height:18px;fill:var(--accent)}
+.arbtn:hover{background:var(--accent);color:#1a1408}.arbtn:hover svg{fill:#1a1408}
+.arview{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;background:#161a17;color:#e6eae3}
+.arview .btn{color:#e6eae3;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+.arview .btn.primary{background:#e2a84c;color:#1a1408;border-color:#e2a84c}
+@media (max-width:480px){.arbtn span{display:none}.arbtn{padding:4px 7px}}
+.arview[hidden]{display:none}
+.arhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:max(12px,env(safe-area-inset-top)) 16px 10px}
+.arhead b{font:700 18px var(--f-display);text-transform:uppercase;letter-spacing:.03em}
+.arstage{position:relative;flex:1;min-height:0}
+.arstage model-viewer{width:100%;height:100%;--poster-color:transparent;background:radial-gradient(ellipse at 50% 70%,#3b4639,#161a17)}
+.arwait{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;font:500 14px var(--f-mono);color:#aab3a7}
+.arfoot{display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 16px max(16px,env(safe-area-inset-bottom))}
+.arnote{margin:0;max-width:560px;text-align:center;font-size:13px;line-height:1.45;color:#aab3a7}
+.argo{font-size:16px;padding:12px 22px;border-radius:99px}
 .dbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--glass-sep);background:var(--glass-2);color:var(--fg);display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
 .dbtn svg{width:20px;height:20px;fill:currentColor}
 .dbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
@@ -543,7 +559,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v29 · gate</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v30 · AR</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -551,6 +567,7 @@ details[open] summary{margin-bottom:8px}
       <label class="chk"><input type="checkbox" id="cLabels"> Labels</label>
     </div>
     <div class="barend">
+      <button class="arbtn" id="arBtn" type="button" aria-label="AR"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7zm0 2.3 6.6 3.7L12 11.7 5.4 8zM5 9.7l6 3.4v6.6l-6-3.4zm8 10V13.1l6-3.4v6.6z"/></svg><span>AR</span></button>
       <button class="langbtn" id="langBtn" type="button"><span data-l="fr">FR</span><span data-l="en">EN</span></button>
       <button class="acctbtn" id="acctBtn" type="button" title="Save online with a nickname and PIN"><span class="dot" id="acctDot"></span><span id="acctLbl">Sign in</span></button>
     </div>
@@ -617,6 +634,11 @@ details[open] summary{margin-bottom:8px}
         <div class="sbt"><b id="sbName"></b><span id="sbFrom"></span></div>
         <div class="sbb"><button type="button" class="btn primary" id="sbSave">Save a copy</button><button type="button" class="btn" id="sbClose">Close</button><button type="button" class="sbrep" id="sbReport" hidden>Report</button></div>
       </div>
+      <div class="arview" id="arView" role="dialog" aria-modal="true" hidden>
+        <div class="arhead"><b id="arTitle">Augmented reality</b><button type="button" class="btn" id="arClose">Close</button></div>
+        <div class="arstage" id="arStage"><div class="arwait" id="arWait"></div></div>
+        <div class="arfoot"><p class="arnote" id="arNote"></p><button type="button" class="btn primary argo" id="arGo" hidden>Place it around me</button></div>
+      </div>
       <div class="dock" id="dock">
         <button class="dbtn" id="bUndo" type="button" title="Undo (Ctrl+Z)" aria-label="Undo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 3 10.5 9 16v-3.6h6a4 4 0 0 1 0 8h-3V23h3a6.5 6.5 0 0 0 0-13H9z"/></svg></button>
         <div class="seg dseg" role="group" aria-label="Mode">
@@ -639,7 +661,7 @@ details[open] summary{margin-bottom:8px}
           <div class="stat"><b id="sJoints">0</b><span>brelages</span></div>
           <div class="stat"><b id="sFaces">0</b><span>faces</span></div>
         </div>
-        <div class="appver">v29</div>
+        <div class="appver">v30</div>
         <div class="row" id="possRow" hidden><span class="note" id="possTxt"></span><button class="btn" id="bConnectAll" type="button">Connect all</button></div>
       </section>
       <section class="sec card" id="selCard"></section>
@@ -723,7 +745,7 @@ pinsDiffer:'The two PINs are different.',creating:'Creating…',signingIn:'Signi
 locked:'Too many wrong PINs. Try again after {t}.',somethingWrong:'Something went wrong ({e}).',
 savedAt:'All installations saved in this browser · {t}',saveBlocked:'This browser blocks saving here. Sign in with your ID to keep your work online.',
 tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',depth:'depth {d}',
-myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',exTable:'Camp table',
+myDesign:'My design',arBtnT:'See it in augmented reality',arTitle:'Augmented reality',arGo:'Place it around me',arPreparing:'Preparing the 3D model…',arLoading:'Loading the AR viewer…',arNote:'Real size. Drag to move it, twist with two fingers to turn it, pinch to make it smaller.',arNo:'Augmented reality is not available on this device. On Android use Chrome (with Google Play Services for AR); on iPhone or iPad use Safari. You can still turn the model here.',arEmpty:'Draw some logs first.',arFail:'Could not prepare the AR view. Check your connection and try again.',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',exTable:'Camp table',
 /* fixed page text */
 's.chInv':'Enter my list of wood beams','s.chDraw':'Use the draw beams tool','s.yourBeams':'Your beams',
 's.listLead':'One line per log: length, then diameter. Put <b>4x</b> in front for several identical logs, and a name before a colon if you like.',
@@ -733,7 +755,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'v29 · gate','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'v30 · AR','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -795,7 +817,7 @@ pinsDiffer:'Les deux codes sont différents.',creating:'Création…',signingIn:
 locked:'Trop de codes faux. Réessayez après {t}.',somethingWrong:'Un problème est survenu ({e}).',
 savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde ici. Connectez-vous avec votre identifiant pour garder votre travail en ligne.',
 tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
-myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',exTable:'Table de camp',
+myDesign:'Mon projet',arBtnT:'Voir en réalité augmentée',arTitle:'Réalité augmentée',arGo:'La placer autour de moi',arPreparing:'Préparation du modèle 3D…',arLoading:'Chargement de la vue RA…',arNote:'Taille réelle. Glissez pour la déplacer, tournez à deux doigts pour la pivoter, pincez pour la réduire.',arNo:'La réalité augmentée n’est pas disponible sur cet appareil. Sur Android, utilisez Chrome (avec Google Play Services pour la RA) ; sur iPhone ou iPad, utilisez Safari. Vous pouvez quand même tourner le modèle ici.',arEmpty:'Dessinez d’abord quelques perches.',arFail:'Impossible de préparer la vue RA. Vérifiez votre connexion et réessayez.',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',exTable:'Table de camp',
 's.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
 's.listLead':'Une ligne par perche : la longueur, puis le diamètre. Mettez <b>4x</b> devant pour plusieurs perches identiques, et un nom suivi de deux-points si vous voulez.',
 's.yourList':'Votre liste','s.examples':'Exemples : <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diamètre par défaut : 10 cm.',
@@ -804,7 +826,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'v29 · gate','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'v30 · AR','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -1427,7 +1449,7 @@ const ropeMatSel=new THREE.MeshStandardMaterial({map:ropeMat.map,roughness:0.8,e
 function scaleUV(g,sx,sy){const uv=g.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)*sx,uv.getY(i)*sy);}
 /* one closed rope turn through a list of points */
 /* settle a turn like a tensioned rope: smooth it, then push it back out of the logs, a few times over */
-let draftRope=false;
+let draftRope=false,arLight=false; /* arLight: the lightest rope, for the AR file of a big installation */
 /* radius of the drawn log at a point on its axis (logs taper from base to top) */
 function logRadiusAt(L,p){const u=clamp(dot(sub(p,L.mid),L.dir)/L.len+0.5,0,1);return L.r*(1-(1-TAPER)*u)}
 function settleRope(pts,logs,iters=draftRope?4:14){
@@ -1447,7 +1469,7 @@ function settleRope(pts,logs,iters=draftRope?4:14){
 function ropeLoop(pts){
   const curve=new THREE.CatmullRomCurve3(pts.map(V),true,'centripetal');
   const L=curve.getLength();
-  const g=new THREE.TubeGeometry(curve,Math.max(24,Math.round(L/(draftRope?0.016:0.008))),ROPE,draftRope?5:6,true);
+  const g=new THREE.TubeGeometry(curve,Math.max(arLight?16:24,Math.round(L/(arLight?0.032:draftRope?0.016:0.008))),ROPE,arLight?4:draftRope?5:6,true);
   scaleUV(g,L/(ROPE*5),1);return g;
 }
 const arc=(c,u,v,r,f0,f1,n=10)=>{const out=[];for(let k=0;k<=n;k++){const f=f0+(f1-f0)*k/n;out.push(add(c,add(mul(u,r*Math.cos(f)),mul(v,r*Math.sin(f)))))}return out};
@@ -2870,7 +2892,89 @@ applyWorkflow();setMode(state.workflow==='inventory'||state.lines.length?'select
   const phone=innerWidth<760,get=(k,d)=>{try{return localStorage.getItem(k)??d}catch(_){return d}};
   setScenesOpen(get('atelier-scenes-open',phone?'0':'1')==='1');setSideOpen(get('atelier-side-open',phone?'0':'1')==='1');
   if(phone&&!$('#scenes').classList.contains('closed')&&!$('#side').classList.contains('closed'))setSideOpen(false);setBarOpen(get('atelier-bar-open','1')==='1')}
-const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}
+/* ---------- augmented reality ----------
+   The installation (logs, brelages, strings, no editing helpers) is exported as a GLB at real size and shown in
+   <model-viewer>: WebXR on Android (Chrome + ARCore), AR Quick Look on iPhone / iPad (it makes the USDZ itself).
+   Both libraries load only the first time someone opens AR. One entry point, arOpen(), so it can be gated later. */
+const AR_LIBS={exporter:'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js',viewer:'https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js'};
+const loadScript=(src,module)=>new Promise((ok,ko)=>{if(document.querySelector(`script[src="${src}"]`)){ok();return}
+  const sc=document.createElement('script');sc.src=src;if(module)sc.type='module';sc.onload=ok;sc.onerror=()=>ko(new Error('load '+src));document.head.appendChild(sc)});
+/* one indexed geometry from many (position, normal, uv), so the file has a handful of meshes, not thousands */
+function mergeGeos(list){
+  let nv=0,ni=0;for(const g of list){nv+=g.attributes.position.count;ni+=g.index?g.index.count:g.attributes.position.count}
+  const P=new Float32Array(nv*3),N=new Float32Array(nv*3),U=new Float32Array(nv*2),I=nv>65535?new Uint32Array(ni):new Uint16Array(ni);
+  let ov=0,oi=0;
+  for(const g of list){const n=g.attributes.position.count;
+    P.set(g.attributes.position.array.subarray(0,n*3),ov*3);if(g.attributes.normal)N.set(g.attributes.normal.array.subarray(0,n*3),ov*3);if(g.attributes.uv)U.set(g.attributes.uv.array.subarray(0,n*2),ov*2);
+    if(g.index){const a=g.index.array;for(let k=0;k<g.index.count;k++)I[oi+k]=a[k]+ov;oi+=g.index.count}else{for(let k=0;k<n;k++)I[oi+k]=ov+k;oi+=n}
+    ov+=n}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(P,3));g.setAttribute('normal',new THREE.BufferAttribute(N,3));g.setAttribute('uv',new THREE.BufferAttribute(U,2));g.setIndex(new THREE.BufferAttribute(I,1));return g;
+}
+/* strings: every piece as a thin 6-sided tube, the rope pattern baked into the uv (the app does it in the shader) */
+function stringsGeo(list){
+  const base=new THREE.CylinderGeometry(1,1,1,4,1,true),bp=base.attributes.position,bn=base.attributes.normal,bu=base.attributes.uv,bi=base.index.array,nv=bp.count;
+  const P=new Float32Array(list.length*nv*3),N=new Float32Array(list.length*nv*3),U=new Float32Array(list.length*nv*2),tot=list.length*nv,I=tot>65535?new Uint32Array(list.length*bi.length):new Uint16Array(list.length*bi.length);
+  const q=new THREE.Quaternion(),v=new THREE.Vector3();
+  list.forEach(([a,b],k)=>{const d=sub(b,a),L=len3(d)||1e-6,m=mul(add(a,b),0.5);q.setFromUnitVectors(UP,V(mul(d,1/L)));
+    for(let i=0;i<nv;i++){const o=(k*nv+i);
+      v.set(bp.getX(i)*FIC_R,bp.getY(i)*L,bp.getZ(i)*FIC_R).applyQuaternion(q);P[o*3]=v.x+m[0];P[o*3+1]=v.y+m[1];P[o*3+2]=v.z+m[2];
+      v.set(bn.getX(i),bn.getY(i),bn.getZ(i)).applyQuaternion(q);N[o*3]=v.x;N[o*3+1]=v.y;N[o*3+2]=v.z;
+      U[o*2]=bu.getX(i);U[o*2+1]=bu.getY(i)*L*18}
+    for(let j=0;j<bi.length;j++)I[k*bi.length+j]=bi[j]+k*nv});
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(P,3));g.setAttribute('normal',new THREE.BufferAttribute(N,3));g.setAttribute('uv',new THREE.BufferAttribute(U,2));g.setIndex(new THREE.BufferAttribute(I,1));return g;
+}
+function arGroup(){
+  const out=new THREE.Group(),logs=[],ropes=[],tmp=[];
+  for(const b of model.beams){
+    /* only what stands above the ground: a dug log is cut where it enters the ground */
+    const m=new THREE.Mesh();placeLog(m,b.G1,b.G2,d3(b.G1,b.G2),b.r,(hash(b.l.id)%628)/100);m.updateMatrix();
+    const g=m.geometry.clone();g.applyMatrix4(m.matrix);logs.push(g);tmp.push(g);
+  }
+  /* big installations get the lighter rope, so phones can open the file */
+  const nJ=model.nodes.reduce((a,n)=>a+n.js.length,0),keep=draftRope;draftRope=arLight=nJ>40;
+  for(const n of model.nodes)for(const J of n.js){const L=nJ>40?lashing(J):lashingCached(J);ropes.push(...L.geos);if(nJ>40)tmp.push(...L.geos)}
+  draftRope=keep;arLight=false;
+  const pieces=[];for(const j of state.ficelles){const S=jeuStrings(j);if(S)pieces.push(...patchPieces(S))}
+  const wood=new THREE.MeshStandardMaterial({map:bark,roughness:0.93,name:'wood'}),rope=new THREE.MeshStandardMaterial({map:ropeMat.map,roughness:0.85,name:'rope'});
+  if(logs.length){const mm=new THREE.Mesh(mergeGeos(logs),wood);mm.name='logs';out.add(mm)}
+  if(ropes.length){const mm=new THREE.Mesh(mergeGeos(ropes),rope);mm.name='brelages';out.add(mm)}
+  if(pieces.length){const mm=new THREE.Mesh(stringsGeo(pieces),rope);mm.name='ficelles';out.add(mm)}
+  tmp.forEach(g=>g.dispose());
+  return out;
+}
+let arUrl=null,arBusy=false;
+async function arOpen(){
+  if(arBusy)return;
+  if(!state.lines.length){showMsg(t('arTitle'),t('arEmpty'));return}
+  arBusy=true;const stage=$('#arStage'),wait=$('#arWait'),go=$('#arGo');
+  $('#arTitle').textContent=t('arTitle');$('#arClose').textContent=t('s.close');go.textContent=t('arGo');go.hidden=true;$('#arNote').textContent='';
+  stage.querySelectorAll('model-viewer').forEach(x=>x.remove());wait.hidden=false;wait.textContent=t('arPreparing');$('#arView').hidden=false;
+  try{
+    await new Promise(r=>setTimeout(r,30)); /* let the screen show first */
+    await loadScript(AR_LIBS.exporter);
+    const grp=arGroup();
+    const glb=await new Promise((ok,ko)=>{try{new THREE.GLTFExporter().parse(grp,ok,{binary:true})}catch(e){ko(e)}});
+    grp.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose()});
+    if(arUrl)URL.revokeObjectURL(arUrl);arUrl=URL.createObjectURL(new Blob([glb],{type:'model/gltf-binary'}));
+    if($('#arView').hidden)return;
+    wait.textContent=t('arLoading');
+    await loadScript(AR_LIBS.viewer,true);await customElements.whenDefined('model-viewer');
+    const mv=document.createElement('model-viewer');
+    const name=(cur()&&cur().name)||'Atelier des Mâts';
+    Object.entries({src:arUrl,alt:name,ar:'','ar-modes':'webxr quick-look','ar-scale':'auto','ar-placement':'floor','camera-controls':'','camera-orbit':'35deg 72deg auto','touch-action':'pan-y','shadow-intensity':'1','exposure':'1','environment-image':'neutral','interaction-prompt':'none'}).forEach(([k,v])=>mv.setAttribute(k,v));
+    /* model-viewer shows its own AR button; we use ours, below, and only when AR can really start */
+    const hideBtn=document.createElement('span');hideBtn.slot='ar-button';hideBtn.style.display='none';mv.appendChild(hideBtn);
+    mv.addEventListener('load',()=>{wait.hidden=true;
+      if(mv.canActivateAR){go.hidden=false;$('#arNote').textContent=t('arNote');go.onclick=()=>mv.activateAR()}
+      else $('#arNote').textContent=t('arNo')},{once:true});
+    mv.addEventListener('error',()=>{wait.hidden=false;wait.textContent=t('arFail')},{once:true});
+    stage.appendChild(mv);
+  }catch(e){console.warn('AR',e);wait.hidden=false;wait.textContent=t('arFail')}
+  finally{arBusy=false}
+}
+function arClose(){$('#arView').hidden=true;$('#arStage').querySelectorAll('model-viewer').forEach(x=>x.remove())}
+document.body.appendChild($('#arView'));$('#arBtn').onclick=arOpen;$('#arBtn').title=t('arBtnT');$('#arBtn').querySelector('span').textContent=lang==='fr'?'RA':'AR';$('#arClose').onclick=arClose;
+const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}$('#arBtn').title=t('arBtnT');$('#arBtn').querySelector('span').textContent=lang==='fr'?'RA':'AR';
   applyStatic();updateInstall();updateShareBar();renderDecor();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
   setSideOpen(!$('#side').classList.contains('closed'));setBarOpen(!$('#bar').classList.contains('closed'));
   if(!$('#start').hidden&&!$('#stepChoose').hidden)openStart('choose');else if(!$('#start').hidden)previewList()};
