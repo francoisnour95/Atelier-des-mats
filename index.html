@@ -47,6 +47,7 @@ body{background:var(--bg);color:var(--fg);font:14px/1.45 var(--f-body)}
 .brand{display:flex;align-items:baseline;gap:10px}
 .brand h1{font:700 22px/1 var(--f-display);letter-spacing:.02em;margin:0;text-transform:uppercase}
 .brand span{font:500 12px var(--f-mono);color:var(--muted)}
+.appver{font:500 11px var(--f-mono);color:var(--muted);text-align:right;margin-top:6px}
 .brand .logo{width:30px;height:30px;align-self:center;flex:none;margin-right:-2px}
 .logoh{display:flex;align-items:center;gap:12px}.logoh .logo{width:54px;height:54px;flex:none}
 .howto{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;font:400 15px/1.45 var(--f-body)}
@@ -542,7 +543,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>proto 26 · explore</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v27 · table</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -638,6 +639,7 @@ details[open] summary{margin-bottom:8px}
           <div class="stat"><b id="sJoints">0</b><span>brelages</span></div>
           <div class="stat"><b id="sFaces">0</b><span>faces</span></div>
         </div>
+        <div class="appver">v27</div>
         <div class="row" id="possRow" hidden><span class="note" id="possTxt"></span><button class="btn" id="bConnectAll" type="button">Connect all</button></div>
       </section>
       <section class="sec card" id="selCard"></section>
@@ -721,7 +723,7 @@ pinsDiffer:'The two PINs are different.',creating:'Creating…',signingIn:'Signi
 locked:'Too many wrong PINs. Try again after {t}.',somethingWrong:'Something went wrong ({e}).',
 savedAt:'All installations saved in this browser · {t}',saveBlocked:'This browser blocks saving here. Sign in with your ID to keep your work online.',
 tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',depth:'depth {d}',
-myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',
+myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',exTable:'Camp table',
 /* fixed page text */
 's.chInv':'Enter my list of wood beams','s.chDraw':'Use the draw beams tool','s.yourBeams':'Your beams',
 's.listLead':'One line per log: length, then diameter. Put <b>4x</b> in front for several identical logs, and a name before a colon if you like.',
@@ -731,7 +733,7 @@ myDesign:'My design',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Porta
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'proto 26 · explore','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'v27 · table','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -793,7 +795,7 @@ pinsDiffer:'Les deux codes sont différents.',creating:'Création…',signingIn:
 locked:'Trop de codes faux. Réessayez après {t}.',somethingWrong:'Un problème est survenu ({e}).',
 savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveBlocked:'Ce navigateur bloque la sauvegarde ici. Connectez-vous avec votre identifiant pour garder votre travail en ligne.',
 tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
-myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',
+myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',exTable:'Table de camp',
 's.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
 's.listLead':'Une ligne par perche : la longueur, puis le diamètre. Mettez <b>4x</b> devant pour plusieurs perches identiques, et un nom suivi de deux-points si vous voulez.',
 's.yourList':'Votre liste','s.examples':'Exemples : <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diamètre par défaut : 10 cm.',
@@ -802,7 +804,7 @@ myDesign:'Mon projet',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'proto 26 · explore','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'v27 · table','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -880,6 +882,21 @@ const EX_DEPTH = {version:3,nextId:7,lines:[
   {id:5,a:[-3.4,2.95,0.1],b:[3.4,2.95,0.1],side:1},
   {id:6,a:[-2.6,0.8,0.68],b:[-1.3,0.8,0.68],sideA:1,sideB:-1}
 ]};
+/* camp table: two A-frames, a ledger across each, two long beams on the ledgers, low stretchers,
+   and a top made of thin logs laid side by side across the beams */
+const EX_TABLE=(()=>{
+  const lines=[],brelages=[];let id=0;
+  const log=(a,b,d)=>{lines.push({id:++id,a,b,sideA:1,sideB:1,d});return id};
+  const tie=(x,y)=>brelages.push({a:Math.min(x,y),b:Math.max(x,y)});
+  const X=1.55,legz=y=>0.8-0.96*y/2.25,r3=v=>Math.round(v*1000)/1000,legs={},led={},beams=[];
+  for(const sx of [-1,1]){const x=sx*X,l1=log([x,0,-0.8],[x,2.25,0.16],0.12),l2=log([x,0,0.8],[x,2.25,-0.16],0.12);tie(l1,l2);legs[sx]=[l1,l2]}
+  for(const sx of [-1,1]){led[sx]=log([sx*X,0.62,-0.72],[sx*X,0.62,0.72],0.1);for(const l of legs[sx])tie(led[sx],l)}
+  for(const sz of [-1,1]){const z=r3(sz*(legz(0.74)-0.02)),b=log([-X-0.3,0.74,z],[X+0.3,0.74,z],0.1);beams.push(b);
+    for(const sx of [-1,1]){tie(b,led[sx]);tie(b,legs[sx][sz<0?0:1])}}
+  for(const sz of [-1,1]){const z=r3(sz*legz(0.28)),s=log([-X-0.35,0.28,z],[X+0.35,0.28,z],0.08);for(const sx of [-1,1])tie(s,legs[sx][sz<0?0:1])}
+  for(let x=-1.32;x<=1.33;x+=0.072){const sl=log([r3(x),0.83,-0.58],[r3(x),0.83,0.58],0.06);for(const b of beams)tie(sl,b)}
+  return {version:5,nextId:id+1,lines,brelages,ficelles:[]};
+})();
 /* the three knots side by side: parallel logs (long), a cross at 90° (carré), a cross at about 50° (en X) */
 const EX_TYPES = {version:4,nextId:7,lines:[
   {id:1,a:[-4.3,1.0,0],b:[-2.3,1.0,0]},
@@ -912,11 +929,13 @@ let libDeleted={},libOrderAt=0;
     scenes=[
       wrapScene({id:'mine',name:t('myDesign'),state:mine||emptyState()}),
       wrapScene({id:'ex-types',name:t('exTypes'),state:exState(EX_TYPES),view:'demo'}),
-      wrapScene({id:'ex-flat',name:t('exFlat'),state:exState(EX_FLAT),view:'34'}),
-      wrapScene({id:'ex-depth',name:t('exDepth'),state:exState(EX_DEPTH),view:'34'})
+      wrapScene({id:'ex-table',name:t('exTable'),state:exState(EX_TABLE),view:'34'})
     ];
     active='mine';
   }
+  else{let had=false;try{had=localStorage.getItem('atelier-table-added')==='1'}catch(_){}
+    if(!had&&!scenes.some(x=>x.id==='ex-table')&&!libDeleted['ex-table'])scenes.push(wrapScene({id:'ex-table',name:t('exTable'),state:exState(EX_TABLE),view:'34',updated:Date.now()}));
+    try{localStorage.setItem('atelier-table-added','1')}catch(_){}}
   if(!scenes.some(x=>x.id===active))active=scenes[0].id;
 })();
 let state=scenes.find(x=>x.id===active).state;
