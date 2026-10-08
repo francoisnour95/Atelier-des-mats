@@ -131,16 +131,17 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-vi
 .snap.grid,.snap.free,.snap.level,.snap.plumb{border-color:#9aa79c;width:8px;height:8px}
 .etools{position:absolute;display:flex;gap:2px;transform:translate(-50%,-50%);background:rgba(14,17,15,.9);border:1px solid #3c473f;border-radius:8px;padding:3px;z-index:3}
 .etools[hidden],.midtools[hidden]{display:none}
-.ptmenu{position:absolute;display:flex;gap:2px;transform:translate(-50%,-50%);z-index:3;background:rgba(14,17,15,.9);border:1px solid #3c473f;border-radius:12px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.ptmenu{position:absolute;display:grid;grid-template-columns:1fr 1fr;gap:3px;transform:translate(-50%,-50%);z-index:3;background:rgba(14,17,15,.9);border:1px solid #3c473f;border-radius:12px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
 .ptmenu[hidden]{display:none}
-.ptmenu button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:48px;height:46px;border:0;border-radius:9px;background:transparent;color:#dfe6dd;cursor:pointer;padding:0 6px;font:600 10.5px var(--f-body)}
+.ptmenu button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:62px;height:50px;border:0;border-radius:9px;background:transparent;color:#dfe6dd;cursor:pointer;padding:0 6px;font:600 10.5px var(--f-body)}
 .ptmenu button svg{width:18px;height:18px;fill:currentColor}
 .ptmenu button:hover:not(:disabled){background:#2c352f}
 .ptmenu button.on,.ptmenu button.on:hover{background:#e2a84c;color:#1a1408}
 .ptmenu button:disabled{opacity:.35;cursor:default}
 .ptmenu button[hidden]{display:none}
 .ptmenu button.del{color:#ff8a8d}
-.ptmenu button.del.armed{background:#e5484d;color:#fff;font-size:12px;min-width:110px}
+.ptmenu button.del.armed{background:#e5484d;color:#fff;font-size:12px}
+.ptmenu button[data-act=flip]{grid-column:1/-1;flex-direction:row;height:34px;gap:6px}
 .midtools{position:absolute;display:flex;gap:6px;transform:translate(-50%,-50%);z-index:3}
 .etools button{display:inline-flex;align-items:center;gap:4px;height:30px;min-width:30px;justify-content:center;border:0;border-radius:6px;background:transparent;color:#dfe6dd;cursor:pointer;padding:0 6px;font:600 12px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
 .etools button svg,.midbtn svg{width:17px;height:17px;fill:currentColor}
@@ -596,9 +597,9 @@ details[open] summary{margin-bottom:8px}
       <div class="ptmenu" id="ptMenu" role="toolbar" hidden>
         <button type="button" data-act="move"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.5 3.5h-2.5v5h5V8l3.5 3.5-3.5 3.5v-2.5h-5v5h2.5L12 21l-3.5-3.5H11v-5H6V15l-3.5-3.5L6 8v2.5h5v-5H8.5z"/></svg><span class="pl">Move</span></button>
         <button type="button" data-act="rotate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L7.5 5.5 12 10V6.5a5.5 5.5 0 1 1-5.5 5.5H4a8 8 0 1 0 8-8z"/></svg><span class="pl">Turn</span></button>
-        <button type="button" data-act="flip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l5 4.5-5 4.5V9H6V6h11zM7 12v3h11v3H7v3l-5-4.5z"/></svg><span class="pl">Flip</span></button>
         <button type="button" data-act="dup"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h12a2 2 0 0 1 2 2v12h-2V4H8zM4 6h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2v12h12V8z"/></svg><span class="pl">Copy</span></button>
         <button type="button" data-act="del" class="del" id="etMidDel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 12H7zm3 2v8h2v-8zm4 0v8h2v-8z"/></svg><span class="pl">Delete</span></button>
+        <button type="button" data-act="flip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3l5 4.5-5 4.5V9H6V6h11zM7 12v3h11v3H7v3l-5-4.5z"/></svg><span class="pl">Flip</span></button>
       </div>
       <div class="midtools" id="midTools" hidden>
         <button class="midbtn" id="etMidMove" type="button" title="Move the whole log from its centre" aria-label="Move the whole log"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.5 3.5h-2.5v5h5V8l3.5 3.5-3.5 3.5v-2.5h-5v5h2.5L12 21l-3.5-3.5H11v-5H6V15l-3.5-3.5L6 8v2.5h5v-5H8.5z"/></svg></button>
@@ -2230,15 +2231,24 @@ $('#etMidDel').onclick=e=>{
   disarmDel();const d=$('#etMidDel');d.classList.add('armed');d.querySelector('.pl').textContent=t('confirmDel');
   delArmed={id:sel.id,timer:setTimeout(disarmDel,3000)};
 };
+var viewInset={L:0,Rt:0,T:0};
 function placeBeamTools(){
   const menu=$('#ptMenu');
   const b=(!menu.hidden&&sel&&sel.type==='beam'&&sel.end)?model.beams.find(x=>x.l.id===sel.id):null;if(!b)return;
   const P=sel.end==='mid'?mul(add(b.G1,b.G2),0.5):(sel.end==='a'?b.G1:b.G2);
   const s0=toScreen(V(P)),sa=toScreen(V(b.G1)),sb=toScreen(V(b.G2));
   let dx=sb.x-sa.x,dy=sb.y-sa.y;const L=Math.hypot(dx,dy)||1;let px=-dy/L,py=dx/L;if(py>0){px=-px;py=-py} /* the upper side of the log */
-  const away=sel.tool?120:52; /* clear of the gizmo when one is showing */
-  const vw=view.clientWidth,vh=view.clientHeight,mw=menu.offsetWidth||260,mh=menu.offsetHeight||54;
-  const x=clamp(s0.x+px*away,mw/2+8,vw-mw/2-8),y=clamp(s0.y+py*away,mh/2+8,vh-mh/2-90);
+  const vw=view.clientWidth,vh=view.clientHeight,mw=menu.offsetWidth||140,mh=menu.offsetHeight||120;
+  const gap=sel.tool?100:34; /* empty space between the point and the menu: wider when the gizmo is out */
+  let best=null;
+  /* stay in the open space between the panels; try beside the log, then above or below the point */
+  const I=viewInset,x0=I.L+mw/2+8,x1=vw-I.Rt-mw/2-8,y0=I.T+mh/2+8,y1=vh-mh/2-90;
+  for(const [ux,uy,pen] of [[px,py,0],[-px,-py,6],[0,-1,12],[0,1,18]]){
+    const ext=Math.abs(ux)*mw/2+Math.abs(uy)*mh/2,cx=s0.x+ux*(gap+ext),cy=s0.y+uy*(gap+ext);
+    const x=x0<=x1?clamp(cx,x0,x1):vw/2,y=y0<=y1?clamp(cy,y0,y1):vh/2,cost=Math.hypot(x-cx,y-cy)*3+pen;
+    if(!best||cost<best.cost)best={x,y,cost};
+  }
+  const x=best.x,y=best.y;
   menu.style.left=x+'px';menu.style.top=y+'px';menu.style.visibility=(gizmoDrag||!s0.vis)?'hidden':'visible';
 }
 /* ---------- the troop's beam list ---------- */
@@ -2730,7 +2740,7 @@ function resize(){
   if(getComputedStyle(view).position==='absolute'){
     /* glass layout: aim the camera at the open space between the panels, not the middle of the window */
     const L=Math.max(0,Math.max($('#scenes').getBoundingClientRect().right,$('#explore').getBoundingClientRect().right)-r.left),Rt=Math.max(0,r.right-Math.min($('.side').getBoundingClientRect().left,$('#decor').getBoundingClientRect().left)),T=Math.max(0,$('.bar').getBoundingClientRect().bottom-r.top);
-    camera.setViewOffset(W,H,-(L-Rt)/2,-T/2,W,H);
+    camera.setViewOffset(W,H,-(L-Rt)/2,-T/2,W,H);viewInset={L,Rt,T};
     hint.style.left=(L+14)+'px';hint.style.right=(Rt+14)+'px';hint.style.visibility=(W-L-Rt<240)?'hidden':'';
     const dk=$('#dock');dk.style.left=(narrow()?W/2:(L+W-Rt)/2)+'px';const sb=$('#shareBar');sb.style.top=(T+10)+'px';sb.style.left=((L+W-Rt)/2)+'px';sb.style.maxWidth=Math.max(240,W-L-Rt-24)+'px';
   }else{camera.clearViewOffset();hint.style.left='';hint.style.right='';const sb=$('#shareBar');sb.style.top=sb.style.left=sb.style.maxWidth='';$('#dock').style.left=''}
