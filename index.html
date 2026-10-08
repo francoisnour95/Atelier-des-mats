@@ -308,7 +308,7 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .barbody{gap:6px 14px;margin-left:0}
 .barend{display:flex;align-items:center;gap:8px;margin-left:auto}
 .chk{font-size:12.5px;white-space:nowrap}
-@media (max-width:760px){.brand .logo{display:none}.barend{flex:1 1 0;min-width:0;justify-content:flex-end;gap:6px}.acctbtn{min-width:0;flex:0 1 auto}#acctLbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.barbody{order:3;width:100%;gap:4px 10px;flex-wrap:nowrap;overflow-x:auto}.chk{gap:4px;font-size:12px}.chk input{margin:0}.bar.closed .barbody{display:none}
+@media (max-width:760px){.bar{gap:8px 10px}.barend{flex:1 1 0;min-width:0;justify-content:flex-end;gap:6px}.acctbtn{min-width:0;flex:0 1 auto}#acctLbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.barbody{order:3;width:100%;gap:4px 10px;flex-wrap:nowrap;overflow-x:auto}.chk{gap:4px;font-size:12px}.chk input{margin:0}.bar.closed .barbody{display:none}
   .snew{font-size:12px;letter-spacing:.03em;padding:9px 6px}.snew .snl{white-space:normal}}
 /* closed side panels shrink to their label */
 .scenes.closed,.side.closed{align-self:start}
@@ -365,7 +365,7 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .stat{display:flex;flex-direction:column}
 .stat b{font:600 26px/1 var(--f-display)}
 .stat span{font-size:12px;color:var(--muted)}
-.stats2{grid-template-columns:repeat(4,1fr);margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.stats2{grid-template-columns:repeat(3,1fr);margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
 .stats2 .stat b{font-size:20px}
 .stats2 .stat span{font-size:11px}
 .card h3{font:700 20px/1.1 var(--f-display);margin:0;letter-spacing:.02em}
@@ -382,8 +382,20 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .depth .lbl span:last-child{font:12.5px var(--f-mono);font-variant-numeric:tabular-nums}
 .depth input[type=range]{width:100%;accent-color:var(--accent)}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-#possRow{justify-content:space-between}
-#possRow[hidden]{display:none}
+#possTxt{display:block;margin-top:10px}#possTxt[hidden]{display:none}
+#bShare{display:none!important}
+#selCard[hidden]{display:none}
+.actrow{margin-top:10px;gap:8px;flex-wrap:wrap}
+.side{position:relative}
+.unitgear{position:absolute;top:5px;right:38px;z-index:2;width:30px;height:30px;border-radius:8px;border:0;background:transparent;color:var(--muted);display:grid;place-items:center;cursor:pointer;padding:0}
+.unitgear svg{width:18px;height:18px;fill:currentColor}.unitgear:hover,.unitgear[aria-expanded=true]{color:var(--accent);background:var(--glass-2)}
+.side.closed .unitgear,.side.closed .unitpop{display:none}
+.unitpop{position:absolute;top:40px;right:10px;z-index:5;display:grid;gap:6px;padding:12px;border-radius:12px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--glass-shadow);min-width:210px}
+.unitpop[hidden]{display:none}.unitpop b{font:600 11px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.useg button{flex:1;white-space:nowrap;text-transform:none;font-size:13px;letter-spacing:0;padding:7px 10px}
+.listhead{display:flex;align-items:center;gap:12px}
+.backarrow{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);font:700 20px/1 var(--f-body);cursor:pointer;display:grid;place-items:center;padding:0}
+.backarrow:hover{border-color:var(--accent);color:var(--accent)}
 .note{font-size:12.5px;color:var(--muted);margin:0}
 .pill{display:inline-block;font:600 11px var(--f-mono);padding:2px 7px;border-radius:99px;background:var(--chip);color:var(--fg)}
 .pill.front{background:var(--accent-soft);color:var(--accent)}
@@ -464,7 +476,7 @@ details[open] summary{margin-bottom:8px}
       <button class="contlink" id="chInstall" type="button" hidden>Install the app on this device</button>
     </div>
     <div class="startstep" id="stepList" hidden>
-      <h1>Your beams</h1>
+      <div class="listhead"><button class="backarrow" id="listBack2" type="button" aria-label="Back">←</button><h1>Your beams</h1></div>
       <p class="lead">One line per log: length, then diameter. Put <b>4x</b> in front for several identical logs, and a name before a colon if you like.</p>
       <div class="listedit">
         <div class="lecol">
@@ -562,7 +574,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v31 · weight</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v32 · units</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -657,21 +669,25 @@ details[open] summary{margin-bottom:8px}
     <div class="rightcol">
     <aside class="side" id="side">
       <button class="sidetab" id="sideTab" type="button" aria-expanded="true" aria-controls="sideBody"><span class="stl">Details</span><span class="arr" aria-hidden="true">›</span></button>
+      <button class="unitgear" id="unitGear" type="button" aria-label="Units" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.6 7.6 0 0 0-1.7-1L15 3h-4l-.4 2.7a7.6 7.6 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1L11 21h4l.4-2.7c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg></button>
+      <div class="unitpop" id="unitPop" hidden>
+        <b id="uLenH">Lengths</b><div class="seg useg" data-u="len"><button type="button" data-v="m">m · cm</button><button type="button" data-v="ft">ft · in</button></div>
+        <b id="uWtH">Weight</b><div class="seg useg" data-u="wt"><button type="button" data-v="kg">kg · tonnes</button><button type="button" data-v="lb">lb · tons</button></div>
+      </div>
       <div class="sidebody" id="sideBody">
       <section class="sec">
         <div class="stats">
           <div class="stat"><b id="sBeams">0</b><span>logs</span></div>
           <div class="stat"><b id="sJoints">0</b><span>brelages</span></div>
-          <div class="stat"><b id="sFaces">0</b><span>faces</span></div>
         </div>
         <div class="stats stats2">
-          <div class="stat" id="sWeightBox"><b id="sWeight">0</b><span>t (approx.)</span></div>
-          <div class="stat"><b id="sRope">0</b><span>m of rope</span></div>
-          <div class="stat"><b id="sFic">0</b><span>m of string</span></div>
+          <div class="stat"><b id="sWeight">0</b><span id="sWeightU">kg</span></div>
+          <div class="stat"><b id="sRope">0</b><span id="sRopeU">m of rope</span></div>
           <div class="stat"><b id="sNails">0</b><span>nails</span></div>
         </div>
-        <div class="appver">v31</div>
-        <div class="row" id="possRow" hidden><span class="note" id="possTxt"></span><button class="btn" id="bConnectAll" type="button">Connect all</button></div>
+        <span class="note" id="possTxt" hidden></span>
+        <div class="row actrow"><button class="btn" id="bConnectAll" type="button">Connect all</button><button class="btn danger" id="bClear" type="button">Erase</button><button class="btn" id="bInstall" type="button" hidden>Install the app</button></div>
+        <div class="appver">v32</div>
       </section>
       <section class="sec card" id="selCard"></section>
       <section class="sec" id="stockSec"></section>
@@ -679,15 +695,7 @@ details[open] summary{margin-bottom:8px}
         <h2>Faces for jeux de ficelles</h2>
         <ul class="list" id="faceList"></ul>
       </section>
-      <section class="sec">
-        <h2>Session</h2>
-        <span class="saved" id="savedMsg">Autosaves in this browser</span>
-        <div class="row">
-          <button class="btn danger" id="bClear" type="button">Clear all</button>
-          <button class="btn" id="bInstall" type="button" hidden>Install the app</button>
-          <button class="btn" id="bShare" type="button">Share this scene</button>
-        </div>
-      </section>
+      <span class="saved" id="savedMsg" hidden></span><button id="bShare" type="button" hidden></button>
       </div>
     </aside>
     <aside class="decor closed" id="decor">
@@ -708,6 +716,9 @@ details[open] summary{margin-bottom:8px}
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
 <script>
+const units=(()=>{let u=null;try{u=JSON.parse(localStorage.getItem('atelier-units')||'null')}catch(_){}
+  const us=/^en-(US|LR)|^my/i.test(navigator.language||'');return {len:u&&u.len==='ft'?'ft':(u?'m':(us?'ft':'m')),wt:u&&u.wt==='lb'?'lb':(u?'kg':(us?'lb':'kg'))}})();
+const FT=3.28084,IN=39.3701;
 (function(){
 /* ---------- languages: English / français ---------- */
 const I18N={
@@ -757,19 +768,19 @@ tipShort:'too short',tipLog:'log {len} · Ø{d}',level:'level',plumb:'plumb',dep
 myDesign:'My design',arBtnT:'See it in augmented reality',arTitle:'Augmented reality',arGo:'Place it around me',arPreparing:'Preparing the 3D model…',arLoading:'Loading the AR viewer…',arNote:'Real size. Drag to move it, twist with two fingers to turn it, pinch to make it smaller.',arNo:'Augmented reality is not available on this device. On Android use Chrome (with Google Play Services for AR); on iPhone or iPad use Safari. You can still turn the model here.',arEmpty:'Draw some logs first.',arFail:'Could not prepare the AR view. Check your connection and try again.',exTypes:'Brelage types',exFlat:'Flat portal',exDepth:'Portal with depth',exTable:'Camp table',
 /* fixed page text */
 's.chInv':'Enter my list of wood beams','s.chDraw':'Use the draw beams tool','s.yourBeams':'Your beams',
-'s.listLead':'One line per log: length, then diameter. Put <b>4x</b> in front for several identical logs, and a name before a colon if you like.',
-'s.yourList':'Your list','s.examples':'Examples: <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diameter defaults to 10 cm.',
+'s.listLead':'One line per log type: <b>(number) x length x diameter</b>',
+'s.yourList':'Your list','s.examples':()=>units.len==='ft'?'Examples: <code>4 x 10 ft x 4 in</code> · <code>12 ft x 5 in</code>':'Examples: <code>4 x 3 m x 10 cm</code> · <code>2.5 m x 8 cm</code>',
 's.preview':'Preview','s.back':'Back','s.startBuilding':'Start building',
 's.myId':'My ID','s.close':'Close','s.acctLead':'Save your installations online and find them on your phone, tablet or computer. No email: just a nickname and a PIN.',
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'v31 · weight','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'v32 · units','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
 's.moveAllT':'Move the whole log from its centre','s.moveAll':'Move the whole log','s.flipBoth':'Flip both ends front / back',
-'s.fewer':'Fewer points','s.more':'More points','s.points':'points','s.delete':'Delete','s.details':'Details','s.logs':'logs','s.tons':'t (approx.)','s.ropeM':'m of rope','s.ficM':'m of string','s.nails':'nails','s.weightT':'Rough weight of the wood, counted as freshly cut softwood (about 700 kg per m³). Dry wood is lighter.','s.ropeT':'Rope wound in the brelages, without the length for the knots','s.ficT':'String in the jeux de ficelles, without the knots','s.nailsT':'One nail for each point of the jeux de ficelles','s.connectAll':'Connect all',
+'s.fewer':'Fewer points','s.more':'More points','s.points':'points','s.delete':'Delete','s.details':'Details','s.logs':'logs','s.nails':'nails','s.weightT':'Rough weight of the wood, counted as freshly cut softwood (about 700 kg per m³). Dry wood is lighter.','s.ropeT':'Rope in the brelages and the jeux de ficelles, without the length for the knots','s.nailsT':'One nail for each point of the jeux de ficelles',uKg:'kg',uT:v=>v.n>=2?'tonnes':'tonne',uLb:'lb',uTon:v=>v.n>=2?'tons':'ton',uRopeM:'m of rope',uRopeFt:'ft of rope',unitsT:'Units',uLenH:'Lengths',uWtH:'Weight',untieAll:'Untie all',eraseBtn:'Erase',eraseConfirm:'Erase the whole installation','s.connectAll':'Connect all',
 's.facesH':'Faces for jeux de ficelles','s.session':'Session','s.autosaves':'Autosaves in this browser','s.importH':'Import a design','s.pastePh':'Paste design JSON here',
 's.loadPasted':'Load pasted design','s.openJson':'Open .json file','s.langT':'Langue : français',
 installApp:'Install the app on this device',installShort:'Install the app','s.ios1':'Open this page in Safari.','s.ios2a':'Tap the Share button','s.ios2b':'at the bottom of the screen.','s.ios3':'Scroll down and tap “Add to Home Screen”, then “Add”.','s.ios4':'The app gets its own icon and works without internet. It keeps its own copy of your installations, so sign in with your ID to find them there.',
@@ -828,19 +839,19 @@ savedAt:'Toutes les installations sont gardées dans ce navigateur · {t}',saveB
 tipShort:'trop courte',tipLog:'perche {len} · Ø{d}',level:'de niveau',plumb:'d’aplomb',depth:'profondeur {d}',
 myDesign:'Mon projet',arBtnT:'Voir en réalité augmentée',arTitle:'Réalité augmentée',arGo:'La placer autour de moi',arPreparing:'Préparation du modèle 3D…',arLoading:'Chargement de la vue RA…',arNote:'Taille réelle. Glissez pour la déplacer, tournez à deux doigts pour la pivoter, pincez pour la réduire.',arNo:'La réalité augmentée n’est pas disponible sur cet appareil. Sur Android, utilisez Chrome (avec Google Play Services pour la RA) ; sur iPhone ou iPad, utilisez Safari. Vous pouvez quand même tourner le modèle ici.',arEmpty:'Dessinez d’abord quelques perches.',arFail:'Impossible de préparer la vue RA. Vérifiez votre connexion et réessayez.',exTypes:'Types de brelages',exFlat:'Portique plat',exDepth:'Portique en profondeur',exTable:'Table de camp',
 's.chInv':'Entrer ma liste de perches','s.chDraw':'Utiliser l’outil de dessin','s.yourBeams':'Vos perches',
-'s.listLead':'Une ligne par perche : la longueur, puis le diamètre. Mettez <b>4x</b> devant pour plusieurs perches identiques, et un nom suivi de deux-points si vous voulez.',
-'s.yourList':'Votre liste','s.examples':'Exemples : <code>3 m 10 cm</code> · <code>4x 250 cm 8 cm</code> · <code>Mât: 6 m 15 cm</code>. Diamètre par défaut : 10 cm.',
+'s.listLead':'Une ligne par type de perche : <b>(nombre) x longueur x diamètre</b>',
+'s.yourList':'Votre liste','s.examples':()=>units.len==='ft'?'Exemples : <code>4 x 10 ft x 4 in</code> · <code>12 ft x 5 in</code>':'Exemples : <code>4 x 3 m x 10 cm</code> · <code>2,5 m x 8 cm</code>',
 's.preview':'Aperçu','s.back':'Retour','s.startBuilding':'Commencer',
 's.myId':'Mon identifiant','s.close':'Fermer','s.acctLead':'Sauvegardez vos installations en ligne et retrouvez-les sur téléphone, tablette ou ordinateur. Pas d’e-mail : juste un pseudo et un code.',
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'v31 · weight','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'v32 · units','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
 's.moveAllT':'Déplacer toute la perche depuis son centre','s.moveAll':'Déplacer toute la perche','s.flipBoth':'Passer les deux bouts devant / derrière',
-'s.fewer':'Moins de points','s.more':'Plus de points','s.points':'points','s.delete':'Supprimer','s.details':'Détails','s.logs':'perches','s.tons':'t (env.)','s.ropeM':'m de corde','s.ficM':'m de ficelle','s.nails':'clous','s.weightT':'Poids approximatif du bois, compté comme du résineux fraîchement coupé (environ 700 kg par m³). Le bois sec est plus léger.','s.ropeT':'Corde enroulée dans les brelages, sans la longueur des nœuds','s.ficT':'Ficelle des jeux de ficelles, sans les nœuds','s.nailsT':'Un clou pour chaque point des jeux de ficelles','s.connectAll':'Tout relier',
+'s.fewer':'Moins de points','s.more':'Plus de points','s.points':'points','s.delete':'Supprimer','s.details':'Détails','s.logs':'perches','s.nails':'clous','s.weightT':'Poids approximatif du bois, compté comme du résineux fraîchement coupé (environ 700 kg par m³). Le bois sec est plus léger.','s.ropeT':'Corde des brelages et des jeux de ficelles, sans la longueur des nœuds','s.nailsT':'Un clou pour chaque point des jeux de ficelles',uKg:'kg',uT:v=>v.n>=2?'tonnes':'tonne',uLb:'lb',uTon:v=>v.n>=2?'tons':'ton',uRopeM:'m de corde',uRopeFt:'ft de corde',unitsT:'Unités',uLenH:'Longueurs',uWtH:'Poids',untieAll:'Tout défaire',eraseBtn:'Effacer',eraseConfirm:'Effacer toute l’installation','s.connectAll':'Tout relier',
 's.facesH':'Faces pour jeux de ficelles','s.session':'Session','s.autosaves':'Sauvegarde automatique dans ce navigateur','s.importH':'Importer un projet','s.pastePh':'Collez le JSON du projet ici',
 's.loadPasted':'Charger le projet collé','s.openJson':'Ouvrir un fichier .json','s.langT':'Language: English',
 installApp:'Installer l’appli sur cet appareil',installShort:'Installer l’appli','s.ios1':'Ouvrez cette page dans Safari.','s.ios2a':'Touchez le bouton Partager','s.ios2b':'en bas de l’écran.','s.ios3':'Descendez et touchez « Sur l’écran d’accueil », puis « Ajouter ».','s.ios4':'L’appli a sa propre icône et marche sans internet. Elle garde sa propre copie de vos installations : connectez-vous avec votre identifiant pour les y retrouver.',
@@ -874,8 +885,8 @@ const STATIC=[
  ['#etA [data-act=move]','title','s.moveEnd'],['#etB [data-act=move]','title','s.moveEnd'],['#etA [data-act=flip]','title','s.flipEnd'],['#etB [data-act=flip]','title','s.flipEnd'],
  ['#etMidMove','title','s.moveAllT'],['#etMidMove','aria','s.moveAll'],['#etMid','title','s.flipBoth'],['#etMid','aria','s.flipBoth'],
  ['#jbMinus','aria','s.fewer'],['#jbPlus','aria','s.more'],['#jbN + button + span','text','s.points'],['#jbDel','text','s.delete'],['#jbCancel','text','cancel'],
- ['#sideTab .stl','text','s.details'],['#sBeams + span','text','s.logs'],['#sWeight + span','text','s.tons'],['#sRope + span','text','s.ropeM'],['#sFic + span','text','s.ficM'],['#sNails + span','text','s.nails'],['#bConnectAll','text','s.connectAll'],['#faceList','prevh2','s.facesH'],['#savedMsg','prevh2','s.session'],
- ['#savedMsg','text','s.autosaves'],['#bClear','text','clearAll'],
+ ['#sideTab .stl','text','s.details'],['#sBeams + span','text','s.logs'],['#sNails + span','text','s.nails'],['#uLenH','text','uLenH'],['#uWtH','text','uWtH'],['#unitGear','title','unitsT'],['#bConnectAll','text','s.connectAll'],['#faceList','prevh2','s.facesH'],
+ ['#savedMsg','text','s.autosaves'],['#bClear','text','eraseBtn'],
  ['#iosTitle','text','installShort'],['#iosClose','text','s.close'],['#ios1','text','s.ios1'],['#ios2a','text','s.ios2a'],['#ios2b','text','s.ios2b'],['#ios3','text','s.ios3'],['#ios4','text','s.ios4'],
  ['#sbSave','text','saveCopy'],['#sbClose','text','closeShared'],['#sbClose','title','closeSharedT'],['#shClose','text','s.close'],['#shCopy','text','shareCopy'],['#shSend','text','shareSend'],['#bShare','text','shareScene'],['#shareBar','aria','sharedH']
 ];
@@ -892,11 +903,11 @@ applyStatic();
 /* ---------- rules ---------- */
 const R = { lashGap:0.08, jointTol:0.25, endReach:0.1, nodeTol:0.2, gap:0.004, minLen:0.3, minFaceArea:0.02, defaultD:0.10 };
 const DIAMETERS=[0.06,0.08,0.10,0.12,0.14,0.16];
-const SAMPLE_LIST=`4x 2.5 m 8 cm
-2x 3 m 10 cm
-3.5 m 12 cm
-2x 4 m 12 cm
-6 m 15 cm`;
+const SAMPLE_LIST=`4 x 2.5 m x 8 cm
+2 x 3 m x 10 cm
+1 x 3.5 m x 12 cm
+2 x 4 m x 12 cm
+1 x 6 m x 15 cm`;
 const EX_FLAT = {version:2,nextId:6,lines:[
   {id:1,a:[-2.05,0,0],b:[-2.4,3.3,0],side:1},
   {id:2,a:[-2.05,0,0],b:[-1.2,3.3,0],side:1},
@@ -1033,9 +1044,11 @@ const lerp3=(a,b,t)=>add(a,mul(sub(b,a),t));
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function hash(s){let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
-const cm=v=>Math.round(v*100)+' cm';
-const m2=v=>v.toFixed(2)+' m';
-const sgn=v=>(v>=0?'+':'−')+Math.abs(v).toFixed(2)+' m';
+/* units: lengths in m · cm or ft · in, weight in kg · tonnes or lb · tons (US). Stored per browser. */
+const cm=v=>units.len==='ft'?(v*IN<10?(v*IN).toFixed(1):Math.round(v*IN))+' in':Math.round(v*100)+' cm';
+const m2=v=>units.len==='ft'?(v*FT).toFixed(1)+' ft':v.toFixed(2)+' m';
+const sgn=v=>(v>=0?'+':'−')+m2(Math.abs(v));
+const dLabel=v=>units.len==='ft'?(v*IN).toFixed(1)+'″':String(Math.round(v*100));
 
 /* a log's real size: from the troop's list, or exactly as drawn */
 const invById=id=>state.inventory.find(q=>q.id===id);
@@ -2060,7 +2073,7 @@ function afterTimeTravel(){closeFixPop();pending=null;if(sel&&sel.type==='beam'&
 
 $('#mDraw').onclick=()=>setMode('draw');$('#mSelect').onclick=()=>setMode('select');$('#mJeux').onclick=()=>setMode('jeux');
 $('#bUndo').onclick=undo;$('#bRedo').onclick=redo;
-$('#bConnectAll').onclick=connectAll;
+$('#bConnectAll').onclick=()=>{if(model.potentials.length)connectAll();else if(state.brelages.length){pushHistory();state.brelages=[];sel=null;rebuild()}};
 $('#remChip').onclick=()=>{const n=sel&&sel.type==='node'?model.nodes.find(n=>n.js.some(J=>J.key===sel.key)):null;if(!n)return;pushHistory();const ks=new Set(n.js.map(J=>J.key));state.brelages=state.brelages.filter(q=>!ks.has(q.a+'-'+q.b));sel=null;rebuild()};
 $('#potChip').onclick=e=>addBrelage(e.currentTarget.dataset.key);
 $('#cGrid').onchange=e=>{gridGroup.visible=groundLines.visible=e.target.checked;try{localStorage.setItem('atelier-grid',e.target.checked?'1':'0')}catch(_){}};
@@ -2071,8 +2084,8 @@ $('#cLabels').checked=showLabels;$('#cLabels').onchange=e=>{showLabels=e.target.
 
 let clearArmed=null;
 $('#bClear').onclick=e=>{const b=e.currentTarget;
-  if(!clearArmed){b.classList.add('armed');b.textContent=t('clearConfirm');clearArmed=setTimeout(()=>{b.classList.remove('armed');b.textContent=t('clearAll');clearArmed=null},3000);return}
-  clearTimeout(clearArmed);clearArmed=null;b.classList.remove('armed');b.textContent=t('clearAll');pushHistory();state={version:5,nextId:1,lines:[],brelages:[],ficelles:[],inventory:state.inventory,workflow:state.workflow};sel=null;rebuild()};
+  if(!clearArmed){b.classList.add('armed');b.textContent=t('eraseConfirm');clearArmed=setTimeout(()=>{b.classList.remove('armed');b.textContent=t('eraseBtn');clearArmed=null},3000);return}
+  clearTimeout(clearArmed);clearArmed=null;b.classList.remove('armed');b.textContent=t('eraseBtn');pushHistory();state={version:5,nextId:1,lines:[],brelages:[],ficelles:[],inventory:state.inventory,workflow:state.workflow};sel=null;rebuild()};
 window.addEventListener('keydown',e=>{
   if(e.target.matches('input,textarea'))return;
   if((e.ctrlKey||e.metaKey)&&(e.key.toLowerCase()==='y'||(e.key.toLowerCase()==='z'&&e.shiftKey))){e.preventDefault();redo();return}
@@ -2092,12 +2105,16 @@ function renderStats(){
   {/* wood weight (taper: mean of r² over a log is about 0.9 r²), rope in the brelages, strings and nails of the jeux */
     const kg=model.beams.reduce((a,b)=>a+Math.PI*b.r*b.r*0.903*b.pick.len*700,0);
     let rope=0;for(const n of model.nodes)for(const J of n.js)for(const g of lashingCached(J).geos)rope+=g.userData.len||0;
-    let fic=0,nails=0;for(const j of state.ficelles){const S=jeuStrings(j);if(!S)continue;fic+=S.cord;nails+=S.P.reduce((a,p)=>a+p.length,0)}
+    let nails=0;for(const j of state.ficelles){const S=jeuStrings(j);if(!S)continue;rope+=S.cord;nails+=S.P.reduce((a,p)=>a+p.length,0)}
     const nf=(v,d)=>v.toLocaleString(lang,{minimumFractionDigits:d,maximumFractionDigits:d});
-    $('#sWeight').textContent=nf(kg/1000,kg<10000?2:1);$('#sRope').textContent=nf(rope,0);$('#sFic').textContent=nf(fic,0);$('#sNails').textContent=nf(nails,0);
-    $('#sWeight').parentNode.title=t('s.weightT');$('#sRope').parentNode.title=t('s.ropeT');$('#sFic').parentNode.title=t('s.ficT');$('#sNails').parentNode.title=t('s.nailsT')}
-  $('#sJoints').textContent=model.nodes.length;$('#sFaces').textContent=model.faces.filter(f=>!f.open).length+(model.faces.some(f=>f.open)?' + '+model.faces.filter(f=>f.open).length:'');
-  const np=model.potentials.length;$('#possRow').hidden=!np;$('#possTxt').textContent=t('possible',{n:np});
+    let w,wu;
+    if(units.wt==='lb'){const lb=kg*2.20462;if(lb<2000){w=nf(Math.round(lb/5)*5,0);wu=t('uLb')}else{const tn=lb/2000;w=nf(tn,tn<10?2:1);wu=t('uTon',{n:tn})}}
+    else if(kg<1000){w=nf(Math.round(kg),0);wu=t('uKg')}else{const tn=kg/1000;w=nf(tn,tn<10?2:1);wu=t('uT',{n:tn})}
+    $('#sWeight').textContent=w;$('#sWeightU').textContent=wu;
+    $('#sRope').textContent=nf(units.len==='ft'?rope*FT:rope,0);$('#sRopeU').textContent=t(units.len==='ft'?'uRopeFt':'uRopeM');$('#sNails').textContent=nf(nails,0);
+    $('#sWeight').parentNode.title=t('s.weightT');$('#sRope').parentNode.title=t('s.ropeT');$('#sNails').parentNode.title=t('s.nailsT')}
+  $('#sJoints').textContent=model.nodes.length;
+  const np=model.potentials.length;$('#possTxt').hidden=!np;$('#possTxt').textContent=t('possible',{n:np});{const cb=$('#bConnectAll');cb.hidden=!np&&!state.brelages.length;cb.textContent=t(np?'s.connectAll':'untieAll')}$('#bClear').hidden=!state.lines.length;
   const fl=$('#faceList');
   fl.innerHTML=model.faces.length?model.faces.map(f=>`<li><button type="button" data-key="${f.key}" class="${sel&&sel.type==='face'&&sel.key===f.key?'on':''}"><span class="letter${f.open?' open':''}">${f.letter}</span>${t('logsWord')} ${f.beams.join(', ')}${f.open?` <span class="opentag">${t('openFace')}</span>`:''}<span class="meta">${(n=>n?t('nJeux',{n})+' · ':'')(state.ficelles.filter(j=>j.face===f.key).length)}${f.area.toFixed(2)} m²</span></button></li>`).join('')
     :`<li class="note">${t('noFaces')}</li>`;
@@ -2130,7 +2147,7 @@ function endBlock(b,end,label){
     <div class="xyz">x ${p[0].toFixed(2)} · y ${p[1].toFixed(2)} · depth ${p[2].toFixed(2)} m</div>
   </div>`;
 }
-const dChips=cur=>`<div class="dchips" role="group" aria-label="${t('diameter')}">${DIAMETERS.map(v=>`<button type="button" data-d="${v}" class="${Math.abs(v-cur)<1e-4?'on':''}">Ø${Math.round(v*100)}</button>`).join('')}</div>`;
+const dChips=cur=>`<div class="dchips" role="group" aria-label="${t('diameter')}">${DIAMETERS.map(v=>`<button type="button" data-d="${v}" class="${Math.abs(v-cur)<1e-4?'on':''}">Ø${dLabel(v)}</button>`).join('')}</div>`;
 /* the jeu being edited: an existing one, or a draft not yet created */
 let ficDraft={sides:[],n:12};
 function activeJeu(){
@@ -2175,7 +2192,7 @@ function updateJeuBar(){
   bar.hidden=!act;$('#hint').classList.toggle('under',!!act);
   if(!act){if(panelMemo)restorePanels();return}
   const k=act.sides.length,S=jeuStrings(act);
-  $('#jeuBarTxt').innerHTML=k<2?t('jeuPick',{k}):t('jeuBorders',{k})+(S?' · '+t('nStrings',{n:S.strings.length})+' · '+S.cord.toFixed(1)+' m':'');
+  $('#jeuBarTxt').innerHTML=k<2?t('jeuPick',{k}):t('jeuBorders',{k})+(S?' · '+t('nStrings',{n:S.strings.length})+' · '+m2(S.cord):'');
   $('#jbN').textContent=act.n;
   const isNew=act.id==='new';
   $('#jbOk').textContent=t(isNew?'create':'done');$('#jbOk').disabled=isNew&&k<2;
@@ -2194,7 +2211,7 @@ function placeJeuUI(){
   const bar=$('#jeuBar');if(!bar.hidden){const h=$('#hint');bar.style.left=h.style.left?`calc(${h.style.left} + (100% - ${h.style.left} - ${h.style.right||'0px'})/2)`:'50%'}
 }
 function renderCard(){
-  const card=$('#selCard');
+  const card=$('#selCard');card.hidden=false;
   if(sel&&sel.type==='beam'){
     const b=model.beams.find(x=>x.l.id===sel.id);if(!b){sel=null;return renderCard()}
     card.innerHTML=`<h2>${t('selectedLog')}</h2><h3>${b.pick.inv?b.pick.label:t('logN',{id:b.l.id})}</h3>
@@ -2227,13 +2244,13 @@ function renderCard(){
     const summary=j=>{const S=jeuStrings(j);return S?t('nStrings',{n:S.strings.length})+' · '+t('mCord',{m:S.cord.toFixed(1)}):t('needs2')};
     const bname=id=>{const l=lineById(id);return l&&l.inv?l.inv:t('logN',{id})};
     card.innerHTML=`<h2>${t('selectedFace')}</h2><h3>${t('faceN',{l:f.letter})} · ${t('jeuBorders',{k:f.sides.length}).replace(/<\/?b>/g,'')}${f.open?' · '+t('openFace'):''}</h3>${f.open?`<p class="note">${t('openNote')}</p>`:''}
-      <dl class="kv"><dt>${t('area')}</dt><dd>${f.area.toFixed(2)} m²</dd><dt>${t('outOfFlat')}</dt><dd>${cm(f.warp)}</dd></dl>
+      <dl class="kv"><dt>${t('area')}</dt><dd>${units.len==='ft'?(f.area*FT*FT).toFixed(1)+' ft²':f.area.toFixed(2)+' m²'}</dd><dt>${t('outOfFlat')}</dt><dd>${cm(f.warp)}</dd></dl>
       <span class="note">${t('jeuxOnFace')}</span>
       <ul class="list" id="jeuList">${jeux.map((j,k)=>`<li><button type="button" data-jeu="${j.id}" class="${act&&act.id===j.id?'on':''}"><span class="letter">${k+1}</span>${j.sides.map(bname).join(' + ')}<span class="meta">${summary(j)}</span></button></li>`).join('')}</ul>
       ${act?`<div class="depth active">
         <div class="lbl"><b>${act.id==='new'?t('newJeu'):t('jeuN',{n:jeux.findIndex(j=>j.id===act.id)+1})}</b><span class="note">${summary(act)}</span></div>
         <span class="note">${t('bordersHelp')}</span>
-        <div class="dchips" id="sideChips">${f.sides.map((sd,i)=>`<button type="button" data-side="${sd.beam}" class="${act.sides.includes(sd.beam)?'on':''}">${i+1} · ${bname(sd.beam)} · ${sd.len.toFixed(2)} m</button>`).join('')}</div>
+        <div class="dchips" id="sideChips">${f.sides.map((sd,i)=>`<button type="button" data-side="${sd.beam}" class="${act.sides.includes(sd.beam)?'on':''}">${i+1} · ${bname(sd.beam)} · ${m2(sd.len)}</button>`).join('')}</div>
         <div class="lbl"><label for="jeuN">${t('density')}</label><span id="jeuNv">${t('ptsPerBorder',{n:act.n})}</span></div>
         <input type="range" id="jeuN" min="3" max="40" step="1" value="${act.n}">
         <div class="row">${act.id==='new'?`<button class="btn primary" id="jeuCreate" type="button" ${act.sides.length<2?'disabled':''}>${t('createJeu')}</button><button class="btn" id="jeuCancel" type="button">${t('cancel')}</button>`:`<button class="btn" id="jeuDone" type="button">${t('done')}</button><button class="btn danger" id="jeuDel" type="button">${t('deleteJeu')}</button>`}</div>
@@ -2255,7 +2272,7 @@ function renderCard(){
       if(q('jeuDel'))q('jeuDel').onclick=()=>deleteJeu();
     }
   }else{
-    card.innerHTML=`<h2>${t('selection')}</h2>${state.workflow==='draw'?`<span class="note">${t('newLogsDiam')}</span>${dChips(drawD)}`:''}<p class="note">${t(mode==='draw'?'selDrawNote':jeuxMode?'jeuxNote':'selNote')}</p>`;
+    card.innerHTML=state.workflow==='draw'?`<h2>${t('selection')}</h2><span class="note">${t('newLogsDiam')}</span>${dChips(drawD)}`:'';card.hidden=state.workflow!=='draw';
     card.querySelectorAll('.dchips button').forEach(x=>x.onclick=()=>{drawD=+x.dataset.d;renderCard()});
   }
 }
@@ -2402,11 +2419,16 @@ function parseList(txt){
     let line=raw.trim();if(!line)continue;
     let name=null,m=line.match(/^([^:]{1,24}):\s*(.*)$/);if(m){name=m[1].trim();line=m[2]}
     let qty=1;m=line.match(/^(\d{1,2})\s*[x×*]\s*(.*)$/i);if(m){qty=+m[1];line=m[2]}
-    const nums=[...line.matchAll(/(\d+(?:[.,]\d+)?)\s*(mm|cm|m)?(?![a-z])/gi)].map(k=>({v:+k[1].replace(',','.'),u:(k[2]||'').toLowerCase()}));
+    const nums=[...line.matchAll(/(\d+(?:[.,]\d+)?)\s*(mm|cm|m|ft|feet|foot|in|inch|inches|'|"|′|″)?(?![a-z])/gi)].map(k=>({v:+k[1].replace(',','.'),u:(k[2]||'').toLowerCase()}));
     if(!nums.length){bad.push(raw.trim());continue}
-    const L=nums[0],len=L.u==='m'?L.v:L.u==='cm'?L.v/100:L.u==='mm'?L.v/1000:(L.v>20?L.v/100:L.v);
+    const toM=(q,isLen)=>{const u=q.u;
+      if(u==='m')return q.v;if(u==='cm')return q.v/100;if(u==='mm')return q.v/1000;
+      if(u==='ft'||u==='feet'||u==='foot'||u==="'"||u==='′')return q.v/FT;if(u==='in'||u==='inch'||u==='inches'||u==='"'||u==='″')return q.v/IN;
+      if(units.len==='ft')return isLen?q.v/FT:q.v/IN;
+      return isLen?(q.v>20?q.v/100:q.v):(q.v>=1?q.v/100:q.v)};
+    const len=toM(nums[0],true);
     let d=R.defaultD;
-    if(nums[1]){const D=nums[1];d=D.u==='cm'?D.v/100:D.u==='mm'?D.v/1000:D.u==='m'?D.v:(D.v>=1?D.v/100:D.v)}
+    if(nums[1])d=toM(nums[1],false);
     if(!(len>=0.3&&len<=15&&d>=0.02&&d<=0.5)){bad.push(raw.trim());continue}
     for(let k=0;k<qty;k++){if(!name)n++;out.push({id:name?(qty>1?`${name} ${k+1}`:name):'P'+n,len:Math.round(len*1000)/1000,d:Math.round(d*1000)/1000})}
   }
@@ -2442,7 +2464,7 @@ function renderStock(){
     const logs=model.beams.map(b=>({id:b.l.id,len:b.pick.len,d:b.r*2})).sort((a,b)=>b.len-a.len);
     const tot=logs.reduce((s,q)=>s+q.len,0);
     sec.innerHTML=`<h2>${t('logsToCut',{n:logs.length})}</h2>
-      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${q.len.toFixed(2)} m</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div>`:`<p class="note">${t('drawNoteCut')}</p>`}`;
+      ${logs.length?`<div class="tablewrap"><table><thead><tr><th>${t('colLog')}</th><th>${t('length')}</th><th>Ø</th></tr></thead><tbody>${logs.map(q=>`<tr class="${sel&&sel.type==='beam'&&sel.id===q.id?'used':''}"><td>${q.id}</td><td>${m2(q.len)}</td><td>${cm(q.d)}</td></tr>`).join('')}</tbody></table></div>`:`<p class="note">${t('drawNoteCut')}</p>`}`;
   }
 }
 
@@ -2492,14 +2514,14 @@ function openStart(step,edit=false){
     c.hidden=!n;c.textContent=t('continueFrom',{name:cur().name});
   }else{
     const withList=listEdit?cur():scenes.find(x=>x.state.inventory&&x.state.inventory.length);
-    const inv0=withList?withList.state.inventory:[],ta=$('#invText');ta.value=inv0.length?inv0.map(q=>`${/^P\d+$/.test(q.id)?'':q.id+': '}${q.len} m ${Math.round(q.d*100)} cm`).join('\n'):SAMPLE_LIST;
+    const inv0=withList?withList.state.inventory:[],ta=$('#invText');ta.value=inv0.length?inv0.map(q=>`${/^P\d+$/.test(q.id)?'':q.id+': '}${q.len} m x ${Math.round(q.d*100)} cm`).join('\n'):SAMPLE_LIST;
     previewList();ta.focus();
   }
 }
 function previewList(){
   const {items,bad}=parseList($('#invText').value);
   $('#invCount').textContent=t('listCount',{n:items.length})+(bad.length?t('badLines',{n:bad.length}):'');
-  $('#invPrev').innerHTML=items.map(q=>`<li><span>${q.id}</span><span>${q.len.toFixed(2)} m · Ø${cm(q.d)}</span></li>`).join('')+bad.map(b=>`<li class="bad"><span>${b.replace(/</g,'&lt;')}</span><span>?</span></li>`).join('');
+  $('#invPrev').innerHTML=items.map(q=>`<li><span>${q.id}</span><span>${m2(q.len)} · Ø${cm(q.d)}</span></li>`).join('')+bad.map(b=>`<li class="bad"><span>${b.replace(/</g,'&lt;')}</span><span>?</span></li>`).join('');
   $('#listGo').disabled=!items.length;
 }
 function applyWorkflow(){
@@ -2511,7 +2533,7 @@ function applyWorkflow(){
 }
 $('#invText').addEventListener('input',previewList);
 $('#chInv').onclick=()=>openStart('list');
-$('#listBack').onclick=()=>openStart('choose');
+$('#listBack').onclick=$('#listBack2').onclick=()=>openStart('choose');
 $('#listGo').onclick=()=>{
   const {items}=parseList($('#invText').value);if(!items.length)return;
   if(!listEdit&&state.lines.length)newScene(); /* a new design gets its own scene */
@@ -2714,7 +2736,7 @@ document.querySelectorAll('#decor .dopt').forEach(b=>b.onclick=()=>setEnv(b.data
 $('#sideTab').onclick=()=>{const o=$('#side').classList.contains('closed');if(o&&narrow())setScenesOpen(false);setSideOpen(o)};
 $('#barTab').onclick=()=>setBarOpen($('#bar').classList.contains('closed'));
 /* a tap on an empty part of an open panel closes it (buttons, cards, lists and fields keep working) */
-const PANEL_ACTIVE='button,a,input,textarea,select,label,summary,details,[role=button],[contenteditable=true],.scard,.stock li,.dchips';
+const PANEL_ACTIVE='.unitpop,button,a,input,textarea,select,label,summary,details,[role=button],[contenteditable=true],.scard,.stock li,.dchips';
 function tapToClose(panel,isOpen,close){
   let d=null;
   panel.addEventListener('pointerdown',e=>{d=(e.isPrimary&&isOpen()&&!e.target.closest(PANEL_ACTIVE))?{x:e.clientX,y:e.clientY,t:Date.now()}:null});
@@ -2990,6 +3012,11 @@ async function arOpen(){
   finally{arBusy=false}
 }
 function arClose(){$('#arView').hidden=true;$('#arStage').querySelectorAll('model-viewer').forEach(x=>x.remove())}
+{const pop=$('#unitPop'),gear=$('#unitGear');
+  const paint=()=>pop.querySelectorAll('.useg').forEach(g=>g.querySelectorAll('button').forEach(b=>b.classList.toggle('on',units[g.dataset.u]===b.dataset.v)));
+  gear.onclick=e=>{e.stopPropagation();pop.hidden=!pop.hidden;gear.setAttribute('aria-expanded',!pop.hidden);paint()};
+  pop.querySelectorAll('.useg button').forEach(b=>b.onclick=()=>{units[b.closest('.useg').dataset.u]=b.dataset.v;try{localStorage.setItem('atelier-units',JSON.stringify(units))}catch(_){}paint();rebuild(false);applyStatic()});
+  document.addEventListener('pointerdown',e=>{if(!pop.hidden&&!e.target.closest('#unitPop,#unitGear')){pop.hidden=true;gear.setAttribute('aria-expanded','false')}})}
 document.body.appendChild($('#arView'));$('#arBtn').onclick=arOpen;$('#arBtn').title=t('arBtnT');$('#arBtn').querySelector('span').textContent=lang==='fr'?'RA':'AR';$('#arClose').onclick=arClose;
 const switchLang=()=>{lang=lang==='fr'?'en':'fr';try{localStorage.setItem('atelier-lang',lang)}catch(_){}$('#arBtn').title=t('arBtnT');$('#arBtn').querySelector('span').textContent=lang==='fr'?'RA':'AR';
   applyStatic();updateInstall();updateShareBar();renderDecor();applyWorkflow();rebuild(false);renderScenes();renderAcct();setSyncState(syncState,acct&&syncState==='ok'&&acct.lastSync?t('syncedAt',{t:hm(new Date(acct.lastSync))}):'');
