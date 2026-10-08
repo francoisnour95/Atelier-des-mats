@@ -1109,23 +1109,30 @@ function computeModel(){
   let changed=true;
   while(changed){changed=false;const deg=new Map();for(const e of edges){deg.set(e.u,(deg.get(e.u)||0)+1);deg.set(e.v,(deg.get(e.v)||0)+1)}
     const keep=edges.filter(e=>deg.get(e.u)>1&&deg.get(e.v)>1);if(keep.length!==edges.length){edges=keep;changed=true}}
-  /* 5. faces = for every stretch, the shortest loop that closes through it (works in 3D, no flat drawing needed) */
-  const adj=new Map();edges.forEach((e,ei)=>{for(const [a,b] of [[e.u,e.v],[e.v,e.u]]){if(!adj.has(a))adj.set(a,[]);adj.get(a).push({to:b,ei})}});
-  const cand=new Map();
-  edges.forEach((e0,e0i)=>{
-    const dist=new Map([[e0.u,0]]),prev=new Map(),done=new Set();
+  /* 5. faces = for every corner (two stretches of different logs meeting at a brelage), the shortest loop that closes it.
+        Going corner by corner (not stretch by stretch) finds every cell of a grid, even where two loops are equally short. */
+  const adj=new Map(),inc=new Map();
+  edges.forEach((e,ei)=>{for(const [a,b] of [[e.u,e.v],[e.v,e.u]]){if(!adj.has(a))adj.set(a,[]);adj.get(a).push({to:b,ei});if(!inc.has(a))inc.set(a,[]);inc.get(a).push(ei)}});
+  const shortest=(src,dst,banNode,banE)=>{
+    const dist=new Map([[src,0]]),prev=new Map(),done=new Set([banNode]);
     while(true){
       let u=null,best=Infinity;for(const [k,v] of dist)if(!done.has(k)&&v<best){best=v;u=k}
-      if(u===null||u===e0.v)break;done.add(u);
-      for(const {to,ei} of adj.get(u)||[]){if(ei===e0i)continue;const nd=best+edges[ei].len;if(nd<(dist.get(to)??Infinity)){dist.set(to,nd);prev.set(to,{from:u,ei})}}
+      if(u===null)return null;if(u===dst)break;done.add(u);
+      for(const {to,ei} of adj.get(u)||[]){if(banE.has(ei)||done.has(to))continue;const nd=best+edges[ei].len;if(nd<(dist.get(to)??Infinity)){dist.set(to,nd);prev.set(to,{from:u,ei})}}
     }
-    if(!prev.has(e0.v))return;
-    const loopE=[e0i],loopN=[e0.v];let cur=e0.v;
-    while(cur!==e0.u){const p=prev.get(cur);loopE.push(p.ei);cur=p.from;loopN.push(cur)}
-    if(loopE.length<3)return;
-    const key=[...loopE].sort((a,b)=>a-b).join(',');
+    const nodesP=[dst],edgesP=[];let cur=dst;while(cur!==src){const p=prev.get(cur);edgesP.unshift(p.ei);cur=p.from;nodesP.unshift(cur)}
+    return {nodes:nodesP,edges:edgesP};
+  };
+  const cand=new Map();
+  for(const [k,list] of inc)for(let x=0;x<list.length;x++)for(let y=x+1;y<list.length;y++){
+    const ea=edges[list[x]],eb=edges[list[y]];if(ea.beam===eb.beam)continue;
+    const a=ea.u===k?ea.v:ea.u,b=eb.u===k?eb.v:eb.u;if(a===b)continue;
+    const p=shortest(a,b,k,new Set([list[x],list[y]]));if(!p)continue;
+    const loopN=[k,...p.nodes],loopE=[list[x],...p.edges,list[y]];
+    if(loopE.length<3)continue;
+    const key=[...loopE].sort((m,n)=>m-n).join(',');
     if(!cand.has(key))cand.set(key,{loopE,loopN});
-  });
+  }
   const faces=[];
   for(const {loopE,loopN} of cand.values()){
     const ns=new Set(loopN);
