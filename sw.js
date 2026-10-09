@@ -1,7 +1,7 @@
 /* Atelier des Mâts: lets the installed app open without internet.
    The page is fetched fresh whenever there is a connection, so updates pushed to GitHub arrive on their own.
    Online saving (Supabase) always goes to the network and is never stored here. */
-const CACHE = 'atelier-v38';
+const CACHE = 'atelier-v39';
 const CORE = ['./', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 const LIBS = [
   'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
