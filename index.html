@@ -237,7 +237,10 @@ body.dragging,body.dragging *{user-select:none!important;-webkit-user-select:non
 .aerr{color:var(--warn);font-size:13px;margin:0;min-height:1em}
 .potchip{position:absolute;transform:translate(-50%,-150%);font:600 13px var(--f-display);letter-spacing:.06em;text-transform:uppercase;background:#5ee08a;color:#0d2415;border:0;border-radius:6px;padding:5px 10px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
 .potchip:focus-visible{outline:2px solid #fff}
+.potchip.tri{background:#7fb0d8;color:#0c1d2b}
+.potchip.left{transform:translate(calc(-100% - 4px),-150%)}.potchip.tri{transform:translate(4px,-150%)}
 .potchip.rem{background:#e5484d;color:#fff}
+.btag.triple{border-color:#7fb0d8;color:#dcecf8}
 .btag{position:absolute;transform:translate(-50%,0);font:600 12px var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:#f3e6bf;background:rgba(14,17,15,.78);border:1px solid #6b5a2c;border-radius:4px;padding:1px 6px;pointer-events:none;white-space:nowrap}
 #jeuList button{flex-wrap:wrap;row-gap:2px}
 #jeuList .meta{margin-left:32px;flex-basis:100%}
@@ -584,7 +587,7 @@ details[open] summary{margin-bottom:8px}
 <div class="app">
   <header class="bar" id="bar">
     <button class="bartab" id="barTab" type="button" aria-expanded="true" aria-controls="barBody" title="Hide the toolbar"><span class="arr" aria-hidden="true">▴</span></button>
-    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v37 · sign-in</span></div>
+    <div class="brand"><svg class="logo" aria-hidden="true" viewBox="0 0 512 512"><g transform="translate(256 256) scale(1.0) translate(-256 -270)"><line x1="128" y1="448" x2="400" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="128" y1="448" x2="400" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="133.4407140949524" y1="452.40438760067576" x2="405.4407140949524" y2="116.40438760067575" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="400" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="400" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><line x1="384" y1="448" x2="112" y2="112" stroke="#4a2f14" stroke-width="46" stroke-linecap="round"/><line x1="384" y1="448" x2="112" y2="112" stroke="#a96f32" stroke-width="35" stroke-linecap="round"/><line x1="389.4407140949524" y1="443.59561239932424" x2="117.4407140949524" y2="107.59561239932425" stroke="#c99052" stroke-width="8" stroke-linecap="round"/><circle cx="112" cy="112" r="17" fill="#e9c58f" stroke="#4a2f14" stroke-width="6"/><circle cx="112" cy="112" r="6.5" fill="none" stroke="#b98447" stroke-width="3"/><g stroke="#2a1a08" stroke-width="8" stroke-linecap="round" opacity=".55"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#f4bf55" stroke-width="4" stroke-linecap="round"><line x1="287.7" y1="250.8" x2="129.3" y2="133.4"/><line x1="299.6" y1="236.2" x2="141.2" y2="148.0"/><line x1="311.4" y1="221.5" x2="153.0" y2="162.7"/><line x1="323.3" y1="206.8" x2="164.9" y2="177.4"/><line x1="335.2" y1="192.1" x2="176.8" y2="192.1"/><line x1="347.1" y1="177.4" x2="188.7" y2="206.8"/><line x1="359.0" y1="162.7" x2="200.6" y2="221.5"/><line x1="370.8" y1="148.0" x2="212.4" y2="236.2"/><line x1="382.7" y1="133.4" x2="224.3" y2="250.8"/></g><g stroke="#3a2610" stroke-width="9" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g><g stroke="#f6ead2" stroke-width="5" stroke-linecap="round"><line x1="230.9" y1="301.9" x2="262.4" y2="263.0"/><line x1="237.2" y1="306.9" x2="268.6" y2="268.1"/><line x1="243.4" y1="311.9" x2="274.8" y2="273.1"/><line x1="249.6" y1="317.0" x2="281.1" y2="278.1"/><line x1="262.4" y1="317.0" x2="230.9" y2="278.1"/><line x1="268.6" y1="311.9" x2="237.2" y2="273.1"/><line x1="274.8" y1="306.9" x2="243.4" y2="268.1"/><line x1="281.1" y1="301.9" x2="249.6" y2="263.0"/></g></g></svg><h1>Atelier des Mâts</h1><span>v38 · triple</span></div>
     <div class="barbody" id="barBody">
       <label class="chk"><input type="checkbox" id="cSnap" checked> Grid snap</label>
       <label class="chk"><input type="checkbox" id="cGrid" checked> Show grid</label>
@@ -620,6 +623,7 @@ details[open] summary{margin-bottom:8px}
       <div class="tip" id="tip" hidden></div>
       <button class="potchip" id="potChip" type="button" hidden>Add brelage</button>
       <button class="potchip rem" id="remChip" type="button" hidden>Remove brelage</button>
+      <button class="potchip tri" id="triChip" type="button" hidden>Brelage triple</button>
       <button class="fixchip" id="fixChipA" data-end="a" type="button" hidden></button>
       <button class="fixchip" id="fixChipB" data-end="b" type="button" hidden></button>
       <div class="fixpop" id="fixPop" role="dialog" aria-label="Fix to the ground" hidden>
@@ -698,7 +702,7 @@ details[open] summary{margin-bottom:8px}
         </div>
         <span class="note" id="possTxt" hidden></span>
         <div class="row actrow"><button class="btn" id="bConnectAll" type="button">Connect all</button><button class="btn danger" id="bClear" type="button">Erase</button><button class="btn" id="bInstall" type="button" hidden>Install the app</button></div>
-        <div class="appver">v37</div>
+        <div class="appver">v38</div>
       </section>
       <section class="sec card" id="selCard"></section>
       <section class="sec" id="stockSec"></section>
@@ -749,7 +753,7 @@ endFixed:'End {n} fixed',dugBuried:'dug in · {cm} buried',metalBrackets:'metal 
 noContact:'No contact',restsOn:'Rests on beam {ids}',lashedGap:'Lashed across {cm} gap to beam {id}',floating:'Floating {cm} from beam {id}',
 jeuMin2:'A jeu needs at least 2 borders. Delete it instead.',jeuPick:'Tap the borders to link · <b>{k}</b> chosen',jeuBorders:'<b>{k}</b> borders',nStrings:'{n} strings',create:'Create',done:'Done',
 selectedLog:'Selected log',logN:'Log {id}',tie:'Tie',knot:'Knot',gap:'Gap',apart:'{cm} apart',touching:'touching',remove:'Remove',
-knotRule:'The knot follows the angle: parallel (under 15°) is a brelage long, 90° ± 15° a brelage carré, anything else a brelage en X. Tied beams move together; remove the brelage to move a beam on its own.',
+knotRule:'The knot follows the angle: parallel (under 15°) is a brelage long, 90° ± 15° a brelage carré, anything else a brelage en X. Three logs crossing at the same point make a brelage triple (tripod). Tied beams move together; remove the brelage to move a beam on its own.',
 possibleBrelage:'Possible brelage',axesDist:'Distance between axes',possibleNote:'These beams are close but not tied, so they ignore each other. Add a brelage to lash them: they will then rest on each other and move together.',addBrelage:'Add brelage',removeBrelage:'Remove brelage',
 mCord:'{m} m of cord',needs2:'needs 2 borders',selectedFace:'Selected face',faceN:'Face {l}',area:'Area',outOfFlat:'Out of flat',jeuxOnFace:'Jeux de ficelles on this face',newJeu:'New jeu',jeuN:'Jeu {n}',
 bordersHelp:'Borders, in order around the face. Pick at least 2, here or on the logs in the view.',density:'Density',ptsPerBorder:'{n} points per border',createJeu:'Create jeu',cancel:'Cancel',deleteJeu:'Delete jeu',addJeu:'Add a jeu de ficelles',
@@ -788,7 +792,7 @@ myDesign:'My design',mustSignIn:'Create your free ID or sign in to use Atelier d
 's.nickname':'Nickname','s.nickPh':'e.g. lou_castor','s.pinLabel':'PIN (4 to 8 digits)','s.repeatPin':'Repeat the PIN',
 's.nickNote':'Pick a nickname, not your real name. Write your PIN down: without an email it cannot be reset, but everything stays on this device anyway.',
 's.signedAs':'Signed in as','s.syncNow':'Sync now','s.signOut':'Sign out','s.acctInNote':'Your installations are kept on this device and online. Sign in with the same nickname and PIN on another device to find them there.',
-'s.brandTag':'v37 · sign-in','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
+'s.brandTag':'v38 · triple','s.newDesign':'Start a new design','s.mode':'Mode','s.draw':'Draw','s.select':'Lash','s.jeux':'Strings','s.undo':'Undo','s.redo':'Redo','s.undoT':'Undo (Ctrl+Z)','s.redoT':'Redo (Ctrl+Shift+Z)',
 's.gridSnap':'Snap','s.showGrid':'Grid','s.baseDrawing':'Base drawing','s.labels':'Labels','s.human':'Human scale','s.scenes':'Installations','s.newScene':'New installation',
 's.fixThis':'Fix this end to the ground','s.digIn':'Dig in','s.digInD':'Bury 1/6 of the log in a hole','s.metalLB':'Metal L brackets','s.metalD':'Stand it on the ground, held by two steel L pieces',
 's.notFixed':'Not fixed','s.notFixedD':'The end rests free and can be moved anywhere','s.moveEnd':'Move this end','s.flipEnd':'Flip this end front / back',
@@ -821,7 +825,7 @@ endFixed:'Bout {n} fixé',dugBuried:'enterré · {cm} sous terre',metalBrackets:
 noContact:'Aucun contact',restsOn:'Repose sur la perche {ids}',lashedGap:'Brelage sur un écart de {cm} avec la perche {id}',floating:'Flotte à {cm} de la perche {id}',
 jeuMin2:'Un jeu a besoin d’au moins 2 bords. Supprimez-le plutôt.',jeuPick:'Touchez les bords à relier · <b>{k}</b> choisi(s)',jeuBorders:'<b>{k}</b> bords',nStrings:'{n} ficelles',create:'Créer',done:'Terminé',
 selectedLog:'Perche choisie',logN:'Perche {id}',tie:'Liaison',knot:'Nœud',gap:'Écart',apart:'{cm} d’écart',touching:'se touchent',remove:'Enlever',
-knotRule:'Le nœud suit l’angle : parallèles (moins de 15°) c’est un brelage long, 90° ± 15° un brelage carré, sinon un brelage en X. Les perches liées bougent ensemble ; enlevez le brelage pour bouger une perche seule.',
+knotRule:'Le nœud suit l’angle : parallèles (moins de 15°) c’est un brelage long, 90° ± 15° un brelage carré, sinon un brelage en X. Trois perches qui se croisent au même point font un brelage triple. Les perches liées bougent ensemble ; enlevez le brelage pour bouger une perche seule.',
 possibleBrelage:'Brelage possible',axesDist:'Distance entre les axes',possibleNote:'Ces perches sont proches mais pas liées, donc elles s’ignorent. Ajoutez un brelage pour les attacher : elles reposeront l’une sur l’autre et bougeront ensemble.',addBrelage:'Ajouter un brelage',removeBrelage:'Enlever le brelage',
 mCord:'{m} m de ficelle',needs2:'il faut 2 bords',selectedFace:'Face choisie',faceN:'Face {l}',area:'Surface',outOfFlat:'Écart au plan',jeuxOnFace:'Jeux de ficelles sur cette face',newJeu:'Nouveau jeu',jeuN:'Jeu {n}',
 bordersHelp:'Les bords, dans l’ordre autour de la face. Choisissez-en au moins 2, ici ou sur les perches dans la vue.',density:'Densité',ptsPerBorder:'{n} points par bord',createJeu:'Créer le jeu',cancel:'Annuler',deleteJeu:'Supprimer le jeu',addJeu:'Ajouter un jeu de ficelles',
@@ -859,7 +863,7 @@ myDesign:'Mon projet',mustSignIn:'Créez votre identifiant gratuit ou connectez-
 's.nickname':'Pseudo','s.nickPh':'ex. lou_castor','s.pinLabel':'Code (4 à 8 chiffres)','s.repeatPin':'Répétez le code',
 's.nickNote':'Choisissez un pseudo, pas votre vrai nom. Notez votre code : sans e-mail il ne peut pas être réinitialisé, mais tout reste de toute façon sur cet appareil.',
 's.signedAs':'Connecté en tant que','s.syncNow':'Synchroniser','s.signOut':'Se déconnecter','s.acctInNote':'Vos installations sont gardées sur cet appareil et en ligne. Connectez-vous avec le même pseudo et code sur un autre appareil pour les retrouver.',
-'s.brandTag':'v37 · sign-in','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
+'s.brandTag':'v38 · triple','s.newDesign':'Commencer un nouveau projet','s.mode':'Mode','s.draw':'Dessiner','s.select':'Brelages','s.jeux':'Jeux','s.undo':'Annuler','s.redo':'Rétablir','s.undoT':'Annuler (Ctrl+Z)','s.redoT':'Rétablir (Ctrl+Maj+Z)',
 's.gridSnap':'Aimant','s.showGrid':'Grille','s.baseDrawing':'Plan au sol','s.labels':'Étiquettes','s.human':'Taille humaine','s.scenes':'Installations','s.newScene':'Nouvelle installation',
 's.fixThis':'Fixer ce bout au sol','s.digIn':'Enterrer','s.digInD':'Enfouir 1/6 de la perche dans un trou','s.metalLB':'Équerres en métal','s.metalD':'Posée au sol, tenue par deux équerres en acier',
 's.notFixed':'Pas fixé','s.notFixedD':'Le bout repose librement et peut être déplacé partout','s.moveEnd':'Déplacer ce bout','s.flipEnd':'Passer ce bout devant / derrière',
@@ -974,7 +978,10 @@ const EX_TABLE=(()=>{
   return {version:5,nextId:id+1,lines,brelages,ficelles};
 })();
 /* the three knots side by side: parallel logs (long), a cross at 90° (carré), a cross at about 50° (en X) */
-const EX_TYPES = {version:4,nextId:7,lines:[
+const EX_TYPES = {version:4,nextId:10,lines:[
+  {id:7,a:[4.5,0,0.55],b:[5.65,2.75,-0.12]},
+  {id:8,a:[6.1,0,0.55],b:[4.95,2.75,-0.12]},
+  {id:9,a:[5.3,0,-0.85],b:[5.3,2.85,0.38]},
   {id:1,a:[-4.3,1.0,0],b:[-2.3,1.0,0]},
   {id:2,a:[-3.8,1.11,0],b:[-1.8,1.11,0]},
   {id:3,a:[0,0,0],b:[0,2.6,0]},
@@ -1012,7 +1019,9 @@ let libDeleted={},libOrderAt=0;
   else{let had=false;try{had=localStorage.getItem('atelier-table-added')==='3'}catch(_){}
     if(!had&&!scenes.some(x=>x.id==='ex-table')&&!libDeleted['ex-table'])scenes.push(wrapScene({id:'ex-table',name:t('exTable'),state:exState(EX_TABLE),view:'34',updated:Date.now()}));
     const old=scenes.find(x=>x.id==='ex-table');if(!had&&old&&((old.state.lines.length===47&&old.state.brelages.length===92)||(old.state.lines.length===51&&old.state.brelages.length===96))&&!old.state.ficelles.length){old.state=exState(EX_TABLE);old.updated=Date.now()}
-    try{localStorage.setItem('atelier-table-added','3')}catch(_){}}
+    try{localStorage.setItem('atelier-table-added','3')}catch(_){}
+    /* the types page gets the brelage triple, if it was never edited */
+    const ty=scenes.find(x=>x.id==='ex-types');if(ty&&ty.state.lines.length===6&&!ty.state.ficelles.length){ty.state=exState(EX_TYPES);ty.updated=Date.now()}}
   if(!scenes.some(x=>x.id===active))active=scenes[0].id;
 })();
 let state=scenes.find(x=>x.id===active).state;
@@ -1338,7 +1347,7 @@ function setView(k){
   controls.target.set(0,1.7,0);
   if(k==='side')camera.position.set(12,2.2,0.001);
   else if(k==='34')camera.position.set(8.2,4.2,8.2);
-  else if(k==='demo'){controls.target.set(-0.25,1.2,0);camera.position.set(1.3,2.3,8.6)}
+  else if(k==='demo'){controls.target.set(1.6,1.3,0);camera.position.set(2.9,2.7,12.6)}
   else camera.position.set(0.001,2.2,11.5);
   controls.update();
 }
@@ -1508,12 +1517,81 @@ function ropeLoop(pts){
   scaleUV(g,L/(ROPE*5),1);g.userData.len=L;return g;
 }
 const arc=(c,u,v,r,f0,f1,n=10)=>{const out=[];for(let k=0;k<=n;k++){const f=f0+(f1-f0)*k/n;out.push(add(c,add(mul(u,r*Math.cos(f)),mul(v,r*Math.sin(f)))))}return out};
+const brelagePairType=(i,j)=>{const deg=Math.acos(Math.min(1,Math.abs(dot(model.beams[i].dir,model.beams[j].dir))))*180/Math.PI;return deg<15?'long':Math.abs(deg-90)<=15?'carre':'x'};
 function brelageType(J){
   const dA=model.beams[J.i].dir,dB=model.beams[J.j].dir;
   const deg=Math.acos(Math.min(1,Math.abs(dot(dA,dB))))*180/Math.PI;
+  if(tripleBeams(J.node))return {deg,type:'triple'};
   return {deg,type:deg<15?'long':Math.abs(deg-90)<=15?'carre':'x'};
 }
-const TYPE_NAME={long:'Brelage long',carre:'Brelage carré',x:'Brelage en X'};
+const TYPE_NAME={long:'Brelage long',carre:'Brelage carré',x:'Brelage en X',triple:'Brelage triple'};
+/* brelage triple (tripod): three logs that all cross at one brelage are tied together as one bundle */
+function tripleBeams(n){
+  if(!n||n.beams.size!==3)return null;
+  const bs=[...n.beams],pairs=new Set(n.js.map(J=>Math.min(J.i,J.j)+'-'+Math.max(J.i,J.j)));
+  if(pairs.size<3)return null;
+  const par=(i,j)=>Math.acos(Math.min(1,Math.abs(dot(model.beams[i].dir,model.beams[j].dir))))*180/Math.PI<15;
+  if(par(bs[0],bs[1])&&par(bs[1],bs[2]))return null; /* three parallel logs: that is a sleeve, not a tripod */
+  return bs;
+}
+/* a possible brelage that has a third log crossing at the same spot: it can become a brelage triple */
+const triOptCache=new Map();
+function tripleOption(q){
+  if(!q)return null;const ck=q.key+'|'+q.p.map(v=>v.toFixed(3)).join(',');if(triOptCache.has(ck))return triOptCache.get(ck);
+  const near=p=>d3(p,q.p)<0.25,ids=i=>model.beams[i].l.id,key=(i,j)=>{const a=ids(i),b=ids(j);return Math.min(a,b)+'-'+Math.max(a,b)};
+  const tied=(i,j)=>{const J=model.nodes.flatMap(n=>n.js).find(J=>((J.i===i&&J.j===j)||(J.i===j&&J.j===i))&&near(J.mid));if(J)return {k:key(i,j),have:true};
+    const P=model.potentials.find(P=>((P.i===i&&P.j===j)||(P.i===j&&P.j===i))&&near(P.p));return P?{k:P.key,have:false}:null};
+  let out=null;
+  for(let k=0;k<model.beams.length&&!out;k++){if(k===q.i||k===q.j)continue;const a=tied(q.i,k),b=tied(q.j,k);if(a&&b)out={keys:[q.key,a.k,b.k].filter((x,n,arr)=>arr.indexOf(x)===n)}}
+  if(triOptCache.size>200)triOptCache.clear();triOptCache.set(ck,out);return out;
+}
+function addTriple(keys){pushHistory();for(const k of keys){const [a,b]=k.split('-').map(Number);if(!state.brelages.some(q=>q.a===a&&q.b===b))state.brelages.push({a,b})}sel={type:'node',key:keys[0]};rebuild()}
+function lashTripleCached(n,bs){
+  const r3=a=>a.map(v=>v.toFixed(4)).join(','),key='T|'+bs.map(i=>{const b=model.beams[i];return r3(b.A)+r3(b.B)+b.r}).join('|')+r3(n.p)+(draftRope?'d':'f');
+  let hit=lashCache.get(key);
+  if(!hit){hit=lashTriple(n,bs);lashCache.set(key,hit);
+    if(lashCache.size>160){const [k0,v0]=lashCache.entries().next().value;lashCache.delete(k0);v0.geos.forEach(g=>g.dispose())}}
+  return hit;
+}
+/* the lashings of one brelage: one bundle for a triple, otherwise one per pair of logs */
+function nodeLash(n,fresh){const bs=tripleBeams(n);
+  if(bs){const L=fresh?lashTriple(n,bs):lashTripleCached(n,bs);n.js.forEach(J=>J.type='triple');return [L]}
+  return n.js.map(J=>{const L=fresh?lashing(J):lashingCached(J);J.type=L.type;return L})}
+function lashTriple(n,bs){
+  const B=bs.map(i=>model.beams[i]),c=n.p,geos=[];
+  const lg=b=>({a:b.E1,b:b.E2,r:b.r,mid:mul(add(b.E1,b.E2),0.5),dir:b.dir,len:b.pick.len}),logs=B.map(lg);
+  const turn=pts=>geos.push(ropeLoop(settleRope(pts,logs)));
+  /* the bundle's axis: the three directions added with the signs that agree the most */
+  let a=null,best=-1;for(const s2 of [1,-1])for(const s3 of [1,-1]){const v=add(add(B[0].dir,mul(B[1].dir,s2)),mul(B[2].dir,s3));if(len3(v)>best){best=len3(v);a=nrm(v)}}
+  const u=nrm(Math.abs(a[1])<0.9?crs(a,[0,1,0]):crs(a,[1,0,0])),w=crs(a,u);
+  /* where each log crosses a slice of the bundle, seen along the axis */
+  const cut=(b,o)=>{const k=dot(b.dir,a),P=add(c,mul(a,o));if(Math.abs(k)<0.3){const t=dot(sub(P,b.A),b.dir);return add(b.A,mul(b.dir,t))}return add(b.A,mul(b.dir,dot(sub(P,b.A),a)/k))};
+  const hull=(pts2)=>{const p=pts2.slice().sort((x,y)=>x[0]-y[0]||x[1]-y[1]),cr=(o,a2,b2)=>(a2[0]-o[0])*(b2[1]-o[1])-(a2[1]-o[1])*(b2[0]-o[0]);
+    const lo=[],up=[];for(const q of p){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],q)<=0)lo.pop();lo.push(q)}
+    for(const q of p.slice().reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],q)<=0)up.pop();up.push(q)}
+    return lo.slice(0,-1).concat(up.slice(0,-1))};
+  const ring=(o,extra)=>{const P0=add(c,mul(a,o)),pts2=[];
+    B.forEach(b=>{const q=sub(cut(b,o),P0),qx=dot(q,u),qy=dot(q,w),R=b.r+ROPE*(1+extra);for(let i=0;i<20;i++){const f=i/20*Math.PI*2;pts2.push([qx+R*Math.cos(f),qy+R*Math.sin(f)])}});
+    return hull(pts2).map(([x,y])=>add(P0,add(mul(u,x),mul(w,y))))};
+  /* wraps around the three logs, stacked along the axis */
+  const NT=7,step=ROPE*2.15;
+  for(let k=0;k<NT;k++)turn(ring((k-(NT-1)/2)*step,0.15*(k%2)));
+  /* frapping: in each gap between two logs, a few turns around the wraps, pulling them in */
+  const q2=B.map(b=>{const q=sub(cut(b,0),c);return [dot(q,u),dot(q,w)]}),qc=[(q2[0][0]+q2[1][0]+q2[2][0])/3,(q2[0][1]+q2[1][1]+q2[2][1])/3];
+  const ang=q2.map(q=>Math.atan2(q[1]-qc[1],q[0]-qc[0])),ord=[0,1,2].sort((x,y)=>ang[x]-ang[y]);
+  const H=step*(NT-1)/2+ROPE*1.6;
+  for(let g=0;g<3;g++){const i=ord[g],j=ord[(g+1)%3];
+    let m=[q2[i][0]+q2[j][0]-2*qc[0],q2[i][1]+q2[j][1]-2*qc[1]];let ml=Math.hypot(m[0],m[1]);
+    if(ml<1e-4){const t=ang[i]+((ang[j]-ang[i]+Math.PI*2)%(Math.PI*2))/2;m=[Math.cos(t),Math.sin(t)]}else m=[m[0]/ml,m[1]/ml];
+    const ext=Math.max(...B.map((b,k)=>(q2[k][0]-qc[0])*m[0]+(q2[k][1]-qc[1])*m[1]+b.r))+ROPE*1.2;
+    const M=nrm(add(mul(u,m[0]),mul(w,m[1]))),C0=add(c,add(mul(u,qc[0]),mul(w,qc[1])));
+    /* each turn goes from the middle of the bundle out past the wraps, between the two logs */
+    for(let k=0;k<2;k++){const R=ext*0.5+ROPE*(0.6+k*1.1),ctr=add(C0,mul(M,ext*0.5)),pts=[];
+      for(let i2=0;i2<20;i2++){const f=i2/20*Math.PI*2;pts.push(add(ctr,add(mul(M,R*Math.cos(f)),mul(a,(H+ROPE*k*1.2)*Math.sin(f)))))}
+      turn(pts)}
+  }
+  return {type:'triple',geos};
+}
 /* lashings are cached by their exact inputs, so only the ones that actually moved are rebuilt */
 const lashCache=new Map();
 function lashingCached(J){
@@ -1730,12 +1808,12 @@ function buildScene(){
   }
   for(const n of model.nodes){
     const isSelN=sel&&sel.type==='node'&&n.js.some(J=>J.key===sel.key);
-    for(const J of n.js){
-      const L=lashingCached(J);J.type=L.type;
+    const Ls=nodeLash(n);
+    Ls.forEach((L,k)=>{
       for(const g of L.geos){const m=new THREE.Mesh(g,isSelN?ropeMatSel:ropeMat);m.castShadow=true;m.receiveShadow=true;group.add(m)}
-      if(showLabels){const d=document.createElement('div');d.className='btag '+L.type;d.textContent=TYPE_NAME[L.type];labels.appendChild(d);labelItems.push({el:d,v:V(add(J.mid,[0,-0.22,0]))})}
-    }
-    for(const J of n.js){if(J.loose<=R.lashGap)continue;const g=new THREE.BufferGeometry().setFromPoints([V(J.pi),V(J.pj)]);const l=new THREE.Line(g,lineMat(0xe8806c,1,false));l.renderOrder=6;l.userData.own=true;group.add(l)}
+      if(showLabels){const J=n.js[k],d=document.createElement('div');d.className='btag '+L.type;d.textContent=TYPE_NAME[L.type];labels.appendChild(d);labelItems.push({el:d,v:V(add(L.type==='triple'?n.p:J.mid,[0,-0.22,0]))})}
+    });
+    if(!tripleBeams(n))for(const J of n.js){if(J.loose<=R.lashGap)continue;const g=new THREE.BufferGeometry().setFromPoints([V(J.pi),V(J.pj)]);const l=new THREE.Line(g,lineMat(0xe8806c,1,false));l.renderOrder=6;l.userData.own=true;group.add(l)}
   }
   for(const f of (jeuxMode?model.faces:[])){
     const isSel=sel&&sel.type==='face'&&sel.key===f.key;
@@ -2090,6 +2168,7 @@ $('#bUndo').onclick=undo;$('#bRedo').onclick=redo;
 $('#bConnectAll').onclick=()=>{if(model.potentials.length)connectAll();else if(state.brelages.length){pushHistory();state.brelages=[];sel=null;rebuild()}};
 $('#remChip').onclick=()=>{const n=sel&&sel.type==='node'?model.nodes.find(n=>n.js.some(J=>J.key===sel.key)):null;if(!n)return;pushHistory();const ks=new Set(n.js.map(J=>J.key));state.brelages=state.brelages.filter(q=>!ks.has(q.a+'-'+q.b));sel=null;rebuild()};
 $('#potChip').onclick=e=>addBrelage(e.currentTarget.dataset.key);
+$('#triChip').onclick=e=>addTriple(e.currentTarget.dataset.keys.split(','));
 $('#cGrid').onchange=e=>{gridGroup.visible=groundLines.visible=e.target.checked;try{localStorage.setItem('atelier-grid',e.target.checked?'1':'0')}catch(_){}};
 try{if(localStorage.getItem('atelier-grid')==='0'){$('#cGrid').checked=false;gridGroup.visible=groundLines.visible=false}}catch(_){}
 $('#cSnap').onchange=e=>{snapGrid=e.target.checked;tc.setTranslationSnap(snapGrid?0.05:null)};
@@ -2165,7 +2244,7 @@ function renderStats(){
   $('#sBeams').textContent=model.beams.length;
   {/* wood weight (taper: mean of r² over a log is about 0.9 r²), rope in the brelages, strings and nails of the jeux */
     const kg=model.beams.reduce((a,b)=>a+Math.PI*b.r*b.r*0.903*b.pick.len*700,0);
-    let rope=0;for(const n of model.nodes)for(const J of n.js)for(const g of lashingCached(J).geos)rope+=g.userData.len||0;
+    let rope=0;for(const n of model.nodes)for(const L of nodeLash(n))for(const g of L.geos)rope+=g.userData.len||0;
     let nails=0;for(const j of state.ficelles){const S=jeuStrings(j);if(!S)continue;rope+=S.cord;nails+=S.P.reduce((a,p)=>a+p.length,0)}
     const nf=(v,d)=>v.toLocaleString(lang,{minimumFractionDigits:d,maximumFractionDigits:d});
     let w,wu;
@@ -2296,8 +2375,8 @@ function renderCard(){
     card.innerHTML=`<h2>${t('possibleBrelage')}</h2><h3>${t('logN',{id:a})} × ${t('logN',{id:b})}</h3>
       <dl class="kv"><dt>${t('axesDist')}</dt><dd>${cm(q.gap)}</dd></dl>
       <p class="note">${t('possibleNote')}</p>
-      <div class="row"><button class="btn primary" id="bAddBr" type="button">${t('addBrelage')}</button></div>`;
-    $('#bAddBr').onclick=()=>addBrelage(q.key);
+      <div class="row"><button class="btn primary" id="bAddBr" type="button">${tripleOption(q)?TYPE_NAME[brelagePairType(q.i,q.j)]:t('addBrelage')}</button>${tripleOption(q)?'<button class="btn" id="bAddTri" type="button">'+TYPE_NAME.triple+'</button>':''}</div>`;
+    $('#bAddBr').onclick=()=>addBrelage(q.key);if($('#bAddTri'))$('#bAddTri').onclick=()=>addTriple(tripleOption(q).keys);
   }else if(sel&&sel.type==='face'){
     const f=model.faces.find(x=>x.key===sel.key);
     if(!f){sel=null;return renderCard()}
@@ -2990,7 +3069,11 @@ function loop(){
   if(pending&&hover)updatePreview();
   placeBeamTools();placeFixChips();placeJeuUI();
   const chip=$('#potChip');const sp=sel&&sel.type==='potential'&&mode==='select'?model.potentials.find(q=>q.key===sel.key):null;
-  if(sp){const s=toScreen(V(sp.p));chip.hidden=!s.vis;chip.style.left=s.x+'px';chip.style.top=s.y+'px';chip.dataset.key=sp.key}else chip.hidden=true;
+  const tc=$('#triChip'),tri=sp?tripleOption(sp):null;
+  if(sp){const s=toScreen(V(sp.p));chip.hidden=!s.vis;chip.style.left=s.x+'px';chip.style.top=s.y+'px';chip.dataset.key=sp.key;
+    chip.classList.toggle('left',!!tri);const lbl=tri?TYPE_NAME[brelagePairType(sp.i,sp.j)]:t('addBrelage');if(chip.textContent!==lbl)chip.textContent=lbl;
+    if(tri){tc.hidden=!s.vis;tc.style.left=s.x+'px';tc.style.top=s.y+'px';tc.dataset.keys=tri.keys.join(',')}else tc.hidden=true}
+  else{chip.hidden=true;tc.hidden=true}
   const rc=$('#remChip');const sn=sel&&sel.type==='node'&&mode==='select'?model.nodes.find(n=>n.js.some(J=>J.key===sel.key)):null;
   if(sn){const s=toScreen(V(sn.p));rc.hidden=!s.vis;rc.style.left=s.x+'px';rc.style.top=s.y+'px'}else rc.hidden=true;
   requestAnimationFrame(loop);
@@ -3042,7 +3125,7 @@ function arGroup(){
   }
   /* big installations get the lighter rope, so phones can open the file */
   const nJ=model.nodes.reduce((a,n)=>a+n.js.length,0),keep=draftRope;draftRope=arLight=nJ>40;
-  for(const n of model.nodes)for(const J of n.js){const L=nJ>40?lashing(J):lashingCached(J);ropes.push(...L.geos);if(nJ>40)tmp.push(...L.geos)}
+  for(const n of model.nodes)for(const L of nodeLash(n,nJ>40)){ropes.push(...L.geos);if(nJ>40)tmp.push(...L.geos)}
   draftRope=keep;arLight=false;
   const pieces=[];for(const j of state.ficelles){const S=jeuStrings(j);if(S)pieces.push(...patchPieces(S))}
   const wood=new THREE.MeshStandardMaterial({map:bark,roughness:0.93,name:'wood'}),rope=new THREE.MeshStandardMaterial({map:ropeMat.map,roughness:0.85,name:'rope'});
